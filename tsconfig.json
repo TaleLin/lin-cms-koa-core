@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "declaration": true,
+    // "sourceMap": true,
+    "outDir": "./lin",
+    "rootDir": "./lib",
+    "importHelpers": true,
+    "strict": true,
+    "typeRoots": ["./node_modules/@types"],
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+  },
+  "exclude": ["node_modules", "lin"],
+  "include": ["lib"]
+}

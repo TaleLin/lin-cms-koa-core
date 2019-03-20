@@ -1,0 +1,46 @@
+{
+  "name": "lin-cms",
+  "version": "0.0.1-alpha3",
+  "description": "The core library of Lin CMS, this package is just for test!",
+  "main": "lin/index.js",
+  "scripts": {
+    "tsc": " rm -rf lin/ && tsc",
+    "test": "jest tests"
+  },
+  "keywords": [
+    "lin",
+    "cms",
+    "koa"
+  ],
+  "author": "pedrogao",
+  "license": "MIT",
+  "dependencies": {
+    "class-validator": "^0.9.1",
+    "consola": "^2.5.6",
+    "dayjs": "^1.8.9",
+    "is-async-function": "^1.2.3",
+    "jsonwebtoken": "^8.5.0",
+    "koa": "^2.7.0",
+    "koa-router": "^7.4.0",
+    "lodash": "^4.17.11",
+    "mysql2": "^1.6.5",
+    "sequelize": "^4.43.0",
+    "tslib": "^1.9.3"
+  },
+  "devDependencies": {
+    "@types/consola": "^1.0.0",
+    "@types/jest": "^24.0.9",
+    "@types/jsonwebtoken": "^8.3.2",
+    "@types/koa": "^2.0.48",
+    "@types/koa-bodyparser": "^4.2.2",
+    "@types/koa-router": "^7.0.39",
+    "@types/lodash": "^4.14.122",
+    "@types/sequelize": "^4.27.39",
+    "jest": "^24.3.1",
+    "ts-jest": "^24.0.0",
+    "ts-node": "^8.0.3",
+    "tslint": "^5.13.1",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.3.3333"
+  }
+}

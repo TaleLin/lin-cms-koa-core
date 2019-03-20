@@ -1,0 +1,12 @@
+{
+  "extends": "tslint-config-standard",
+  "rules": {
+    "quotemark": true,
+    "semicolon": true,
+    "space-before-function-paren": false,
+    "whitespace": true
+  },
+  "linterOptions": {
+    "exclude": ["node_modules/**", "lin/**/**"]
+  }
+}
