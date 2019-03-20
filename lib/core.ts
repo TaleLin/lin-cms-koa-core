@@ -23,7 +23,7 @@ export const __version__ = "0.0.1";
 // 存放meta路由信息
 export const routeMetaInfo = new Map();
 
-// 当前文件路由是否架子
+// 当前文件路由是否挂载
 export const disableLoading = Symbol("disableLoading");
 
 // 初始化各种扩展，中间件
