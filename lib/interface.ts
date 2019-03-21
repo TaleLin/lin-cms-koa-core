@@ -2,7 +2,7 @@ import Sequelize from "sequelize";
 import { merge } from "lodash";
 import { UserAdmin, UserActive } from "./enums";
 import dayjs from "dayjs";
-import { generate } from "./passwordHash";
+import { generate } from "./password-hash";
 
 export const InfoCrudMixin = {
   attributes: {

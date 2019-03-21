@@ -1,6 +1,6 @@
 {
   "name": "lin-cms",
-  "version": "0.0.1-alpha4",
+  "version": "0.0.1-alpha5",
   "description": "The core library of Lin CMS, this package is just for test!",
   "main": "lin/index.js",
   "scripts": {

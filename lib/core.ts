@@ -14,8 +14,8 @@ import { json, logging } from "./extend";
 import { NotFound, ParametersException } from "./exception";
 import { set, get, has, merge } from "lodash";
 import { Loader } from "./loader";
-import { LinRouter } from "./linRouter";
-import { verify } from "./passwordHash";
+import { LinRouter } from "./lin-router";
+import { verify } from "./password-hash";
 
 // tslint:disable-next-line:variable-name
 export const __version__ = "0.0.1";

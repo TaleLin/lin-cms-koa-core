@@ -2,7 +2,7 @@ import isAsyncFunction from "is-async-function";
 import { get, isArray, set, unset } from "lodash";
 import { ParametersException } from "./exception";
 import { Context } from "koa";
-import { extendedValidator } from "./extendedValidator";
+import { extendedValidator } from "./extended-validator";
 import { getAllMethodNames } from "./util";
 
 /**
