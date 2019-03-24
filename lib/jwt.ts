@@ -14,9 +14,8 @@ import { config } from "./config";
 
 export class Token {
   private secret: string | undefined;
-  private accessExp: number = Math.floor(Date.now() / 1000) + 60 * 60; // 1h;
-  private refreshExp: number =
-    Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30 * 3; // 3 months
+  private accessExp: number = 60 * 60; // 1h;
+  private refreshExp: number = 60 * 60 * 24 * 30 * 3; // 3 months
 
   constructor(secret?: string, accessExp?: number, refreshExp?: number) {
     secret && (this.secret = secret);
@@ -48,9 +47,10 @@ export class Token {
     if (!this.secret) {
       throw new Error("密匙不可为空");
     }
+    let exp: number = Math.floor(Date.now() / 1000) + this.accessExp;
     return jwtGenerator.sign(
       {
-        exp: this.accessExp,
+        exp: exp,
         identity: identity,
         type: TokenType.ACCESS
       },
@@ -66,9 +66,10 @@ export class Token {
     if (!this.secret) {
       throw new Error("密匙不可为空");
     }
+    let exp: number = Math.floor(Date.now() / 1000) + this.refreshExp;
     return jwtGenerator.sign(
       {
-        exp: this.refreshExp,
+        exp: exp,
         identity: identity,
         type: TokenType.REFRESH
       },
