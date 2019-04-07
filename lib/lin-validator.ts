@@ -3,12 +3,12 @@ import { get, isArray, set, unset } from "lodash";
 import { ParametersException } from "./exception";
 import { Context } from "koa";
 import { extendedValidator } from "./extended-validator";
-import { getAllMethodNames } from "./util";
+import { getAllMethodNames, getAllFieldNames } from "./util";
 
 /**
  * 支持optional，支持array，支持nested object
  */
-export class ClassValidator {
+export class LinValidator {
   /**
    * 装载数据的容器
    */
@@ -52,7 +52,6 @@ export class ClassValidator {
       }
       throw new ParametersException({ msg: obj });
     } else {
-      // 把validator挂载到ctx上
       ctx.v = this;
       return this;
     }
@@ -80,12 +79,22 @@ export class ClassValidator {
     // 筛选出是Rule或Rules的key
     // 添加规则校验 validateKey
     // default校验规则 throw
-    let keys = Object.keys(this).filter(key => {
-      const value = this[key];
-      if (isArray(value)) {
-        return value[0] instanceof Rule;
-      } else {
-        return value instanceof Rule;
+    let keys = getAllFieldNames(this, {
+      filter: key => {
+        const value = this[key];
+        if (isArray(value)) {
+          if (value.length === 0) {
+            return false;
+          }
+          for (const it of value) {
+            if (!(it instanceof Rule)) {
+              throw new Error("every item must be a instance of Rule");
+            }
+          }
+          return true;
+        } else {
+          return value instanceof Rule;
+        }
       }
     });
     // 此处进行别名替换
@@ -170,9 +179,11 @@ export class ClassValidator {
         }
       }
     }
-    let validateFuncKeys: string[] = getAllMethodNames(this).filter(key => {
-      return /validate([A-Z])\w+/g.test(key) && typeof this[key] === "function";
+    let validateFuncKeys: string[] = getAllMethodNames(this, {
+      filter: key =>
+        /validate([A-Z])\w+/g.test(key) && typeof this[key] === "function"
     });
+
     for (const validateFuncKey of validateFuncKeys) {
       //  最后校验规则函数
       const customerValidateFunc = get(this, validateFuncKey);
@@ -191,18 +202,33 @@ export class ClassValidator {
           key = validateFuncKey.replace("validate", "").toLowerCase();
         }
         this.errors.push({ key, message: validRes[1] });
+      } else if (!validRes) {
+        let key = validateFuncKey.replace("validate", "").toLowerCase();
+        // 如果自定函数没有给出错误信息，那么错误信息为默认
+        this.errors.push({ key, message: "参数错误" });
       }
     }
     return this.errors.length === 0;
   }
 
-  get(path: string, parsed = false) {
+  /**
+   *  取参数里的值；如果参数不能被解析，则返回没有被解析的值
+   * @param path 参数所在的路径，如 a.b
+   * @param parsed 是否取已经解析后的数据，默认为true
+   * @param defaultVal 默认值，当路径指向的值不存在，取默认值
+   */
+  get(path: string, parsed = true) {
     let defaultVal;
     if (arguments.length >= 3) {
       defaultVal = arguments[2];
     }
     if (parsed) {
-      return get(this.parsed, path, defaultVal && defaultVal);
+      const key = get(this.parsed, path, defaultVal && defaultVal);
+      if (key) {
+        return key;
+      } else {
+        return get(this.data, path, defaultVal && defaultVal);
+      }
     } else {
       return get(this.data, path, defaultVal && defaultVal);
     }

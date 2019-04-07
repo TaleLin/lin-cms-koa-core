@@ -157,14 +157,33 @@ export function decorateProp(decorators, type, target, key) {
   );
 }
 
-export function getAllMethodNames(obj) {
+export interface ObjOptions {
+  prefix?: string;
+  filter?: (key: any) => boolean;
+}
+
+export function getAllMethodNames(obj, option?: ObjOptions) {
   let methods = new Set();
   // tslint:disable-next-line:no-conditional-assignment
   while ((obj = Reflect.getPrototypeOf(obj))) {
     let keys = Reflect.ownKeys(obj);
     keys.forEach(k => methods.add(k));
   }
-  return Array.from(methods.values());
+  let keys = Array.from(methods.values());
+  return prefixAndFilter(keys, option);
+}
+
+export function getAllFieldNames(obj, option?: ObjOptions) {
+  let keys = Reflect.ownKeys(obj);
+  return prefixAndFilter(keys, option);
+}
+
+function prefixAndFilter(keys: any[], option?: ObjOptions) {
+  option &&
+    option.prefix &&
+    (keys = keys.filter(key => key.toString().startsWith(option.prefix)));
+  option && option.filter && (keys = keys.filter(option.filter));
+  return keys;
 }
 
 export function getFiles(dir: string) {

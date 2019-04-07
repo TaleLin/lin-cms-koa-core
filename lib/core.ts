@@ -98,7 +98,6 @@ export class Lin {
             );
             set(ly, "path", `/${get(plugin, "name")}${get(ly, "path")}`);
           });
-          // cont.stack[0].path
           pluginRp
             .use((cont as any).routes() as IMiddleware)
             .use((cont as any).allowedMethods() as IMiddleware);
@@ -106,7 +105,7 @@ export class Lin {
       } else {
         controllers.forEach(cont => {
           get(cont, "stack", []).forEach(ly => {
-            consola.info(`loading a route: /plugin/${get(ly, "path")}`);
+            consola.info(`loading a route: /plugin${get(ly, "path")}`);
           });
           pluginRp
             .use((cont as any).routes() as IMiddleware)
