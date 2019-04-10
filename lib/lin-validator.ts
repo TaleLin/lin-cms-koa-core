@@ -31,16 +31,16 @@ export class LinValidator {
 
   async validate(ctx: Context, alias?: {}) {
     this.alias = alias;
-    const params = Object.assign(
-      {},
-      ctx.request.body,
-      ctx.request.query,
-      ctx.params,
-      ctx.request.header
-    );
-    for (const it of Object.keys(params)) {
-      set(this.data, it, get(params, it));
-    }
+    this.data = {
+      body: ctx.request.body,
+      query: ctx.request.query,
+      path: ctx.params,
+      header: ctx.request.header
+    };
+    this.parsed = {
+      ...this.data,
+      default: {}
+    };
     if (!(await this.checkRules())) {
       let obj = {};
       if (this.errors.length === 1) {
@@ -106,7 +106,9 @@ export class LinValidator {
       const value = this[key];
       let defaultVal;
       // 如果没有传入这个参数，检查这个校验链中是否有 isOptional 如果有通过，否则抛异常
-      if (extendedValidator.isEmpty(this.data[key])) {
+      // 去data下找key，二级目录查找 dataKey 为一级目录的路径
+      const [dataKey, dataVal] = this.findInData(key);
+      if (dataVal === void 0) {
         let msg: string | undefined;
         if (isArray(value)) {
           for (const it of value) {
@@ -132,7 +134,7 @@ export class LinValidator {
         if (!optional) {
           this.errors.push({ key, message: msg || `${key}不可为空` });
         } else {
-          this.data[key] = defaultVal;
+          this.parsed["default"][key] = defaultVal;
         }
       } else {
         if (isArray(value)) {
@@ -142,9 +144,9 @@ export class LinValidator {
             if (!stoppedFlag && !it.optional) {
               let valid: boolean;
               if (isAsyncFunction(it.validate)) {
-                valid = await it.validate(this.data[key]);
+                valid = await it.validate(this.data[dataKey][key]);
               } else {
-                valid = it.validate(this.data[key]);
+                valid = it.validate(this.data[dataKey][key]);
               }
               if (!valid) {
                 errs.push(it.message);
@@ -152,7 +154,7 @@ export class LinValidator {
                 stoppedFlag = true;
               }
             }
-            it.parsedValue && (this.parsed[key] = it.parsedValue);
+            it.parsedValue && (this.parsed[dataKey][key] = it.parsedValue);
           }
           if (errs.length !== 0) {
             this.errors.push({ key, message: errs });
@@ -162,9 +164,9 @@ export class LinValidator {
           if (!stoppedFlag && !value.optional) {
             let valid: boolean;
             if (isAsyncFunction(value.validate)) {
-              valid = await value.validate(this.data[key]);
+              valid = await value.validate(this.data[dataKey][key]);
             } else {
-              valid = value.validate(this.data[key]);
+              valid = value.validate(this.data[dataKey][key]);
             }
             if (!valid) {
               errs.push(value.message);
@@ -172,7 +174,7 @@ export class LinValidator {
               stoppedFlag = true;
             }
           }
-          value.parsedValue && (this.parsed[key] = value.parsedValue);
+          value.parsedValue && (this.parsed[dataKey][key] = value.parsedValue);
           if (errs.length !== 0) {
             this.errors.push({ key, message: errs });
           }
@@ -227,11 +229,24 @@ export class LinValidator {
       if (key) {
         return key;
       } else {
-        return get(this.data, path, defaultVal && defaultVal);
+        const index = path.lastIndexOf(".");
+        const suffix = path.substring(index + 1, path.length);
+        return get(this.parsed["default"], suffix, defaultVal && defaultVal);
       }
     } else {
       return get(this.data, path, defaultVal && defaultVal);
     }
+  }
+
+  private findInData(key: string) {
+    const keys = Object.keys(this.data);
+    for (const k of keys) {
+      const val = get(this.data[k], key);
+      if (val !== void 0) {
+        return [k, val];
+      }
+    }
+    return [];
   }
 }
 
