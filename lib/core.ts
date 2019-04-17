@@ -1,5 +1,6 @@
 import Application from "koa";
 import consola from "consola";
+import { Model } from "sequelize";
 import { IMiddleware } from "koa-router";
 import { jwt } from "./jwt";
 import { assert } from "./util";
@@ -158,14 +159,33 @@ export class Manager {
 /**
  * 权限系统中的User模型
  */
-export const User = db.define(
-  "lin_user",
+export class User extends Model {
+  public id!: number;
+  public nickname!: string;
+  public admin!: number;
+  public active!: number;
+  public email!: string;
+  // tslint:disable-next-line:variable-name
+  public group_id!: number;
+  public password!: string;
+
+  // tslint:disable-next-line:variable-name
+  public create_time!: Date;
+  // tslint:disable-next-line:variable-name
+  public update_time!: Date;
+  // tslint:disable-next-line:variable-name
+  public delete_time!: Date;
+}
+
+User.init(
   {
     ...UserInterface.attributes
   },
   merge(
     {
-      tableName: "lin_user"
+      sequelize: db,
+      tableName: "lin_user",
+      modelName: "user"
     },
     UserInterface.options
   )
@@ -188,27 +208,36 @@ User.verify = async function(nickname: string, password: string) {
 
 // @ts-ignore
 User.prototype.checkPassword = function(raw: string) {
+  // @ts-ignore
   if (!this.password || this.password === "") {
     return false;
   }
+  // @ts-ignore
   return verify(raw, this.password);
 };
 
 // @ts-ignore
-User.prototype.softDelete = function() {
-  this.delete_time = new Date();
-  this.save();
-};
+// User.prototype.softDelete = function() {
+//   this.delete_time = new Date();
+//   this.save();
+// };
 
 // @ts-ignore
 User.prototype.toJSON = function() {
   const origin = {
+    // @ts-ignore
     id: this.id,
+    // @ts-ignore
     nickname: this.nickname,
+    // @ts-ignore
     admin: this.admin,
+    // @ts-ignore
     active: this.active,
+    // @ts-ignore
     email: this.email,
+    // @ts-ignore
     group_id: this.groupId,
+    // @ts-ignore
     create_time: this.create_time
   };
   if (has(this, "auths")) {
@@ -223,6 +252,7 @@ User.prototype.toJSON = function() {
 // @ts-ignore
 User.prototype.resetPassword = function(newPassword: string) {
   // 注意，重置密码后记得提交至数据库
+  // @ts-ignore
   this.password = newPassword;
 };
 
@@ -231,7 +261,9 @@ User.prototype.changePassword = function(
   oldPassword: string,
   newPassword: string
 ) {
+  // @ts-ignore
   if (this.checkPassword(oldPassword)) {
+    // @ts-ignore
     this.password = newPassword;
     return true;
   }
@@ -241,12 +273,21 @@ User.prototype.changePassword = function(
 /**
  * 权限系统中的Group模型
  */
-export const Group = db.define(
-  "lin_group",
-  { ...GroupInterface.attributes },
+export class Group extends Model {
+  public id!: number;
+  public name!: string;
+  public info!: string;
+}
+
+Group.init(
+  {
+    ...GroupInterface.attributes
+  },
   merge(
     {
-      tableName: "lin_group"
+      sequelize: db,
+      tableName: "lin_group",
+      modelName: "group"
     },
     GroupInterface.options
   )
@@ -255,8 +296,11 @@ export const Group = db.define(
 // @ts-ignore
 Group.prototype.toJSON = function() {
   let origin = {
+    // @ts-ignore
     id: this.id,
+    // @ts-ignore
     name: this.name,
+    // @ts-ignore
     info: this.info
   };
   return has(this, "auths")
@@ -267,14 +311,23 @@ Group.prototype.toJSON = function() {
 /**
  * 权限系统中的Auth模型
  */
-export const Auth = db.define(
-  "lin_auth",
+export class Auth extends Model {
+  public id!: number;
+  // tslint:disable-next-line:variable-name
+  public group_id!: number;
+  public auth!: string;
+  public module!: string;
+}
+
+Auth.init(
   {
     ...AuthInterface.attributes
   },
   merge(
     {
-      tableName: "lin_auth"
+      sequelize: db,
+      tableName: "lin_auth",
+      modelName: "auth"
     },
     AuthInterface.options
   )
@@ -283,9 +336,13 @@ export const Auth = db.define(
 // @ts-ignore
 Auth.prototype.toJSON = function() {
   return {
+    // @ts-ignore
     id: this.id,
+    // @ts-ignore
     group_id: this.group_id,
+    // @ts-ignore
     module: this.module,
+    // @ts-ignore
     auth: this.auth
   };
 };
@@ -300,14 +357,30 @@ export interface LogArgs {
   authority?: string;
 }
 
-export const Log = db.define(
-  "lin_log",
+export class Log extends Model {
+  public id!: number;
+  public message!: string;
+  // tslint:disable-next-line:variable-name
+  public user_id!: number;
+  // tslint:disable-next-line:variable-name
+  public user_name!: string;
+  // tslint:disable-next-line:variable-name
+  public status_code!: number;
+  public method!: string;
+  public path!: string;
+  public authority!: string;
+  public time!: Date;
+}
+
+Log.init(
   {
     ...LogInterface.attributes
   },
   merge(
     {
-      tableName: "lin_log"
+      sequelize: db,
+      tableName: "lin_log",
+      modelName: "log"
     },
     LogInterface.options
   )
@@ -315,11 +388,6 @@ export const Log = db.define(
 
 // @ts-ignore
 Log.createLog = function(args?: LogArgs, commit?: boolean) {
-  // if (args) {
-  //   Object.keys(args).forEach(arg => {
-  //     set(log, arg, get(args, arg));
-  //   });
-  // }
   const log = Log.build(args as any);
   // @ts-ignore
   commit && log.save();

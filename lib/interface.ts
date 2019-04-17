@@ -5,12 +5,12 @@ import dayjs from "dayjs";
 import { generate } from "./password-hash";
 
 export const InfoCrudMixin = {
-  attributes: {
-    delete_time: Sequelize.DATE
-  },
+  attributes: {},
   options: {
     createdAt: "create_time",
     updatedAt: "update_time",
+    deletedAt: "delete_time",
+    paranoid: true,
     getterMethods: {
       createTime() {
         // @ts-ignore
@@ -21,51 +21,48 @@ export const InfoCrudMixin = {
 };
 
 export const UserInterface = {
-  attributes: merge(
-    {
-      id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      nickname: {
-        type: Sequelize.STRING({ length: 24 }),
-        allowNull: false,
-        unique: true
-      },
-      admin: {
-        type: Sequelize.TINYINT,
-        allowNull: false,
-        defaultValue: 1
-      },
-      active: {
-        type: Sequelize.TINYINT,
-        allowNull: false,
-        defaultValue: 1
-      },
-      email: {
-        type: Sequelize.STRING({ length: 100 }),
-        unique: true,
-        allowNull: true
-      },
-      group_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true
-      },
-      password: {
-        type: Sequelize.STRING({ length: 100 }),
-        set(ps) {
-          // @ts-ignore
-          this.setDataValue("password", generate(ps));
-        },
-        get() {
-          // @ts-ignore
-          return this.getDataValue("password");
-        }
-      }
+  attributes: {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
     },
-    InfoCrudMixin.attributes
-  ),
+    nickname: {
+      type: Sequelize.STRING({ length: 24 }),
+      allowNull: false,
+      unique: true
+    },
+    admin: {
+      type: Sequelize.TINYINT,
+      allowNull: false,
+      defaultValue: 1
+    },
+    active: {
+      type: Sequelize.TINYINT,
+      allowNull: false,
+      defaultValue: 1
+    },
+    email: {
+      type: Sequelize.STRING({ length: 100 }),
+      unique: true,
+      allowNull: true
+    },
+    group_id: {
+      type: Sequelize.INTEGER,
+      allowNull: true
+    },
+    password: {
+      type: Sequelize.STRING({ length: 100 }),
+      set(ps) {
+        // @ts-ignore
+        this.setDataValue("password", generate(ps));
+      },
+      get() {
+        // @ts-ignore
+        return this.getDataValue("password");
+      }
+    }
+  },
   options: merge(
     {
       tableName: "lin_user",

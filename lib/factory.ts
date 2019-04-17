@@ -1,8 +1,6 @@
-// phone: {
-//   type: Sequelize.STRING,
-//   unique: true,
-//   allowNull: true
-// }
+/**
+ * 工厂方法
+ */
 
 export function modelExtend(superModel: any, attributes) {
   superModel.tableAttributes = {

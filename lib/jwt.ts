@@ -139,7 +139,7 @@ async function parseHeader(ctx: RouterContext, type = TokenType.ACCESS) {
       if (!get(obj, "type") || get(obj, "type") !== type) {
         ctx.throw(new AuthFailed({ msg: "请使用正确类型的令牌" }));
       }
-      const user = await ctx.manager.userModel.findById(get(obj, "identity"));
+      const user = await ctx.manager.userModel.findByPk(get(obj, "identity"));
       if (!user) {
         ctx.throw(new NotFound({ msg: "用户不存在" }));
       }
