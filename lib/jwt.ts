@@ -3,7 +3,8 @@ import {
   ExpiredTokenException,
   InvalidTokenException,
   AuthFailed,
-  NotFound
+  NotFound,
+  RefreshException
 } from "./exception";
 import Application from "koa";
 import { RouterContext } from "koa-router";
@@ -181,6 +182,26 @@ async function refreshTokenRequired(
 }
 
 /**
+ * 守卫函数，用户刷新令牌，统一异常
+ */
+async function refreshTokenRequiredWithUnifyException(
+  ctx: RouterContext,
+  next: () => Promise<any>
+) {
+  // 添加access 和 refresh 的标识位
+  if (ctx.request.method !== "OPTIONS") {
+    try {
+      await parseHeader(ctx, TokenType.REFRESH);
+    } catch (error) {
+      throw new RefreshException();
+    }
+    await next();
+  } else {
+    await next();
+  }
+}
+
+/**
  * 守卫函数，用于权限组鉴权
  */
 async function groupRequired(ctx: RouterContext, next: () => Promise<any>) {
@@ -246,5 +267,6 @@ export {
   loginRequired,
   groupRequired,
   adminRequired,
-  refreshTokenRequired
+  refreshTokenRequired,
+  refreshTokenRequiredWithUnifyException
 };
