@@ -1,5 +1,5 @@
 import isAsyncFunction from "is-async-function";
-import { get, isArray, set, unset } from "lodash";
+import { get, isArray, set, unset, cloneDeep } from "lodash";
 import { ParametersException } from "./exception";
 import { Context } from "koa";
 import { extendedValidator } from "./extended-validator";
@@ -37,8 +37,9 @@ export class LinValidator {
       path: ctx.params,
       header: ctx.request.header
     };
+    const tmpData = cloneDeep(this.data);
     this.parsed = {
-      ...this.data,
+      ...tmpData,
       default: {}
     };
     if (!(await this.checkRules())) {
@@ -154,7 +155,9 @@ export class LinValidator {
                 stoppedFlag = true;
               }
             }
-            it.parsedValue && (this.parsed[dataKey][key] = it.parsedValue);
+            if (it.parsedValue !== void 0) {
+              this.parsed[dataKey][key] = it.parsedValue;
+            }
           }
           if (errs.length !== 0) {
             this.errors.push({ key, message: errs });
@@ -174,7 +177,9 @@ export class LinValidator {
               stoppedFlag = true;
             }
           }
-          value.parsedValue && (this.parsed[dataKey][key] = value.parsedValue);
+          if (value.parsedValue !== void 0) {
+            this.parsed[dataKey][key] = value.parsedValue;
+          }
           if (errs.length !== 0) {
             this.errors.push({ key, message: errs });
           }
@@ -226,7 +231,7 @@ export class LinValidator {
     }
     if (parsed) {
       const key = get(this.parsed, path, defaultVal && defaultVal);
-      if (key) {
+      if (key !== void 0) {
         return key;
       } else {
         const index = path.lastIndexOf(".");

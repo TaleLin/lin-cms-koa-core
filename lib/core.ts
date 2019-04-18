@@ -17,6 +17,7 @@ import { set, get, has, merge } from "lodash";
 import { Loader } from "./loader";
 import { LinRouter } from "./lin-router";
 import { verify } from "./password-hash";
+import dayjs from "dayjs";
 
 // tslint:disable-next-line:variable-name
 export const __version__ = "0.0.1";
@@ -238,7 +239,7 @@ User.prototype.toJSON = function() {
     // @ts-ignore
     group_id: this.groupId,
     // @ts-ignore
-    create_time: this.create_time
+    create_time: this.createTime
   };
   if (has(this, "auths")) {
     return { ...origin, auths: get(this, "auths", []) };
@@ -402,7 +403,7 @@ Log.prototype.toJSON = function() {
     // @ts-ignore
     message: this.message,
     // @ts-ignore
-    time: this.time,
+    time: this.time ? null : dayjs(this.time).unix(),
     // @ts-ignore
     user_id: this.user_id,
     // @ts-ignore
