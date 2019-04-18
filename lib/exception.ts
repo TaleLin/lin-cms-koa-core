@@ -261,3 +261,24 @@ export class MethodNotAllowed extends HttpException {
     }
   }
 }
+
+export class RefreshException extends HttpException {
+  public code = 401;
+  public msg = "refresh token 获取失败";
+  public errorCode = 10100;
+
+  constructor(ex?: Exception) {
+    super();
+    if (ex && ex.code) {
+      assert(isInteger(ex.code));
+      this.code = ex.code;
+    }
+    if (ex && ex.msg) {
+      this.msg = ex.msg;
+    }
+    if (ex && ex.errorCode) {
+      assert(isInteger(ex.errorCode));
+      this.errorCode = ex.errorCode;
+    }
+  }
+}
