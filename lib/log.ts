@@ -32,9 +32,9 @@ function writeLog(template: string, ctx: IRouterContext) {
     Log.createLog(
       {
         message: message,
-        userId: ctx.currentUser.id,
-        userName: ctx.currentUser.nickname,
-        statusCode: statusCode,
+        user_id: ctx.currentUser.id,
+        user_name: ctx.currentUser.nickname,
+        status_code: statusCode,
         method: ctx.request.method,
         path: ctx.request.path,
         authority: auth
