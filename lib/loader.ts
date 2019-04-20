@@ -95,19 +95,30 @@ export class Loader {
       // 现在只考虑加载.js文件，后续考虑.ts文件
       if (extention === ".js") {
         const mod = require(file);
+        // 如果mod 为 koa-router实例
         // const exports = get(mod, "default");
         // 如果disableLoading为true，则不加载这个文件路由
         // tslint:disable-next-line:no-empty
-        if (!mod[disableLoading]) {
+        if (mod instanceof Router) {
+          if (config.getItem("debug")) {
+            consola.info(`loading a router instance from file: ${file}`);
+            get(mod, "stack", []).forEach(ly => {
+              consola.info(`loading a route: ${get(ly, "path")}`);
+            });
+          }
+          mainRouter.use(mod.routes()).use(mod.allowedMethods());
+        } else if (!mod[disableLoading]) {
           Object.keys(mod).forEach(key => {
             if (mod[key] instanceof Router) {
-              consola.info(`loading a router instance :${key} from file: ${file}`);
-              get(mod[key] , "stack", []).forEach(ly => {
-                consola.info(`loading a route: ${get(ly, "path")}`);
-              });
-              mainRouter
-                .use(mod[key].routes())
-                .use(mod[key].allowedMethods());
+              if (config.getItem("debug")) {
+                consola.info(
+                  `loading a router instance :${key} from file: ${file}`
+                );
+                get(mod[key], "stack", []).forEach(ly => {
+                  consola.info(`loading a route: ${get(ly, "path")}`);
+                });
+              }
+              mainRouter.use(mod[key].routes()).use(mod[key].allowedMethods());
             }
           });
         }

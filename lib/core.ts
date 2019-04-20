@@ -18,6 +18,7 @@ import { Loader } from "./loader";
 import { LinRouter } from "./lin-router";
 import { verify } from "./password-hash";
 import dayjs from "dayjs";
+import { config } from "./config";
 
 // tslint:disable-next-line:variable-name
 export const __version__ = "0.0.1";
@@ -92,12 +93,14 @@ export class Lin {
             `/${get(plugin, "name")}${get(cont, "opts.prefix")}`
           );
           get(cont, "stack", []).forEach(ly => {
-            consola.info(
-              `loading a route: /plugin/${get(plugin, "name")}${get(
-                ly,
-                "path"
-              )}`
-            );
+            if (config.getItem("debug")) {
+              consola.info(
+                `loading a route: /plugin/${get(plugin, "name")}${get(
+                  ly,
+                  "path"
+                )}`
+              );
+            }
             set(ly, "path", `/${get(plugin, "name")}${get(ly, "path")}`);
           });
           pluginRp
@@ -106,9 +109,11 @@ export class Lin {
         });
       } else {
         controllers.forEach(cont => {
-          get(cont, "stack", []).forEach(ly => {
-            consola.info(`loading a route: /plugin${get(ly, "path")}`);
-          });
+          if (config.getItem("debug")) {
+            get(cont, "stack", []).forEach(ly => {
+              consola.info(`loading a route: /plugin${get(ly, "path")}`);
+            });
+          }
           pluginRp
             .use((cont as any).routes() as IMiddleware)
             .use((cont as any).allowedMethods() as IMiddleware);
