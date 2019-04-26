@@ -29,6 +29,9 @@ export const isEmpty = (array: { length: number }): boolean =>
 
 export const isSymbol = (fn: any): fn is symbol => typeof fn === "symbol";
 
+export const strVal = (value: any) =>
+  typeof value === "string" ? value : String(value);
+
 /**
  * Assertion utility.
  */

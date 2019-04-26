@@ -1,7 +1,8 @@
 import isAsyncFunction from "is-async-function";
-import { get, isArray, set, unset, cloneDeep } from "lodash";
+import { get, isArray, unset, cloneDeep } from "lodash";
 import { ParametersException } from "./exception";
 import { Context } from "koa";
+import validator1 from "validator";
 import { extendedValidator } from "./extended-validator";
 import { getAllMethodNames, getAllFieldNames } from "./util";
 
@@ -82,6 +83,20 @@ export class LinValidator {
     return arr;
   }
 
+  private isOptional(val: any) {
+    // undefined , null , ""  , "    ", 皆通过
+    if (val === void 0) {
+      return true;
+    }
+    if (val === null) {
+      return true;
+    }
+    if (typeof val === "string") {
+      return val === "" || val.trim() === "";
+    }
+    return false;
+  }
+
   private async checkRules() {
     // 筛选出是Rule或Rules的key
     // 添加规则校验 validateKey
@@ -115,7 +130,7 @@ export class LinValidator {
       // 如果没有传入这个参数，检查这个校验链中是否有 isOptional 如果有通过，否则抛异常
       // 去data下找key，二级目录查找 dataKey 为一级目录的路径
       const [dataKey, dataVal] = this.findInData(key);
-      if (dataVal === void 0) {
+      if (this.isOptional(dataVal)) {
         let msg: string | undefined;
         if (isArray(value)) {
           for (const it of value) {
@@ -237,7 +252,7 @@ export class LinValidator {
     }
     if (parsed) {
       const key = get(this.parsed, path, defaultVal && defaultVal);
-      if (key !== void 0) {
+      if (!this.isOptional(key)) {
         return key;
       } else {
         const index = path.lastIndexOf(".");
@@ -293,33 +308,36 @@ export class Rule {
     if (typeof this.validateFunction === "function") {
       return this.validateFunction(value, ...this.options);
     } else {
-      if (this.validateFunction === "isDate") {
-        typeof value === "string"
-          ? (this.parsedValue = extendedValidator.toDate(value))
-          : (this.parsedValue = value);
-      } else if (this.validateFunction === "isInt") {
-        if (typeof value === "string") {
-          this.parsedValue = extendedValidator.toInt(value);
-          return extendedValidator.isInt2(value, ...this.options);
-        } else {
-          this.parsedValue = value;
-          return extendedValidator.isInt3(value, ...this.options);
-        }
-      } else if (this.validateFunction === "isFloat") {
-        if (typeof value === "string") {
-          this.parsedValue = extendedValidator.toFloat(value);
-          return extendedValidator.isFloat(value, ...this.options);
-        } else {
-          this.parsedValue = value;
-          return extendedValidator.isFloat2(value, ...this.options);
-        }
-      } else if (this.validateFunction === "isBoolean") {
-        typeof value === "string"
-          ? (this.parsedValue = extendedValidator.toBoolean(value))
-          : (this.parsedValue = value);
-        return extendedValidator.isBoolean(value);
+      switch (this.validateFunction) {
+        case "isInt":
+          if (typeof value === "string") {
+            this.parsedValue = validator1.toInt(value);
+            return validator1.isInt(value, ...this.options);
+          } else {
+            this.parsedValue = value;
+            return validator1.isInt(String(value), ...this.options);
+          }
+        case "isFloat":
+          if (typeof value === "string") {
+            this.parsedValue = validator1.toFloat(value);
+            return validator1.isFloat(value, ...this.options);
+          } else {
+            this.parsedValue = value;
+            return validator1.isFloat(String(value), ...this.options);
+          }
+        case "isBoolean":
+          if (typeof value === "string") {
+            this.parsedValue = validator1.toBoolean(value);
+            return validator1.isBoolean(value);
+          } else {
+            this.parsedValue = value;
+            return validator1.isBoolean(String(value));
+          }
+        case "isNotEmpty":
+          return extendedValidator.isNotEmpty(value);
+        default:
+          return validator1[this.validateFunction](value, ...this.options);
       }
-      return extendedValidator[this.validateFunction](value, ...this.options);
     }
   }
 }
