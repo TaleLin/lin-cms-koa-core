@@ -6,7 +6,7 @@
   "scripts": {
     "tsc": " rm -rf lin/ && tsc",
     "test": "jest tests",
-    "doc": "typedoc --out docs ./lib"
+    "doc": "typedoc --out docs --mode modules ./lib"
   },
   "keywords": [
     "lin",
