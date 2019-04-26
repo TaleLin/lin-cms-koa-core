@@ -50,6 +50,11 @@ export interface Option {
   iterations?: number;
 }
 
+/**
+ * 生成密文密码
+ * @param password 密码
+ * @param options 参数
+ */
 export const generate = function(password: string, options?: Option) {
   options || (options = {});
   options.algorithm || (options.algorithm = "sha1");
@@ -59,6 +64,11 @@ export const generate = function(password: string, options?: Option) {
   return generateHash(options.algorithm, salt, password, options.iterations);
 };
 
+/**
+ * 校验密码
+ * @param password 原始密码
+ * @param hashedPassword 密文密码
+ */
 export const verify = function(password: string, hashedPassword: string) {
   if (!password || !hashedPassword) return false;
   let parts = hashedPassword.split("$");
@@ -71,6 +81,10 @@ export const verify = function(password: string, hashedPassword: string) {
   }
 };
 
+/**
+ * 判断当前密码是否为密文
+ * @param password 密码
+ */
 export const isHashed = function(password: string) {
   if (!password) return false;
   return password.split("$").length === 4;

@@ -29,11 +29,23 @@ export const routeMetaInfo = new Map();
 // 当前文件路由是否挂载
 export const disableLoading = Symbol("disableLoading");
 
-// 初始化各种扩展，中间件
+/**
+ * Lin核心类
+ */
 export class Lin {
   private manager: Manager | undefined;
   private app: Application | undefined;
 
+  /**
+   * 初始化
+   *
+   * @param app koa app
+   * @param mount 是否挂载路由
+   * @param synchronize 是否同步模型到数据库
+   * @param userModel 用户模型
+   * @param groupModel 分组模型
+   * @param authModel 权限模型
+   */
   public async initApp(
     app: Application,
     mount?: boolean, // 是否挂载插件路由，默认为true
@@ -124,13 +136,24 @@ export class Lin {
   }
 }
 
-// 管理插件，数据模型
+/**
+ * 管理者
+ * 管理插件，数据模型
+ */
 export class Manager {
   public loader: Loader | undefined;
   public userModel: any;
   public groupModel: any;
   public authModel: any;
 
+  /**
+   * 初始化
+   * @param app koa app
+   * @param userModel 用户模型
+   * @param groupModel 分组模型
+   * @param authModel 权限模型
+   * @param pluginPath 插件路径
+   */
   public initApp(
     app: Application,
     userModel: any,
@@ -145,18 +168,34 @@ export class Manager {
     this.loader = new Loader(pluginPath, app);
   }
 
+  /**
+   * 获取插件
+   */
   public get plugins() {
     return this.loader!.plugins;
   }
 
+  /**
+   * 校验密码是否正确
+   * @param nickname 昵称
+   * @param password 密码
+   */
   public verify(nickname: string, password: string) {
     return this.userModel.verify(nickname, password);
   }
 
+  /**
+   * 寻找用户
+   * @param args 参数
+   */
   public findUser(args: {}) {
     return this.userModel.findOne({ where: { ...args } });
   }
 
+  /**
+   * 寻找分组
+   * @param args 参数
+   */
   public findGroup(args: {}) {
     return this.groupModel.findOne({ where: { ...args } });
   }
@@ -181,6 +220,57 @@ export class User extends Model {
   public update_time!: Date;
   // tslint:disable-next-line:variable-name
   public delete_time!: Date;
+
+  static async verify(nickname: string, password: string): Promise<User> {
+    // tslint:disable-next-line: await-promise
+    const user = await this.findOne({ where: { nickname } });
+    if (!user) {
+      throw new NotFound({ msg: "用户不存在" });
+    }
+    if (!user.checkPassword(password)) {
+      throw new ParametersException({ msg: "密码错误，请输入正确密码" });
+    }
+    return user;
+  }
+
+  checkPassword(raw: string) {
+    if (!this.password || this.password === "") {
+      return false;
+    }
+    return verify(raw, this.password);
+  }
+
+  resetPassword(newPassword: string) {
+    this.password = newPassword;
+  }
+
+  changePassword(oldPassword: string, newPassword: string) {
+    if (this.checkPassword(oldPassword)) {
+      this.password = newPassword;
+      return true;
+    }
+    return false;
+  }
+
+  toJSON() {
+    const origin = {
+      id: this.id,
+      nickname: this.nickname,
+      admin: this.admin,
+      active: this.active,
+      email: this.email,
+      group_id: this.group_id,
+      // @ts-ignore
+      create_time: this.createTime
+    };
+    if (has(this, "auths")) {
+      return { ...origin, auths: get(this, "auths", []) };
+    } else if (has(this, "groupName")) {
+      return { ...origin, group_name: get(this, "groupName", "") };
+    } else {
+      return origin;
+    }
+  }
 }
 
 User.init(
@@ -197,85 +287,6 @@ User.init(
   )
 );
 
-// @ts-ignore
-User.verify = async function(nickname: string, password: string) {
-  // @ts-ignore
-  // tslint:disable-next-line: await-promise
-  const user = await this.findOne({ where: { nickname } });
-  if (!user) {
-    throw new NotFound({ msg: "用户不存在" });
-  }
-  // @ts-ignore
-  if (!user.checkPassword(password)) {
-    throw new ParametersException({ msg: "密码错误，请输入正确密码" });
-  }
-  return user;
-};
-
-// @ts-ignore
-User.prototype.checkPassword = function(raw: string) {
-  // @ts-ignore
-  if (!this.password || this.password === "") {
-    return false;
-  }
-  // @ts-ignore
-  return verify(raw, this.password);
-};
-
-// @ts-ignore
-// User.prototype.softDelete = function() {
-//   this.delete_time = new Date();
-//   this.save();
-// };
-
-// @ts-ignore
-User.prototype.toJSON = function() {
-  const origin = {
-    // @ts-ignore
-    id: this.id,
-    // @ts-ignore
-    nickname: this.nickname,
-    // @ts-ignore
-    admin: this.admin,
-    // @ts-ignore
-    active: this.active,
-    // @ts-ignore
-    email: this.email,
-    // @ts-ignore
-    group_id: this.groupId,
-    // @ts-ignore
-    create_time: this.createTime
-  };
-  if (has(this, "auths")) {
-    return { ...origin, auths: get(this, "auths", []) };
-  } else if (has(this, "groupName")) {
-    return { ...origin, group_name: get(this, "groupName", "") };
-  } else {
-    return origin;
-  }
-};
-
-// @ts-ignore
-User.prototype.resetPassword = function(newPassword: string) {
-  // 注意，重置密码后记得提交至数据库
-  // @ts-ignore
-  this.password = newPassword;
-};
-
-// @ts-ignore
-User.prototype.changePassword = function(
-  oldPassword: string,
-  newPassword: string
-) {
-  // @ts-ignore
-  if (this.checkPassword(oldPassword)) {
-    // @ts-ignore
-    this.password = newPassword;
-    return true;
-  }
-  return false;
-};
-
 /**
  * 权限系统中的Group模型
  */
@@ -283,6 +294,17 @@ export class Group extends Model {
   public id!: number;
   public name!: string;
   public info!: string;
+
+  toJSON() {
+    let origin = {
+      id: this.id,
+      name: this.name,
+      info: this.info
+    };
+    return has(this, "auths")
+      ? { ...origin, auths: get(this, "auths", []) }
+      : origin;
+  }
 }
 
 Group.init(
@@ -299,21 +321,6 @@ Group.init(
   )
 );
 
-// @ts-ignore
-Group.prototype.toJSON = function() {
-  let origin = {
-    // @ts-ignore
-    id: this.id,
-    // @ts-ignore
-    name: this.name,
-    // @ts-ignore
-    info: this.info
-  };
-  return has(this, "auths")
-    ? { ...origin, auths: get(this, "auths", []) }
-    : origin;
-};
-
 /**
  * 权限系统中的Auth模型
  */
@@ -323,6 +330,15 @@ export class Auth extends Model {
   public group_id!: number;
   public auth!: string;
   public module!: string;
+
+  toJSON() {
+    return {
+      id: this.id,
+      group_id: this.group_id,
+      module: this.module,
+      auth: this.auth
+    };
+  }
 }
 
 Auth.init(
@@ -339,20 +355,6 @@ Auth.init(
   )
 );
 
-// @ts-ignore
-Auth.prototype.toJSON = function() {
-  return {
-    // @ts-ignore
-    id: this.id,
-    // @ts-ignore
-    group_id: this.group_id,
-    // @ts-ignore
-    module: this.module,
-    // @ts-ignore
-    auth: this.auth
-  };
-};
-
 export interface LogArgs {
   message?: string;
   user_id?: number;
@@ -363,6 +365,9 @@ export interface LogArgs {
   authority?: string;
 }
 
+/**
+ * 日志模型
+ */
 export class Log extends Model {
   public id!: number;
   public message!: string;
@@ -376,6 +381,27 @@ export class Log extends Model {
   public path!: string;
   public authority!: string;
   public time!: Date;
+
+  static createLog(args?: LogArgs, commit?: boolean) {
+    const log = Log.build(args as any);
+    commit && log.save();
+    return log;
+  }
+
+  toJSON() {
+    let origin = {
+      id: this.id,
+      message: this.message,
+      time: this.time ? null : dayjs(this.time).unix(),
+      user_id: this.user_id,
+      user_name: this.user_name,
+      status_code: this.status_code,
+      method: this.method,
+      path: this.path,
+      authority: this.authority
+    };
+    return origin;
+  }
 }
 
 Log.init(
@@ -391,36 +417,3 @@ Log.init(
     LogInterface.options
   )
 );
-
-// @ts-ignore
-Log.createLog = function(args?: LogArgs, commit?: boolean) {
-  const log = Log.build(args as any);
-  // @ts-ignore
-  commit && log.save();
-  return log;
-};
-
-// @ts-ignore
-Log.prototype.toJSON = function() {
-  let origin = {
-    // @ts-ignore
-    id: this.id,
-    // @ts-ignore
-    message: this.message,
-    // @ts-ignore
-    time: this.time ? null : dayjs(this.time).unix(),
-    // @ts-ignore
-    user_id: this.user_id,
-    // @ts-ignore
-    user_name: this.user_name,
-    // @ts-ignore
-    status_code: this.status_code,
-    // @ts-ignore
-    method: this.method,
-    // @ts-ignore
-    path: this.path,
-    // @ts-ignore
-    authority: this.authority
-  };
-  return origin;
-};

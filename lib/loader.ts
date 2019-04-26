@@ -10,8 +10,8 @@ import { config } from "./config";
 import { disableLoading } from "./core";
 
 /**
- * loader of lin
- * working for loading plugins
+ * 加载器
+ * 用于加载插件和路由文件
  */
 export class Loader {
   public mainRouter: Router | undefined;

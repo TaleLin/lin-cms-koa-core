@@ -5,7 +5,12 @@ import { toLine, unsets } from "./util";
 import { get, set } from "lodash";
 
 /**
- * 将返回的结果json序列化
+ * json序列化扩展
+ *
+ * ```js
+ * ctx.json({ msg:"hello from lin!" })
+ * ```
+ *
  * @param app app实例
  */
 export const json = (app: Application) => {
@@ -35,7 +40,15 @@ function transform(obj: any, data: any) {
 }
 
 /**
- * logging扩展
+ * 日志扩展
+ *
+ * ```js
+ * ctx.logger.info();
+ * ctx.logger.warn();
+ * ctx.logger.debug();
+ * ctx.logger.error();
+ * ```
+ *
  * @param app app实例
  */
 export const logging = (app: Application) => {

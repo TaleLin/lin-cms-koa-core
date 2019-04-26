@@ -4,6 +4,9 @@ import { UserAdmin, UserActive } from "./enums";
 import dayjs from "dayjs";
 import { generate } from "./password-hash";
 
+/**
+ * 记录信息的mixin
+ */
 export const InfoCrudMixin = {
   attributes: {},
   options: {
@@ -20,6 +23,9 @@ export const InfoCrudMixin = {
   }
 };
 
+/**
+ * 用户接口
+ */
 export const UserInterface = {
   attributes: {
     id: {
@@ -81,6 +87,9 @@ export const UserInterface = {
   )
 };
 
+/**
+ * 权限接口
+ */
 export const AuthInterface = {
   attributes: {
     id: {
@@ -106,6 +115,9 @@ export const AuthInterface = {
   }
 };
 
+/**
+ * 分组接口
+ */
 export const GroupInterface = {
   attributes: {
     id: {
@@ -128,6 +140,9 @@ export const GroupInterface = {
   }
 };
 
+/**
+ * 日志接口
+ */
 export const LogInterface = {
   attributes: {
     id: {
