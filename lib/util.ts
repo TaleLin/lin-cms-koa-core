@@ -126,7 +126,8 @@ export function unsets(obj: any, props: Array<string>) {
  * @param {*} type 被装饰值的类型 String | Array
  * @param {*} target 被装饰类的原型
  * @param {*} key 被装饰器类的键
- * @example
+ *
+ * ```js
  * tslib.__decorate([
  * Length(2, 20, {
  *  message: "昵称长度必须在2~10之间"
@@ -148,6 +149,7 @@ export function unsets(obj: any, props: Array<string>) {
  * RegisterForm.prototype,
  * "nickname"
  * )
+ * ```
  */
 export function decorateProp(decorators, type, target, key) {
   return __decorate(
@@ -162,6 +164,18 @@ export interface ObjOptions {
   filter?: (key: any) => boolean;
 }
 
+/**
+ * 获取一个实例的所有方法
+ * @param obj 对象实例
+ * @param option 参数
+ *
+ * ```js
+ *     let validateFuncKeys: string[] = getAllMethodNames(this, {
+ *     filter: key =>
+ *   /validate([A-Z])\w+/g.test(key) && typeof this[key] === "function"
+ *  });
+ * ```
+ */
 export function getAllMethodNames(obj, option?: ObjOptions) {
   let methods = new Set();
   // tslint:disable-next-line:no-conditional-assignment
@@ -173,6 +187,32 @@ export function getAllMethodNames(obj, option?: ObjOptions) {
   return prefixAndFilter(keys, option);
 }
 
+/**
+ * 获得实例的所有字段名
+ * @param obj 实例
+ * @param option 参数项
+ *
+ * ```js
+ *     let keys = getAllFieldNames(this, {
+ *      filter: key => {
+ *    const value = this[key];
+ *    if (isArray(value)) {
+ *      if (value.length === 0) {
+ *      return false;
+ *    }
+ *    for (const it of value) {
+ *       if (!(it instanceof Rule)) {
+ *         throw new Error("every item must be a instance of Rule");
+ *      }
+ *    }
+ *    return true;
+ *   } else {
+ *    return value instanceof Rule;
+ *    }
+ *   }
+ *  });
+ * ```
+ */
 export function getAllFieldNames(obj, option?: ObjOptions) {
   let keys = Reflect.ownKeys(obj);
   return prefixAndFilter(keys, option);
@@ -186,6 +226,10 @@ function prefixAndFilter(keys: any[], option?: ObjOptions) {
   return keys;
 }
 
+/**
+ * 获取文件夹下所有文件名
+ * @param dir 文件夹
+ */
 export function getFiles(dir: string) {
   let res: string[] = [];
   const files = fs.readdirSync(dir);

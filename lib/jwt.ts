@@ -13,11 +13,39 @@ import { routeMetaInfo } from "./core";
 import { TokenType } from "./enums";
 import { config } from "./config";
 
+/**
+ * 令牌类，提供令牌的生成和解析功能
+ *
+ * ```js
+ * const jwt = new Token(
+ * config.getItem("secret"),
+ * config.getItem("accessExp"),
+ * config.getItem("refreshExp")
+ * );
+ * ```
+ */
 export class Token {
+  /**
+   * 令牌的secret值，用于令牌的加密
+   */
   private secret: string | undefined;
+
+  /**
+   * access token 默认的过期时间
+   */
   private accessExp: number = 60 * 60; // 1h;
+
+  /**
+   * refresh token 默认的过期时间
+   */
   private refreshExp: number = 60 * 60 * 24 * 30 * 3; // 3 months
 
+  /**
+   * 构造函数
+   * @param secret 牌的secret值
+   * @param accessExp access token 过期时间
+   * @param refreshExp refresh token 过期时间
+   */
   constructor(secret?: string, accessExp?: number, refreshExp?: number) {
     secret && (this.secret = secret);
     refreshExp && (this.refreshExp = refreshExp);
@@ -25,7 +53,7 @@ export class Token {
   }
 
   /**
-   * initApp
+   * 挂载到 ctx 上
    */
   public initApp(
     app: Application,
@@ -82,6 +110,8 @@ export class Token {
    * verifyToken 验证token
    * 若过期，抛出ExpiredTokenException
    * 若失效，抛出InvalidTokenException
+   *
+   * @param token 令牌
    */
   public verifyToken(token: string) {
     if (!this.secret) {
@@ -122,6 +152,11 @@ function getTokens(user) {
   return { accessToken, refreshToken };
 }
 
+/**
+ * 解析请求头
+ * @param ctx koa 的context
+ * @param type 令牌的类型
+ */
 async function parseHeader(ctx: RouterContext, type = TokenType.ACCESS) {
   // 此处借鉴了koa-jwt
   if (!ctx.header || !ctx.header.authorization) {

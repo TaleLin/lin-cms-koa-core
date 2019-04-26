@@ -1,19 +1,54 @@
 import assert from "assert";
 import { isInteger } from "lodash";
 
+/**
+ * HttpException 类构造函数的参数接口
+ */
 export interface Exception {
   code?: number;
   msg?: any;
   errorCode?: number;
 }
 
+/**
+ * HttpException 是lin中所有其他异常的基类
+ *
+ * ```js
+ * // 实例化一个默认的HttpException
+ * const ex = new HttpException();
+ *
+ * // 实例化一个带参的HttpException
+ * const ex = new HttpException({ msg: "想给你一个信息呢！" });
+ *
+ * // 也可以是其他参数
+ * const ex = new HttpException({ errorCode: 10010 });
+ *
+ * // 也可以指定所有参数
+ * const ex = new HttpException({ errorCode: 10010, msg: "想给你一个信息呢！", code: 200 });
+ * ```
+ */
 export class HttpException extends Error {
-  public code: number = 500; // http 状态码
-  public msg: any = "服务器未知错误"; // 返回的信息内容
-  public errorCode: number = 999; // 特定的错误码
+  /**
+   * http 状态码
+   */
+  public code: number = 500;
+
+  /**
+   * 返回的信息内容
+   */
+  public msg: any = "服务器未知错误";
+
+  /**
+   * 特定的错误码
+   */
+  public errorCode: number = 999;
 
   public fields: string[] = ["msg", "errorCode"];
 
+  /**
+   * 构造函数
+   * @param ex 可选参数，通过{}的形式传入
+   */
   constructor(ex?: Exception) {
     super();
     if (ex && ex.code) {
@@ -30,6 +65,9 @@ export class HttpException extends Error {
   }
 }
 
+/**
+ * 成功
+ */
 export class Success extends HttpException {
   public code = 201;
   public msg = "成功";
@@ -51,6 +89,9 @@ export class Success extends HttpException {
   }
 }
 
+/**
+ * 失败
+ */
 export class Failed extends HttpException {
   public code = 400;
   public msg = "失败";
@@ -72,6 +113,9 @@ export class Failed extends HttpException {
   }
 }
 
+/**
+ * 认证失败
+ */
 export class AuthFailed extends HttpException {
   public code = 401;
   public msg = "认证失败";
@@ -93,6 +137,9 @@ export class AuthFailed extends HttpException {
   }
 }
 
+/**
+ * 资源不存在
+ */
 export class NotFound extends HttpException {
   public code = 404;
   public msg = "资源不存在";
@@ -114,7 +161,9 @@ export class NotFound extends HttpException {
   }
 }
 
-// msg必须每次指定，js没有默认的赋值操作，父类的构造函数在字段赋值之前。
+/**
+ * 参数错误
+ */
 export class ParametersException extends HttpException {
   public code = 400;
   public msg = "参数错误";
@@ -136,6 +185,9 @@ export class ParametersException extends HttpException {
   }
 }
 
+/**
+ * 令牌失效或损坏
+ */
 export class InvalidTokenException extends HttpException {
   public code = 401;
   public msg = "令牌失效";
@@ -157,6 +209,9 @@ export class InvalidTokenException extends HttpException {
   }
 }
 
+/**
+ * 令牌过期
+ */
 export class ExpiredTokenException extends HttpException {
   public code = 422;
   public msg = "令牌过期";
@@ -178,6 +233,9 @@ export class ExpiredTokenException extends HttpException {
   }
 }
 
+/**
+ * 服务器未知错误
+ */
 export class UnknownException extends HttpException {
   public code = 400;
   public msg = "服务器未知错误";
@@ -199,6 +257,9 @@ export class UnknownException extends HttpException {
   }
 }
 
+/**
+ * 字段重复
+ */
 export class RepeatException extends HttpException {
   public code = 400;
   public msg = "字段重复";
@@ -220,6 +281,9 @@ export class RepeatException extends HttpException {
   }
 }
 
+/**
+ * 不可操作
+ */
 export class Forbidden extends HttpException {
   public code = 401;
   public msg = "不可操作";
@@ -241,6 +305,9 @@ export class Forbidden extends HttpException {
   }
 }
 
+/**
+ * 请求方法不允许
+ */
 export class MethodNotAllowed extends HttpException {
   public code = 405;
   public msg = "请求方法不允许";
@@ -262,6 +329,9 @@ export class MethodNotAllowed extends HttpException {
   }
 }
 
+/**
+ * refresh token 获取失败
+ */
 export class RefreshException extends HttpException {
   public code = 401;
   public msg = "refresh token 获取失败";

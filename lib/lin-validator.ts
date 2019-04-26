@@ -6,6 +6,7 @@ import { extendedValidator } from "./extended-validator";
 import { getAllMethodNames, getAllFieldNames } from "./util";
 
 /**
+ * 强大的校验器
  * 支持optional，支持array，支持nested object
  */
 export class LinValidator {
@@ -29,6 +30,11 @@ export class LinValidator {
    */
   alias: any;
 
+  /**
+   * 校验
+   * @param ctx koa context
+   * @param alias 别名
+   */
   async validate(ctx: Context, alias?: {}) {
     this.alias = alias;
     this.data = {
@@ -255,6 +261,9 @@ export class LinValidator {
   }
 }
 
+/**
+ * 规则类
+ */
 export class Rule {
   options: any;
   message: string;
