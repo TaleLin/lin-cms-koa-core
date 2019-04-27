@@ -1,5 +1,5 @@
 import Application from "koa";
-import { HttpException } from "./exception";
+import { HttpException, Success, Exception } from "./exception";
 import consola from "consola";
 import { toLine, unsets } from "./util";
 import { get, set } from "lodash";
@@ -38,6 +38,25 @@ function transform(obj: any, data: any) {
     data[toLine(field)] = get(obj, field);
   });
 }
+
+/**
+ * 处理success
+ *
+ * ```js
+ * ctx.success({ msg:"hello from lin!" })
+ * ```
+ *
+ * ```js
+ * ctx.success({ code: 200, msg: "hello from lin!", errorCode: 10000 })
+ * ```
+ *
+ * @param app app实例
+ */
+export const success = (app: Application) => {
+  app.context.json = function(ex?: Exception) {
+    throw new Success(ex);
+  };
+};
 
 /**
  * 日志扩展
