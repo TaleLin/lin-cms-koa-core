@@ -11,7 +11,7 @@ import {
   AuthInterface,
   LogInterface
 } from "./interface";
-import { json, logging } from "./extend";
+import { json, logging, success } from "./extend";
 import { NotFound, ParametersException } from "./exception";
 import { set, get, has, merge } from "lodash";
 import { Loader } from "./loader";
@@ -90,6 +90,7 @@ export class Lin {
   private applyDefaultExtends() {
     json(this.app!);
     logging(this.app!);
+    success(this.app!);
   }
 
   private mount() {
