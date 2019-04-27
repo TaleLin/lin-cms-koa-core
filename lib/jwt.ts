@@ -187,6 +187,12 @@ async function parseHeader(ctx: RouterContext, type = TokenType.ACCESS) {
   }
 }
 
+function checkUserIsActive(user) {
+  if (!user || !user.isActive) {
+    throw new AuthFailed({ msg: "您目前处于未激活状态，请联系超级管理员" });
+  }
+}
+
 /**
  * 守卫函数，用户登陆即可访问
  */
@@ -194,6 +200,9 @@ async function loginRequired(ctx: RouterContext, next: () => Promise<any>) {
   if (ctx.request.method !== "OPTIONS") {
     await parseHeader(ctx);
     // 一定要await，否则这个守卫函数没有作用
+    // 用户处于未激活状态
+    const currentUser = ctx.currentUser;
+    checkUserIsActive(currentUser);
     await next();
   } else {
     await next();
@@ -244,9 +253,7 @@ async function groupRequired(ctx: RouterContext, next: () => Promise<any>) {
     await parseHeader(ctx);
     const currentUser = ctx.currentUser;
     // 用户处于未激活状态
-    if (!currentUser || !currentUser.isActive) {
-      throw new AuthFailed({ msg: "您目前处于未激活状态，请联系超级管理员" });
-    }
+    checkUserIsActive(currentUser);
     // 超级管理员
     if (currentUser && currentUser.isAdmin) {
       await next();
@@ -303,5 +310,6 @@ export {
   groupRequired,
   adminRequired,
   refreshTokenRequired,
-  refreshTokenRequiredWithUnifyException
+  refreshTokenRequiredWithUnifyException,
+  checkUserIsActive
 };
