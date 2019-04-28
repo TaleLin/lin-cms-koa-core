@@ -17,7 +17,7 @@ export const InfoCrudMixin = {
     getterMethods: {
       createTime() {
         // @ts-ignore
-        return dayjs(this.getDataValue("create_time")).unix();
+        return dayjs(this.getDataValue("create_time")).unix() * 1000;
       }
     }
   }
@@ -180,7 +180,7 @@ export const LogInterface = {
     getterMethods: {
       time() {
         // @ts-ignore
-        return dayjs(this.getDataValue("time")).unix();
+        return dayjs(this.getDataValue("time")).unix() * 1000;
       }
     }
   }

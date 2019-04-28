@@ -17,7 +17,6 @@ import { set, get, has, merge } from "lodash";
 import { Loader } from "./loader";
 import { LinRouter } from "./lin-router";
 import { verify } from "./password-hash";
-import dayjs from "dayjs";
 import { config } from "./config";
 
 // tslint:disable-next-line:variable-name
