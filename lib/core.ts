@@ -393,7 +393,7 @@ export class Log extends Model {
     let origin = {
       id: this.id,
       message: this.message,
-      time: this.time ? null : dayjs(this.time).unix(),
+      time: this.time,
       user_id: this.user_id,
       user_name: this.user_name,
       status_code: this.status_code,
