@@ -53,8 +53,16 @@ function transform(obj: any, data: any) {
  * @param app app实例
  */
 export const success = (app: Application) => {
-  app.context.json = function(ex?: Exception) {
-    throw new Success(ex);
+  app.context.success = function(ex?: Exception) {
+    this.type = "application/json";
+    const suc = new Success(ex);
+    let data = {
+      error_code: suc.errorCode,
+      msg: suc.msg,
+      url: this.req.url
+    };
+    this.status = suc.code;
+    this.body = JSON.stringify(data);
   };
 };
 

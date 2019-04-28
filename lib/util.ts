@@ -4,6 +4,7 @@ import { routeMetaInfo } from "./core";
 import { get, unset } from "lodash";
 import { config } from "./config";
 import { ParametersException } from "./exception";
+import { extendedValidator } from "./extended-validator";
 import { __decorate, __metadata } from "tslib";
 
 export const isUndefined = (obj: any): obj is undefined =>
@@ -31,6 +32,12 @@ export const isSymbol = (fn: any): fn is symbol => typeof fn === "symbol";
 
 export const strVal = (value: any) =>
   typeof value === "string" ? value : String(value);
+
+export const isNotEmpty = extendedValidator.isNotEmpty;
+
+export const isNegative = extendedValidator.isNegative;
+
+export const isPositive = extendedValidator.isPositive;
 
 /**
  * Assertion utility.

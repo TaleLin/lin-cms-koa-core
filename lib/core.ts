@@ -224,7 +224,7 @@ export class User extends Model {
 
   static async verify(nickname: string, password: string): Promise<User> {
     // tslint:disable-next-line: await-promise
-    const user = await this.findOne({ where: { nickname } });
+    const user = await this.findOne({ where: { nickname, delete_time: null } });
     if (!user) {
       throw new NotFound({ msg: "用户不存在" });
     }
@@ -393,7 +393,7 @@ export class Log extends Model {
     let origin = {
       id: this.id,
       message: this.message,
-      time: this.time ? null : dayjs(this.time).unix(),
+      time: this.time,
       user_id: this.user_id,
       user_name: this.user_name,
       status_code: this.status_code,

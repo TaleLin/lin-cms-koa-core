@@ -1,6 +1,6 @@
 import isAsyncFunction from "is-async-function";
 import { get, isArray, unset, cloneDeep } from "lodash";
-import { ParametersException } from "./exception";
+import { ParametersException, HttpException } from "./exception";
 import { Context } from "koa";
 import validator1 from "validator";
 import { extendedValidator } from "./extended-validator";
@@ -214,29 +214,48 @@ export class LinValidator {
 
     for (const validateFuncKey of validateFuncKeys) {
       //  最后校验规则函数
-      const customerValidateFunc = get(this, validateFuncKey);
+      const customerValidateFunc: Function = get(this, validateFuncKey);
+      // 规则函数，每个都try,catch，并将错误信息加入到整体错误信息中
+      // 第一个参数为data
       // 自定义校验函数，第一个参数是校验是否成功，第二个参数为错误信息
       let validRes: boolean;
-      if (isAsyncFunction(customerValidateFunc)) {
-        validRes = await customerValidateFunc.call(this);
-      } else {
-        validRes = customerValidateFunc.call(this);
-      }
-      if (isArray(validRes) && !validRes[0]) {
-        let key;
-        if (validRes[2]) {
-          key = validRes[2];
+      try {
+        if (isAsyncFunction(customerValidateFunc)) {
+          validRes = await customerValidateFunc.call(this, this.data);
         } else {
-          key = validateFuncKey.replace("validate", "").toLowerCase();
+          validRes = customerValidateFunc.call(this, this.data);
         }
-        this.errors.push({ key, message: validRes[1] });
-      } else if (!validRes) {
-        let key = validateFuncKey.replace("validate", "").toLowerCase();
-        // 如果自定函数没有给出错误信息，那么错误信息为默认
-        this.errors.push({ key, message: "参数错误" });
+        if (isArray(validRes) && !validRes[0]) {
+          let key;
+          if (validRes[2]) {
+            key = validRes[2];
+          } else {
+            key = this.getValidateFuncKey(validateFuncKey);
+          }
+          this.errors.push({ key, message: validRes[1] });
+        } else if (!validRes) {
+          let key = this.getValidateFuncKey(validateFuncKey);
+          // 如果自定函数没有给出错误信息，那么错误信息为默认
+          this.errors.push({ key, message: "参数错误" });
+        }
+      } catch (error) {
+        const key = this.getValidateFuncKey(validateFuncKey);
+        if (error instanceof HttpException) {
+          this.errors.push({ key, message: error.msg });
+        } else {
+          this.errors.push({ key, message: error.message });
+        }
       }
     }
     return this.errors.length === 0;
+  }
+
+  /**
+   * 获得规则函数的key
+   * @param validateFuncKey 规则函数的名称
+   */
+  private getValidateFuncKey(validateFuncKey: string) {
+    return validateFuncKey.replace("validate", "");
   }
 
   /**
