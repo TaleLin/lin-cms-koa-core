@@ -16,3 +16,5 @@ jest.config.js
 yarn.lock
 learn
 abandon
+bin
+example
