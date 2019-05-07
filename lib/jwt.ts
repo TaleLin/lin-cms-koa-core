@@ -1,4 +1,8 @@
-import jwtGenerator, { TokenExpiredError } from "jsonwebtoken";
+import jwtGenerator, {
+  TokenExpiredError,
+  VerifyOptions,
+  SignOptions
+} from "jsonwebtoken";
 import {
   ExpiredTokenException,
   InvalidTokenException,
@@ -141,6 +145,27 @@ const jwt = new Token(
   config.getItem("accessExp"),
   config.getItem("refreshExp")
 );
+
+/**
+ * 生成令牌
+ * @param payload 负载
+ * @param options 参数
+ */
+export function generateToken(
+  payload: string | Buffer | object,
+  options?: SignOptions
+) {
+  return jwtGenerator.sign(payload, config.getItem("secret"), options);
+}
+
+/**
+ * 验证令牌
+ * @param token 令牌
+ * @param options 选项
+ */
+export function verifyToken(token: string, options?: VerifyOptions) {
+  return jwtGenerator.verify(token, config.getItem("secret"), options);
+}
 
 /**
  * 颁发令牌
