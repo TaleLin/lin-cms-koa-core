@@ -147,23 +147,70 @@ const jwt = new Token(
 );
 
 /**
- * 生成令牌
- * @param payload 负载
+ * 生成access token
+ * @param payload 负载，支持 string 和 object
  * @param options 参数
  */
-export function generateToken(
-  payload: string | Buffer | object,
+export function createAccessToken(
+  payload: string | object,
   options?: SignOptions
 ) {
-  return jwtGenerator.sign(payload, config.getItem("secret"), options);
+  // type: TokenType.REFRESH
+  if (typeof payload === "string") {
+    return jwtGenerator.sign(
+      { indentify: payload, type: TokenType.ACCESS },
+      config.getItem("secret"),
+      options
+    );
+  } else {
+    return jwtGenerator.sign(
+      { ...payload, type: TokenType.ACCESS },
+      config.getItem("secret"),
+      options
+    );
+  }
 }
 
 /**
- * 验证令牌
+ * 生成refresh token
+ * @param payload 负载，支持 string 和 object
+ * @param options 参数
+ */
+export function createRefreshToken(
+  payload: string | object,
+  options?: SignOptions
+) {
+  // type: TokenType.REFRESH
+  if (typeof payload === "string") {
+    return jwtGenerator.sign(
+      { indentify: payload, type: TokenType.REFRESH },
+      config.getItem("secret"),
+      options
+    );
+  } else {
+    return jwtGenerator.sign(
+      { ...payload, type: TokenType.REFRESH },
+      config.getItem("secret"),
+      options
+    );
+  }
+}
+
+/**
+ * 验证 access token
  * @param token 令牌
  * @param options 选项
  */
-export function verifyToken(token: string, options?: VerifyOptions) {
+export function verifyAccessToken(token: string, options?: VerifyOptions) {
+  return jwtGenerator.verify(token, config.getItem("secret"), options);
+}
+
+/**
+ * 验证 refresh token
+ * @param token 令牌
+ * @param options 选项
+ */
+export function verifyRefreshToken(token: string, options?: VerifyOptions) {
   return jwtGenerator.verify(token, config.getItem("secret"), options);
 }
 
