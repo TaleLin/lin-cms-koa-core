@@ -1,32 +1,32 @@
-import Application from "koa";
-import consola from "consola";
-import { Model } from "sequelize";
-import { IMiddleware } from "koa-router";
-import { jwt } from "./jwt";
-import { assert } from "./util";
-import { db } from "./db";
+import Application from 'koa';
+import consola from 'consola';
+import { Model } from 'sequelize';
+import { IMiddleware } from 'koa-router';
+import { jwt } from './jwt';
+import { assert } from './util';
+import { db } from './db';
 import {
   UserInterface,
   GroupInterface,
   AuthInterface,
   LogInterface
-} from "./interface";
-import { json, logging, success } from "./extend";
-import { NotFound, ParametersException } from "./exception";
-import { set, get, has, merge } from "lodash";
-import { Loader } from "./loader";
-import { LinRouter } from "./lin-router";
-import { verify } from "./password-hash";
-import { config } from "./config";
+} from './interface';
+import { json, logging, success } from './extend';
+import { NotFound, ParametersException } from './exception';
+import { set, get, has, merge } from 'lodash';
+import { Loader } from './loader';
+import { LinRouter } from './lin-router';
+import { verify } from './password-hash';
+import { config } from './config';
 
 // tslint:disable-next-line:variable-name
-export const __version__ = "0.0.1";
+export const __version__ = '0.0.1';
 
 // 存放meta路由信息
 export const routeMetaInfo = new Map();
 
 // 当前文件路由是否挂载
-export const disableLoading = Symbol("disableLoading");
+export const disableLoading = Symbol('disableLoading');
 
 /**
  * Lin核心类
@@ -54,7 +54,7 @@ export class Lin {
     authModel?: any
   ) {
     this.app = app;
-    assert(!!this.app, "app must not be null");
+    assert(!!this.app, 'app must not be null');
     // 2. 默认扩展 json logger
     this.applyDefaultExtends();
     // 3. manager
@@ -71,7 +71,7 @@ export class Lin {
   }
 
   private applyJwt() {
-    const secret = this.app!.context.config.getItem("secret");
+    const secret = this.app!.context.config.getItem('secret');
     jwt.initApp(this.app!, secret);
   }
 
@@ -82,7 +82,7 @@ export class Lin {
   private applyManager(userModel: any, groupModel: any, authModel: any) {
     const manager = new Manager();
     this.manager = manager;
-    const pluginPath = this.app!.context.config.getItem("pluginPath");
+    const pluginPath = this.app!.context.config.getItem('pluginPath');
     manager.initApp(this.app!, userModel, groupModel, authModel, pluginPath);
   }
 
@@ -93,27 +93,27 @@ export class Lin {
   }
 
   private mount() {
-    const pluginRp = new LinRouter({ prefix: "/plugin" });
+    const pluginRp = new LinRouter({ prefix: '/plugin' });
     Object.values(this.manager!.plugins).forEach(plugin => {
-      consola.info(`loading plugin: ${get(plugin, "name")}`);
-      const controllers = Object.values(get(plugin, "controllers"));
+      consola.info(`loading plugin: ${get(plugin, 'name')}`);
+      const controllers = Object.values(get(plugin, 'controllers'));
       if (controllers.length > 1) {
         controllers.forEach(cont => {
           set(
             cont,
-            "opts.prefix",
-            `/${get(plugin, "name")}${get(cont, "opts.prefix")}`
+            'opts.prefix',
+            `/${get(plugin, 'name')}${get(cont, 'opts.prefix')}`
           );
-          get(cont, "stack", []).forEach(ly => {
-            if (config.getItem("debug")) {
+          get(cont, 'stack', []).forEach(ly => {
+            if (config.getItem('debug')) {
               consola.info(
-                `loading a route: /plugin/${get(plugin, "name")}${get(
+                `loading a route: /plugin/${get(plugin, 'name')}${get(
                   ly,
-                  "path"
+                  'path'
                 )}`
               );
             }
-            set(ly, "path", `/${get(plugin, "name")}${get(ly, "path")}`);
+            set(ly, 'path', `/${get(plugin, 'name')}${get(ly, 'path')}`);
           });
           pluginRp
             .use((cont as any).routes() as IMiddleware)
@@ -121,9 +121,9 @@ export class Lin {
         });
       } else {
         controllers.forEach(cont => {
-          if (config.getItem("debug")) {
-            get(cont, "stack", []).forEach(ly => {
-              consola.info(`loading a route: /plugin${get(ly, "path")}`);
+          if (config.getItem('debug')) {
+            get(cont, 'stack', []).forEach(ly => {
+              consola.info(`loading a route: /plugin${get(ly, 'path')}`);
             });
           }
           pluginRp
@@ -225,16 +225,16 @@ export class User extends Model {
     // tslint:disable-next-line: await-promise
     const user = await this.findOne({ where: { nickname, delete_time: null } });
     if (!user) {
-      throw new NotFound({ msg: "用户不存在" });
+      throw new NotFound({ msg: '用户不存在' });
     }
     if (!user.checkPassword(password)) {
-      throw new ParametersException({ msg: "密码错误，请输入正确密码" });
+      throw new ParametersException({ msg: '密码错误，请输入正确密码' });
     }
     return user;
   }
 
   checkPassword(raw: string) {
-    if (!this.password || this.password === "") {
+    if (!this.password || this.password === '') {
       return false;
     }
     return verify(raw, this.password);
@@ -263,10 +263,10 @@ export class User extends Model {
       // @ts-ignore
       create_time: this.createTime
     };
-    if (has(this, "auths")) {
-      return { ...origin, auths: get(this, "auths", []) };
-    } else if (has(this, "groupName")) {
-      return { ...origin, group_name: get(this, "groupName", "") };
+    if (has(this, 'auths')) {
+      return { ...origin, auths: get(this, 'auths', []) };
+    } else if (has(this, 'groupName')) {
+      return { ...origin, group_name: get(this, 'groupName', '') };
     } else {
       return origin;
     }
@@ -280,8 +280,8 @@ User.init(
   merge(
     {
       sequelize: db,
-      tableName: "lin_user",
-      modelName: "user"
+      tableName: 'lin_user',
+      modelName: 'user'
     },
     UserInterface.options
   )
@@ -301,8 +301,8 @@ export class Group extends Model {
       name: this.name,
       info: this.info
     };
-    return has(this, "auths")
-      ? { ...origin, auths: get(this, "auths", []) }
+    return has(this, 'auths')
+      ? { ...origin, auths: get(this, 'auths', []) }
       : origin;
   }
 }
@@ -314,8 +314,8 @@ Group.init(
   merge(
     {
       sequelize: db,
-      tableName: "lin_group",
-      modelName: "group"
+      tableName: 'lin_group',
+      modelName: 'group'
     },
     GroupInterface.options
   )
@@ -348,8 +348,8 @@ Auth.init(
   merge(
     {
       sequelize: db,
-      tableName: "lin_auth",
-      modelName: "auth"
+      tableName: 'lin_auth',
+      modelName: 'auth'
     },
     AuthInterface.options
   )
@@ -411,8 +411,8 @@ Log.init(
   merge(
     {
       sequelize: db,
-      tableName: "lin_log",
-      modelName: "log"
+      tableName: 'lin_log',
+      modelName: 'log'
     },
     LogInterface.options
   )

@@ -1,8 +1,8 @@
-import Application from "koa";
-import { HttpException, Success, Exception } from "./exception";
-import consola from "consola";
-import { toLine, unsets } from "./util";
-import { get, set } from "lodash";
+import Application from 'koa';
+import { HttpException, Success, Exception } from './exception';
+import consola from 'consola';
+import { toLine, unsets } from './util';
+import { get, set } from 'lodash';
 
 /**
  * json序列化扩展
@@ -18,12 +18,12 @@ export const json = (app: Application) => {
    * hide 表示想要隐藏的属性
    */
   app.context.json = function(obj: any, hide = []) {
-    this.type = "application/json";
+    this.type = 'application/json';
     unsets(obj, hide);
     let data = Object.create(null);
     if (obj instanceof HttpException) {
       transform(obj, data);
-      set(data, "url", this.request.url);
+      set(data, 'url', this.request.url);
       this.status = obj.code;
     } else {
       data = obj;
@@ -33,7 +33,7 @@ export const json = (app: Application) => {
 };
 
 function transform(obj: any, data: any) {
-  const fields: string[] = get(obj, "fields", []);
+  const fields: string[] = get(obj, 'fields', []);
   fields.forEach(field => {
     data[toLine(field)] = get(obj, field);
   });
@@ -54,7 +54,7 @@ function transform(obj: any, data: any) {
  */
 export const success = (app: Application) => {
   app.context.success = function(ex?: Exception) {
-    this.type = "application/json";
+    this.type = 'application/json';
     const suc = new Success(ex);
     let data = {
       error_code: suc.errorCode,

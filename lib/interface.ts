@@ -1,8 +1,8 @@
-import Sequelize from "sequelize";
-import { merge } from "lodash";
-import { UserAdmin, UserActive } from "./enums";
-import dayjs from "dayjs";
-import { generate } from "./password-hash";
+import Sequelize from 'sequelize';
+import { merge } from 'lodash';
+import { UserAdmin, UserActive } from './enums';
+import dayjs from 'dayjs';
+import { generate } from './password-hash';
 
 /**
  * 记录信息的mixin
@@ -10,14 +10,14 @@ import { generate } from "./password-hash";
 export const InfoCrudMixin = {
   attributes: {},
   options: {
-    createdAt: "create_time",
-    updatedAt: "update_time",
-    deletedAt: "delete_time",
+    createdAt: 'create_time',
+    updatedAt: 'update_time',
+    deletedAt: 'delete_time',
     paranoid: true,
     getterMethods: {
       createTime() {
         // @ts-ignore
-        return dayjs(this.getDataValue("create_time")).unix() * 1000;
+        return dayjs(this.getDataValue('create_time')).unix() * 1000;
       }
     }
   }
@@ -61,25 +61,25 @@ export const UserInterface = {
       type: Sequelize.STRING({ length: 100 }),
       set(ps) {
         // @ts-ignore
-        this.setDataValue("password", generate(ps));
+        this.setDataValue('password', generate(ps));
       },
       get() {
         // @ts-ignore
-        return this.getDataValue("password");
+        return this.getDataValue('password');
       }
     }
   },
   options: merge(
     {
-      tableName: "lin_user",
+      tableName: 'lin_user',
       getterMethods: {
         isAdmin() {
           // @ts-ignore
-          return this.getDataValue("admin") === UserAdmin.ADMIN;
+          return this.getDataValue('admin') === UserAdmin.ADMIN;
         },
         isActive() {
           // @ts-ignore
-          return this.getDataValue("active") === UserActive.ACTIVE;
+          return this.getDataValue('active') === UserActive.ACTIVE;
         }
       }
     },
@@ -109,7 +109,7 @@ export const AuthInterface = {
     }
   },
   options: {
-    tableName: "lin_auth",
+    tableName: 'lin_auth',
     createdAt: false,
     updatedAt: false
   }
@@ -134,7 +134,7 @@ export const GroupInterface = {
     }
   },
   options: {
-    tableName: "lin_group",
+    tableName: 'lin_group',
     createdAt: false,
     updatedAt: false
   }
@@ -174,13 +174,13 @@ export const LogInterface = {
     }
   },
   options: {
-    tableName: "lin_log",
-    createdAt: "time",
+    tableName: 'lin_log',
+    createdAt: 'time',
     updatedAt: false,
     getterMethods: {
       time() {
         // @ts-ignore
-        return dayjs(this.getDataValue("time")).unix() * 1000;
+        return dayjs(this.getDataValue('time')).unix() * 1000;
       }
     }
   }

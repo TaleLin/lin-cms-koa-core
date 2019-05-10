@@ -1,7 +1,7 @@
 {
   "extends": "tslint-config-standard",
   "rules": {
-    "quotemark": true,
+    "quotemark": false,
     "semicolon": true,
     "space-before-function-paren": false,
     "whitespace": true

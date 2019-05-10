@@ -1,6 +1,6 @@
-import * as path from "path";
-import { merge, get, has, set } from "lodash";
-import Application from "koa";
+import * as path from 'path';
+import { merge, get, has, set } from 'lodash';
+import Application from 'koa';
 
 /**
  * Config类的实现

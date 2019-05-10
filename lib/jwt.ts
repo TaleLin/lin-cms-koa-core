@@ -2,20 +2,20 @@ import jwtGenerator, {
   TokenExpiredError,
   VerifyOptions,
   SignOptions
-} from "jsonwebtoken";
+} from 'jsonwebtoken';
 import {
   ExpiredTokenException,
   InvalidTokenException,
   AuthFailed,
   NotFound,
   RefreshException
-} from "./exception";
-import Application from "koa";
-import { RouterContext } from "koa-router";
-import { get } from "lodash";
-import { routeMetaInfo } from "./core";
-import { TokenType } from "./enums";
-import { config } from "./config";
+} from './exception';
+import Application from 'koa';
+import { RouterContext } from 'koa-router';
+import { get } from 'lodash';
+import { routeMetaInfo } from './core';
+import { TokenType } from './enums';
+import { config } from './config';
 
 /**
  * 令牌类，提供令牌的生成和解析功能
@@ -32,17 +32,17 @@ export class Token {
   /**
    * 令牌的secret值，用于令牌的加密
    */
-  private secret: string | undefined;
+  public secret: string | undefined;
 
   /**
    * access token 默认的过期时间
    */
-  private accessExp: number = 60 * 60; // 1h;
+  public accessExp: number = 60 * 60; // 1h;
 
   /**
    * refresh token 默认的过期时间
    */
-  private refreshExp: number = 60 * 60 * 24 * 30 * 3; // 3 months
+  public refreshExp: number = 60 * 60 * 24 * 30 * 3; // 3 months
 
   /**
    * 构造函数
@@ -78,7 +78,7 @@ export class Token {
    */
   public createAccessToken(identity: string | number) {
     if (!this.secret) {
-      throw new Error("密匙不可为空");
+      throw new Error('密匙不可为空');
     }
     let exp: number = Math.floor(Date.now() / 1000) + this.accessExp;
     return jwtGenerator.sign(
@@ -97,7 +97,7 @@ export class Token {
    */
   public createRefreshToken(identity: string | number) {
     if (!this.secret) {
-      throw new Error("密匙不可为空");
+      throw new Error('密匙不可为空');
     }
     let exp: number = Math.floor(Date.now() / 1000) + this.refreshExp;
     return jwtGenerator.sign(
@@ -119,7 +119,7 @@ export class Token {
    */
   public verifyToken(token: string) {
     if (!this.secret) {
-      throw new Error("密匙不可为空");
+      throw new Error('密匙不可为空');
     }
     // NotBeforeError
     // TokenExpiredError
@@ -141,9 +141,9 @@ export class Token {
  * jwt 的实例
  */
 const jwt = new Token(
-  config.getItem("secret"),
-  config.getItem("accessExp"),
-  config.getItem("refreshExp")
+  config.getItem('secret'),
+  config.getItem('accessExp'),
+  config.getItem('refreshExp')
 );
 
 /**
@@ -156,16 +156,17 @@ export function createAccessToken(
   options?: SignOptions
 ) {
   // type: TokenType.REFRESH
-  if (typeof payload === "string") {
+  let exp: number = Math.floor(Date.now() / 1000) + jwt.accessExp;
+  if (typeof payload === 'string') {
     return jwtGenerator.sign(
-      { indentify: payload, type: TokenType.ACCESS },
-      config.getItem("secret"),
+      { indentify: payload, type: TokenType.ACCESS, exp: jwt.accessExp },
+      jwt.secret!,
       options
     );
   } else {
     return jwtGenerator.sign(
-      { ...payload, type: TokenType.ACCESS },
-      config.getItem("secret"),
+      { ...payload, type: TokenType.ACCESS, exp: exp },
+      jwt.secret!,
       options
     );
   }
@@ -180,17 +181,18 @@ export function createRefreshToken(
   payload: string | object,
   options?: SignOptions
 ) {
+  let exp: number = Math.floor(Date.now() / 1000) + jwt.refreshExp;
   // type: TokenType.REFRESH
-  if (typeof payload === "string") {
+  if (typeof payload === 'string') {
     return jwtGenerator.sign(
-      { indentify: payload, type: TokenType.REFRESH },
-      config.getItem("secret"),
+      { indentify: payload, type: TokenType.REFRESH, exp: jwt.refreshExp },
+      jwt.secret!,
       options
     );
   } else {
     return jwtGenerator.sign(
-      { ...payload, type: TokenType.REFRESH },
-      config.getItem("secret"),
+      { ...payload, type: TokenType.REFRESH, exp: exp },
+      jwt.secret!,
       options
     );
   }
@@ -202,7 +204,20 @@ export function createRefreshToken(
  * @param options 选项
  */
 export function verifyAccessToken(token: string, options?: VerifyOptions) {
-  return jwtGenerator.verify(token, config.getItem("secret"), options);
+  let decode;
+  try {
+    decode = jwtGenerator.verify(token, jwt.secret!, options);
+  } catch (error) {
+    if (error instanceof TokenExpiredError) {
+      throw new ExpiredTokenException();
+    } else {
+      throw new InvalidTokenException();
+    }
+  }
+  if (!decode['type'] || decode['type'] !== TokenType.ACCESS) {
+    throw new InvalidTokenException({ msg: '令牌类型错误' });
+  }
+  return decode;
 }
 
 /**
@@ -211,7 +226,20 @@ export function verifyAccessToken(token: string, options?: VerifyOptions) {
  * @param options 选项
  */
 export function verifyRefreshToken(token: string, options?: VerifyOptions) {
-  return jwtGenerator.verify(token, config.getItem("secret"), options);
+  let decode;
+  try {
+    decode = jwtGenerator.verify(token, jwt.secret!, options);
+  } catch (error) {
+    if (error instanceof TokenExpiredError) {
+      throw new ExpiredTokenException();
+    } else {
+      throw new InvalidTokenException();
+    }
+  }
+  if (!decode['type'] || decode['type'] !== TokenType.REFRESH) {
+    throw new InvalidTokenException({ msg: '令牌类型错误' });
+  }
+  return decode;
 }
 
 /**
@@ -232,9 +260,9 @@ function getTokens(user) {
 async function parseHeader(ctx: RouterContext, type = TokenType.ACCESS) {
   // 此处借鉴了koa-jwt
   if (!ctx.header || !ctx.header.authorization) {
-    ctx.throw(new AuthFailed({ msg: "认证失败，请检查请求令牌是否正确" }));
+    ctx.throw(new AuthFailed({ msg: '认证失败，请检查请求令牌是否正确' }));
   }
-  const parts = ctx.header.authorization.split(" ");
+  const parts = ctx.header.authorization.split(' ');
 
   if (parts.length === 2) {
     // Bearer 字段
@@ -244,12 +272,12 @@ async function parseHeader(ctx: RouterContext, type = TokenType.ACCESS) {
 
     if (/^Bearer$/i.test(scheme)) {
       const obj = ctx.jwt.verifyToken(token);
-      if (!get(obj, "type") || get(obj, "type") !== type) {
-        ctx.throw(new AuthFailed({ msg: "请使用正确类型的令牌" }));
+      if (!get(obj, 'type') || get(obj, 'type') !== type) {
+        ctx.throw(new AuthFailed({ msg: '请使用正确类型的令牌' }));
       }
-      const user = await ctx.manager.userModel.findByPk(get(obj, "identity"));
+      const user = await ctx.manager.userModel.findByPk(get(obj, 'identity'));
       if (!user) {
-        ctx.throw(new NotFound({ msg: "用户不存在" }));
+        ctx.throw(new NotFound({ msg: '用户不存在' }));
       }
       // 将user挂在ctx上
       ctx.currentUser = user;
@@ -261,7 +289,7 @@ async function parseHeader(ctx: RouterContext, type = TokenType.ACCESS) {
 
 function checkUserIsActive(user) {
   if (!user || !user.isActive) {
-    throw new AuthFailed({ msg: "您目前处于未激活状态，请联系超级管理员" });
+    throw new AuthFailed({ msg: '您目前处于未激活状态，请联系超级管理员' });
   }
 }
 
@@ -269,7 +297,7 @@ function checkUserIsActive(user) {
  * 守卫函数，用户登陆即可访问
  */
 async function loginRequired(ctx: RouterContext, next: () => Promise<any>) {
-  if (ctx.request.method !== "OPTIONS") {
+  if (ctx.request.method !== 'OPTIONS') {
     await parseHeader(ctx);
     // 一定要await，否则这个守卫函数没有作用
     // 用户处于未激活状态
@@ -289,7 +317,7 @@ async function refreshTokenRequired(
   next: () => Promise<any>
 ) {
   // 添加access 和 refresh 的标识位
-  if (ctx.request.method !== "OPTIONS") {
+  if (ctx.request.method !== 'OPTIONS') {
     await parseHeader(ctx, TokenType.REFRESH);
     await next();
   } else {
@@ -305,7 +333,7 @@ async function refreshTokenRequiredWithUnifyException(
   next: () => Promise<any>
 ) {
   // 添加access 和 refresh 的标识位
-  if (ctx.request.method !== "OPTIONS") {
+  if (ctx.request.method !== 'OPTIONS') {
     try {
       await parseHeader(ctx, TokenType.REFRESH);
     } catch (error) {
@@ -321,7 +349,7 @@ async function refreshTokenRequiredWithUnifyException(
  * 守卫函数，用于权限组鉴权
  */
 async function groupRequired(ctx: RouterContext, next: () => Promise<any>) {
-  if (ctx.request.method !== "OPTIONS") {
+  if (ctx.request.method !== 'OPTIONS') {
     await parseHeader(ctx);
     const currentUser = ctx.currentUser;
     // 用户处于未激活状态
@@ -333,7 +361,7 @@ async function groupRequired(ctx: RouterContext, next: () => Promise<any>) {
       const groupId = currentUser.group_id;
       if (!groupId) {
         throw new AuthFailed({
-          msg: "您还不属于任何权限组，请联系超级管理员获得权限"
+          msg: '您还不属于任何权限组，请联系超级管理员获得权限'
         });
       }
       if (ctx.matched) {
@@ -347,10 +375,10 @@ async function groupRequired(ctx: RouterContext, next: () => Promise<any>) {
         if (item) {
           await next();
         } else {
-          throw new AuthFailed({ msg: "权限不够，请联系超级管理员获得权限" });
+          throw new AuthFailed({ msg: '权限不够，请联系超级管理员获得权限' });
         }
       } else {
-        throw new AuthFailed({ msg: "权限不够，请联系超级管理员获得权限" });
+        throw new AuthFailed({ msg: '权限不够，请联系超级管理员获得权限' });
       }
     }
   } else {
@@ -362,13 +390,13 @@ async function groupRequired(ctx: RouterContext, next: () => Promise<any>) {
  * 守卫函数，非超级管理员不可访问
  */
 async function adminRequired(ctx: RouterContext, next: () => Promise<any>) {
-  if (ctx.request.method !== "OPTIONS") {
+  if (ctx.request.method !== 'OPTIONS') {
     await parseHeader(ctx);
     const currentUser = ctx.currentUser;
     if (currentUser && currentUser.isAdmin) {
       await next();
     } else {
-      throw new AuthFailed({ msg: "只有超级管理员可操作" });
+      throw new AuthFailed({ msg: '只有超级管理员可操作' });
     }
   } else {
     await next();

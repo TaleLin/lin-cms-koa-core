@@ -1,10 +1,10 @@
-import isAsyncFunction from "is-async-function";
-import { get, isArray, unset, cloneDeep } from "lodash";
-import { ParametersException, HttpException } from "./exception";
-import { Context } from "koa";
-import validator1 from "validator";
-import { extendedValidator } from "./extended-validator";
-import { getAllMethodNames, getAllFieldNames } from "./util";
+import isAsyncFunction from 'is-async-function';
+import { get, isArray, unset, cloneDeep } from 'lodash';
+import { ParametersException, HttpException } from './exception';
+import { Context } from 'koa';
+import validator1 from 'validator';
+import { extendedValidator } from './extended-validator';
+import { getAllMethodNames, getAllFieldNames } from './util';
 
 /**
  * 强大的校验器
@@ -91,8 +91,8 @@ export class LinValidator {
     if (val === null) {
       return true;
     }
-    if (typeof val === "string") {
-      return val === "" || val.trim() === "";
+    if (typeof val === 'string') {
+      return val === '' || val.trim() === '';
     }
     return false;
   }
@@ -110,7 +110,7 @@ export class LinValidator {
           }
           for (const it of value) {
             if (!(it instanceof Rule)) {
-              throw new Error("every item must be a instance of Rule");
+              throw new Error('every item must be a instance of Rule');
             }
           }
           return true;
@@ -156,7 +156,7 @@ export class LinValidator {
         if (!optional) {
           this.errors.push({ key, message: msg || `${key}不可为空` });
         } else {
-          this.parsed["default"][key] = defaultVal;
+          this.parsed['default'][key] = defaultVal;
         }
       } else {
         if (isArray(value)) {
@@ -209,7 +209,7 @@ export class LinValidator {
     }
     let validateFuncKeys: string[] = getAllMethodNames(this, {
       filter: key =>
-        /validate([A-Z])\w+/g.test(key) && typeof this[key] === "function"
+        /validate([A-Z])\w+/g.test(key) && typeof this[key] === 'function'
     });
 
     for (const validateFuncKey of validateFuncKeys) {
@@ -236,7 +236,7 @@ export class LinValidator {
         } else if (!validRes) {
           let key = this.getValidateFuncKey(validateFuncKey);
           // 如果自定函数没有给出错误信息，那么错误信息为默认
-          this.errors.push({ key, message: "参数错误" });
+          this.errors.push({ key, message: '参数错误' });
         }
       } catch (error) {
         const key = this.getValidateFuncKey(validateFuncKey);
@@ -255,7 +255,7 @@ export class LinValidator {
    * @param validateFuncKey 规则函数的名称
    */
   private getValidateFuncKey(validateFuncKey: string) {
-    return validateFuncKey.replace("validate", "");
+    return validateFuncKey.replace('validate', '');
   }
 
   /**
@@ -274,9 +274,9 @@ export class LinValidator {
       if (!this.isOptional(key)) {
         return key;
       } else {
-        const index = path.lastIndexOf(".");
+        const index = path.lastIndexOf('.');
         const suffix = path.substring(index + 1, path.length);
-        return get(this.parsed["default"], suffix, defaultVal && defaultVal);
+        return get(this.parsed['default'], suffix, defaultVal && defaultVal);
       }
     } else {
       return get(this.data, path, defaultVal && defaultVal);
@@ -312,9 +312,9 @@ export class Rule {
     ...options
   ) {
     this.validateFunction = validateFunction;
-    this.message = message || "参数错误";
+    this.message = message || '参数错误';
     this.options = options;
-    if (this.validateFunction === "isOptional") {
+    if (this.validateFunction === 'isOptional') {
       // 如果当前项为optional，检查该项是否存在，若不存在，将optional置为true
       // 如果是optional，那么没有传入的参数，可以使用默认值
       this.optional = true;
@@ -324,35 +324,35 @@ export class Rule {
 
   validate(value: any) {
     this.rawValue = value;
-    if (typeof this.validateFunction === "function") {
+    if (typeof this.validateFunction === 'function') {
       return this.validateFunction(value, ...this.options);
     } else {
       switch (this.validateFunction) {
-        case "isInt":
-          if (typeof value === "string") {
+        case 'isInt':
+          if (typeof value === 'string') {
             this.parsedValue = validator1.toInt(value);
             return validator1.isInt(value, ...this.options);
           } else {
             this.parsedValue = value;
             return validator1.isInt(String(value), ...this.options);
           }
-        case "isFloat":
-          if (typeof value === "string") {
+        case 'isFloat':
+          if (typeof value === 'string') {
             this.parsedValue = validator1.toFloat(value);
             return validator1.isFloat(value, ...this.options);
           } else {
             this.parsedValue = value;
             return validator1.isFloat(String(value), ...this.options);
           }
-        case "isBoolean":
-          if (typeof value === "string") {
+        case 'isBoolean':
+          if (typeof value === 'string') {
             this.parsedValue = validator1.toBoolean(value);
             return validator1.isBoolean(value);
           } else {
             this.parsedValue = value;
             return validator1.isBoolean(String(value));
           }
-        case "isNotEmpty":
+        case 'isNotEmpty':
           return extendedValidator.isNotEmpty(value);
         default:
           return validator1[this.validateFunction](value, ...this.options);

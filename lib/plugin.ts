@@ -1,11 +1,10 @@
-import { set, get } from "lodash";
+import { set, get } from 'lodash';
 
 /**
  * 插件类，一个插件包含自己的业务 (router)，自己的模型 (model)
  * 自己的校验层，视图层
  */
 export class Plugin {
-
   /**
    * 插件名称
    */

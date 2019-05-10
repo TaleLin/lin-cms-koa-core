@@ -1,6 +1,6 @@
-import Router, { IMiddleware } from "koa-router";
-import { assert } from "./util";
-import { routeMetaInfo } from "./core";
+import Router, { IMiddleware } from 'koa-router';
+import { assert } from './util';
+import { routeMetaInfo } from './core';
 
 export interface Meta {
   auth?: string;
@@ -22,9 +22,9 @@ export class LinRouter extends Router {
     if (meta && meta.mount) {
       assert(
         !!(meta.auth && meta.module),
-        "auth and module must not be empty, if you want to mount"
+        'auth and module must not be empty, if you want to mount'
       );
-      const endpoint = "OPTION " + name;
+      const endpoint = 'OPTION ' + name;
       routeMetaInfo.set(endpoint, { auth: meta.auth, module: meta.module });
     }
     return this.options(name, path, ...middleware);
@@ -39,9 +39,9 @@ export class LinRouter extends Router {
     if (meta && meta.mount) {
       assert(
         !!(meta.auth && meta.module),
-        "auth and module must not be empty, if you want to mount"
+        'auth and module must not be empty, if you want to mount'
       );
-      const endpoint = "HEAD " + name;
+      const endpoint = 'HEAD ' + name;
       routeMetaInfo.set(endpoint, { auth: meta.auth, module: meta.module });
     }
     return this.head(name, path, ...middleware);
@@ -56,9 +56,9 @@ export class LinRouter extends Router {
     if (meta && meta.mount) {
       assert(
         !!(meta.auth && meta.module),
-        "auth and module must not be empty, if you want to mount"
+        'auth and module must not be empty, if you want to mount'
       );
-      const endpoint = "GET " + name;
+      const endpoint = 'GET ' + name;
       routeMetaInfo.set(endpoint, { auth: meta.auth, module: meta.module });
     }
     return this.get(name, path, ...middleware);
@@ -73,9 +73,9 @@ export class LinRouter extends Router {
     if (meta && meta.mount) {
       assert(
         !!(meta.auth && meta.module),
-        "auth and module must not be empty, if you want to mount"
+        'auth and module must not be empty, if you want to mount'
       );
-      const endpoint = "PUT " + name;
+      const endpoint = 'PUT ' + name;
       routeMetaInfo.set(endpoint, { auth: meta.auth, module: meta.module });
     }
     return this.put(name, path, ...middleware);
@@ -90,9 +90,9 @@ export class LinRouter extends Router {
     if (meta && meta.mount) {
       assert(
         !!(meta.auth && meta.module),
-        "auth and module must not be empty, if you want to mount"
+        'auth and module must not be empty, if you want to mount'
       );
-      const endpoint = "PATCH " + name;
+      const endpoint = 'PATCH ' + name;
       routeMetaInfo.set(endpoint, { auth: meta.auth, module: meta.module });
     }
     return this.patch(name, path, ...middleware);
@@ -107,9 +107,9 @@ export class LinRouter extends Router {
     if (meta && meta.mount) {
       assert(
         !!(meta.auth && meta.module),
-        "auth and module must not be empty, if you want to mount"
+        'auth and module must not be empty, if you want to mount'
       );
-      const endpoint = "POST " + name;
+      const endpoint = 'POST ' + name;
       routeMetaInfo.set(endpoint, { auth: meta.auth, module: meta.module });
     }
     return this.post(name, path, ...middleware);
@@ -124,9 +124,9 @@ export class LinRouter extends Router {
     if (meta && meta.mount) {
       assert(
         !!(meta.auth && meta.module),
-        "auth and module must not be empty, if you want to mount"
+        'auth and module must not be empty, if you want to mount'
       );
-      const endpoint = "DELETE " + name;
+      const endpoint = 'DELETE ' + name;
       routeMetaInfo.set(endpoint, { auth: meta.auth, module: meta.module });
     }
     return this.delete(name, path, ...middleware);
