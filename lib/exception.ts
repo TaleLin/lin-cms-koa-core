@@ -352,3 +352,27 @@ export class RefreshException extends HttpException {
     }
   }
 }
+
+/**
+ * 文件体积过大
+ */
+export class FileTooLargeException extends HttpException {
+  public code = 413;
+  public msg = '文件体积过大';
+  public errorCode = 10110;
+
+  constructor(ex?: Exception) {
+    super();
+    if (ex && ex.code) {
+      assert(isInteger(ex.code));
+      this.code = ex.code;
+    }
+    if (ex && ex.msg) {
+      this.msg = ex.msg;
+    }
+    if (ex && ex.errorCode) {
+      assert(isInteger(ex.errorCode));
+      this.errorCode = ex.errorCode;
+    }
+  }
+}

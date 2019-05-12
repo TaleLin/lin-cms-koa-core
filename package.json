@@ -25,8 +25,12 @@
     "koa-router": "^7.4.0",
     "lodash": "^4.17.11",
     "mysql2": "^1.6.5",
+    "mz-modules": "^2.1.0",
     "sequelize": "^5.3.5",
-    "tslib": "^1.9.3"
+    "tslib": "^1.9.3",
+    "uuid": "^3.3.2",
+    "co-busboy": "^1.4.0",
+    "stream-wormhole": "^1.1.0"
   },
   "devDependencies": {
     "@types/consola": "^1.0.0",

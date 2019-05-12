@@ -185,3 +185,34 @@ export const LogInterface = {
     }
   }
 };
+
+/**
+ * 文件接口
+ */
+export const FileInterface = {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  path: {
+    type: Sequelize.STRING({ length: 500 }),
+    allowNull: false
+  },
+  type: {
+    type: Sequelize.TINYINT,
+    allowNull: false,
+    defaultValue: 1
+  },
+  name: {
+    type: Sequelize.STRING(30),
+    allowNull: false
+  },
+  extension: {
+    type: Sequelize.STRING(20)
+  },
+  size: {
+    type: Sequelize.INTEGER,
+    allowNull: true
+  }
+};

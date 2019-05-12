@@ -13,10 +13,12 @@ class Uploader {
   /**
    * 处理文件流Stream
    */
-  public handle() {}
+  public upload() {}
 
   /**
    * 存储到lin_file
    */
-  public save() {}
+  public save() {
+
+  }
 }

@@ -9,7 +9,8 @@ import {
   UserInterface,
   GroupInterface,
   AuthInterface,
-  LogInterface
+  LogInterface,
+  FileInterface
 } from './interface';
 import { json, logging, success } from './extend';
 import { NotFound, ParametersException } from './exception';
@@ -416,4 +417,57 @@ Log.init(
     },
     LogInterface.options
   )
+);
+
+export interface FileArgs {
+  path?: string;
+  type?: number;
+  name?: string;
+  extension?: string;
+  size?: number;
+}
+
+/**
+ * 文件模型
+ * id,path,type,name,extension,size
+ */
+export class File extends Model {
+  public id!: number;
+  public path!: string;
+  public type!: number; // 1 => local
+  public name!: string;
+  public extension!: string;
+  public size!: number;
+
+  static createRecord(args?: FileArgs, commit?: boolean) {
+    const record = File.build(args as any);
+    commit && record.save();
+    return record;
+  }
+
+  toJSON() {
+    let origin = {
+      id: this.id,
+      path: this.path,
+      type: this.type,
+      name: this.name,
+      extension: this.extension,
+      size: this.size
+    };
+    return origin;
+  }
+}
+
+File.init(
+  {
+    ...FileInterface
+  },
+  {
+    sequelize: db,
+    tableName: 'lin_file',
+    modelName: 'file',
+    createdAt: false,
+    updatedAt: false,
+    deletedAt: false
+  }
 );
