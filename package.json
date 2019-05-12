@@ -41,6 +41,7 @@
     "@types/koa-router": "^7.0.39",
     "@types/lodash": "^4.14.122",
     "@types/sequelize": "^4.27.39",
+    "@types/uuid": "^3.4.4",
     "jest": "^24.3.1",
     "ts-jest": "^24.0.0",
     "ts-node": "^8.0.3",

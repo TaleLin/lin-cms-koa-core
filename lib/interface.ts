@@ -202,7 +202,8 @@ export const FileInterface = {
   type: {
     type: Sequelize.TINYINT,
     allowNull: false,
-    defaultValue: 1
+    defaultValue: 1,
+    comment: '1 local，其他表示其他地方'
   },
   name: {
     type: Sequelize.STRING(30),

@@ -82,17 +82,21 @@
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_jwt_.html#jwt" class="tsd-kind-icon">jwt</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-not-exported">
+						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_jwt_.html#adminrequired" class="tsd-kind-icon">admin<wbr>Required</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_jwt_.html#checkuserisactive" class="tsd-kind-icon">check<wbr>User<wbr>IsActive</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_jwt_.html#createaccesstoken" class="tsd-kind-icon">create<wbr>Access<wbr>Token</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_jwt_.html#createrefreshtoken" class="tsd-kind-icon">create<wbr>Refresh<wbr>Token</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_jwt_.html#gettokens" class="tsd-kind-icon">get<wbr>Tokens</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_jwt_.html#grouprequired" class="tsd-kind-icon">group<wbr>Required</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_jwt_.html#loginrequired" class="tsd-kind-icon">login<wbr>Required</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_jwt_.html#parseheader" class="tsd-kind-icon">parse<wbr>Header</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_jwt_.html#refreshtokenrequired" class="tsd-kind-icon">refresh<wbr>Token<wbr>Required</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_jwt_.html#refreshtokenrequiredwithunifyexception" class="tsd-kind-icon">refresh<wbr>Token<wbr>Required<wbr>With<wbr>Unify<wbr>Exception</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_jwt_.html#verifyaccesstoken" class="tsd-kind-icon">verify<wbr>Access<wbr>Token</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_jwt_.html#verifyrefreshtoken" class="tsd-kind-icon">verify<wbr>Refresh<wbr>Token</a></li>
 							</ul>
 						</section>
 					</div>
@@ -103,10 +107,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 					<a name="jwt" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> jwt</h3>
-					<div class="tsd-signature tsd-kind-icon">jwt<span class="tsd-signature-symbol">:</span> <a href="../classes/_jwt_.token.html" class="tsd-signature-type">Token</a><span class="tsd-signature-symbol"> =&nbsp;new Token(config.getItem(&quot;secret&quot;),config.getItem(&quot;accessExp&quot;),config.getItem(&quot;refreshExp&quot;))</span></div>
+					<div class="tsd-signature tsd-kind-icon">jwt<span class="tsd-signature-symbol">:</span> <a href="../classes/_jwt_.token.html" class="tsd-signature-type">Token</a><span class="tsd-signature-symbol"> =&nbsp;new Token(config.getItem(&#x27;secret&#x27;),config.getItem(&#x27;accessExp&#x27;),config.getItem(&#x27;refreshExp&#x27;))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/0cc7811/lib/jwt.ts#L139">jwt.ts:139</a></li>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ed03197/lib/jwt.ts#L143">jwt.ts:143</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -116,7 +120,7 @@
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 					<a name="adminrequired" class="tsd-anchor"></a>
@@ -128,7 +132,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/0cc7811/lib/jwt.ts#L292">jwt.ts:292</a></li>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ed03197/lib/jwt.ts#L392">jwt.ts:392</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -171,7 +175,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/0cc7811/lib/jwt.ts#L190">jwt.ts:190</a></li>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ed03197/lib/jwt.ts#L290">jwt.ts:290</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -181,6 +185,80 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="createaccesstoken" class="tsd-anchor"></a>
+					<h3>create<wbr>Access<wbr>Token</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Access<wbr>Token<span class="tsd-signature-symbol">(</span>payload<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">SignOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ed03197/lib/jwt.ts#L154">jwt.ts:154</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>生成access token</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>payload: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>负载，支持 string 和 object</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">SignOptions</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>参数</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="createrefreshtoken" class="tsd-anchor"></a>
+					<h3>create<wbr>Refresh<wbr>Token</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Refresh<wbr>Token<span class="tsd-signature-symbol">(</span>payload<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">SignOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ed03197/lib/jwt.ts#L180">jwt.ts:180</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>生成refresh token</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>payload: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>负载，支持 string 和 object</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">SignOptions</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>参数</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -194,7 +272,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/0cc7811/lib/jwt.ts#L149">jwt.ts:149</a></li>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ed03197/lib/jwt.ts#L249">jwt.ts:249</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -233,7 +311,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/0cc7811/lib/jwt.ts#L251">jwt.ts:251</a></li>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ed03197/lib/jwt.ts#L351">jwt.ts:351</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -276,7 +354,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/0cc7811/lib/jwt.ts#L199">jwt.ts:199</a></li>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ed03197/lib/jwt.ts#L299">jwt.ts:299</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -319,7 +397,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/0cc7811/lib/jwt.ts#L160">jwt.ts:160</a></li>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ed03197/lib/jwt.ts#L260">jwt.ts:260</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -356,7 +434,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/0cc7811/lib/jwt.ts#L215">jwt.ts:215</a></li>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ed03197/lib/jwt.ts#L315">jwt.ts:315</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -399,7 +477,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/0cc7811/lib/jwt.ts#L231">jwt.ts:231</a></li>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ed03197/lib/jwt.ts#L331">jwt.ts:331</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -429,6 +507,80 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="verifyaccesstoken" class="tsd-anchor"></a>
+					<h3>verify<wbr>Access<wbr>Token</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">verify<wbr>Access<wbr>Token<span class="tsd-signature-symbol">(</span>token<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">VerifyOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ed03197/lib/jwt.ts#L206">jwt.ts:206</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>验证 access token</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>token: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>令牌</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">VerifyOptions</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>选项</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="verifyrefreshtoken" class="tsd-anchor"></a>
+					<h3>verify<wbr>Refresh<wbr>Token</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">verify<wbr>Refresh<wbr>Token<span class="tsd-signature-symbol">(</span>token<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">VerifyOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ed03197/lib/jwt.ts#L228">jwt.ts:228</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>验证 refresh token</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>token: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>令牌</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">VerifyOptions</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>选项</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -463,6 +615,9 @@
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="_factory_.html">"factory"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_file_.html">"file"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="_index_.html">"index"</a>
@@ -519,6 +674,12 @@
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_jwt_.html#checkuserisactive" class="tsd-kind-icon">check<wbr>User<wbr>IsActive</a>
 					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="_jwt_.html#createaccesstoken" class="tsd-kind-icon">create<wbr>Access<wbr>Token</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="_jwt_.html#createrefreshtoken" class="tsd-kind-icon">create<wbr>Refresh<wbr>Token</a>
+					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_jwt_.html#gettokens" class="tsd-kind-icon">get<wbr>Tokens</a>
 					</li>
@@ -536,6 +697,12 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_jwt_.html#refreshtokenrequiredwithunifyexception" class="tsd-kind-icon">refresh<wbr>Token<wbr>Required<wbr>With<wbr>Unify<wbr>Exception</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="_jwt_.html#verifyaccesstoken" class="tsd-kind-icon">verify<wbr>Access<wbr>Token</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="_jwt_.html#verifyrefreshtoken" class="tsd-kind-icon">verify<wbr>Refresh<wbr>Token</a>
 					</li>
 				</ul>
 			</nav>
