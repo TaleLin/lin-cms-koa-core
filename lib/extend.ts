@@ -3,7 +3,9 @@ import {
   HttpException,
   Success,
   Exception,
-  FileTooLargeException
+  FileTooLargeException,
+  FileExtensionException,
+  FileTooManyException
 } from './exception';
 import consola from 'consola';
 import { toLine, unsets } from './util';
@@ -128,20 +130,24 @@ export const multipart = (app: Application) => {
         // console.log('encoding: ' + part.encoding);
         // console.log('mime: ' + part.mime);
         // part.readableLength 31492 检查单个文件的大小
-        // 超过长度，则跳过该文件
-        // 检查extension，失败跳过该文件
-        // const ext = extname(part.filename);
-        if (checkFileExtension(extname(part.filename))) {
-          if (checkSingleFileSize(part.readableLength)) {
-            // 计算总大小
-            totalSize += part.readableLength;
-            const tmp = cloneDeep(part);
-            files.push(tmp);
-          }
+        // 超过长度，报错
+        // 检查extension，报错
+        if (!checkFileExtension(extname(part.filename))) {
+          throw new FileExtensionException();
         }
+        if (!checkSingleFileSize(part.readableLength)) {
+          throw new FileTooLargeException();
+        }
+        // 计算总大小
+        totalSize += part.readableLength;
+        const tmp = cloneDeep(part);
+        files.push(tmp);
         // 恢复再次接受data
         part.resume();
       }
+    }
+    if (!checkFileNums(files.length)) {
+      throw new FileTooManyException();
     }
     if (!checkTotalFileSize(totalSize)) {
       throw new FileTooLargeException();
@@ -161,6 +167,12 @@ function checkTotalFileSize(size: number) {
   // 默认 20M
   const confSize = config.getItem('file_total_limit', 1024 * 1024 * 20);
   return confSize > size;
+}
+
+function checkFileNums(nums: number) {
+  // 默认 10
+  const confNums = config.getItem('file_nums', 10);
+  return confNums > nums;
 }
 
 function checkFileExtension(ext: string) {

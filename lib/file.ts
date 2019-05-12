@@ -12,7 +12,7 @@ import { config } from './config';
 /**
  * 上传文件类，所有文件上传的基类
  */
-class Uploader {
+export class Uploader {
   private storeDir: string | undefined;
   constructor(storeDir?: string) {
     this.storeDir = storeDir;

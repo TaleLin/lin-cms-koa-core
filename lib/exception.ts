@@ -376,3 +376,51 @@ export class FileTooLargeException extends HttpException {
     }
   }
 }
+
+/**
+ * 文件数量过多
+ */
+export class FileTooManyException extends HttpException {
+  public code = 413;
+  public msg = '文件数量过多';
+  public errorCode = 10120;
+
+  constructor(ex?: Exception) {
+    super();
+    if (ex && ex.code) {
+      assert(isInteger(ex.code));
+      this.code = ex.code;
+    }
+    if (ex && ex.msg) {
+      this.msg = ex.msg;
+    }
+    if (ex && ex.errorCode) {
+      assert(isInteger(ex.errorCode));
+      this.errorCode = ex.errorCode;
+    }
+  }
+}
+
+/**
+ * 文件扩展名不符合规范
+ */
+export class FileExtensionException extends HttpException {
+  public code = 401;
+  public msg = '文件扩展名不符合规范';
+  public errorCode = 10130;
+
+  constructor(ex?: Exception) {
+    super();
+    if (ex && ex.code) {
+      assert(isInteger(ex.code));
+      this.code = ex.code;
+    }
+    if (ex && ex.msg) {
+      this.msg = ex.msg;
+    }
+    if (ex && ex.errorCode) {
+      assert(isInteger(ex.errorCode));
+      this.errorCode = ex.errorCode;
+    }
+  }
+}
