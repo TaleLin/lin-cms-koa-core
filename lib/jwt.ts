@@ -85,6 +85,7 @@ export class Token {
       {
         exp: exp,
         identity: identity,
+        scope: 'lin',
         type: TokenType.ACCESS
       },
       this.secret
@@ -104,6 +105,7 @@ export class Token {
       {
         exp: exp,
         identity: identity,
+        scope: 'lin',
         type: TokenType.REFRESH
       },
       this.secret

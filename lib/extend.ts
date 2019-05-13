@@ -93,18 +93,27 @@ export const logging = (app: Application) => {
   app.context.logger = consola;
 };
 
+export interface MulOpts {
+  autoFields?: boolean;
+  singleLimit?: number;
+  totalLimit?: number;
+  fileNums?: number;
+  include?: string[];
+  exclude?: string[];
+}
+
 /**
  * 解析上传文件
  * @param app app实例
  */
 export const multipart = (app: Application) => {
-  app.context.multipart = async function(autoFields = false) {
+  app.context.multipart = async function(opts?: MulOpts) {
     // multipart/form-data
     if (!this.is('multipart')) {
       throw new Error('Content-Type must be multipart/*');
     }
     // field指表单中的非文件
-    const parts = parse(this, { autoFields: autoFields });
+    const parts = parse(this, { autoFields: opts && opts.autoFields });
     let part;
     let totalSize = 0;
     const files: any[] = [];
@@ -112,10 +121,6 @@ export const multipart = (app: Application) => {
     while ((part = await parts()) != null) {
       if (part.length) {
         // arrays are busboy fields
-        // console.log('field: ' + part[0]);
-        // console.log('value: ' + part[1]);
-        // console.log('valueTruncated: ' + part[2]);
-        // console.log('fieldnameTruncated: ' + part[3]);
       } else {
         if (!part.filename) {
           // user click `upload` before choose a file,
@@ -125,18 +130,20 @@ export const multipart = (app: Application) => {
           continue;
         }
         // otherwise, it's a stream
-        // console.log('field: ' + part.fieldname);
-        // console.log('filename: ' + part.filename);
-        // console.log('encoding: ' + part.encoding);
-        // console.log('mime: ' + part.mime);
+        // part.fieldname, part.filename, part.encoding, part.mime
         // part.readableLength 31492 检查单个文件的大小
         // 超过长度，报错
         // 检查extension，报错
         const ext = extname(part.filename);
-        if (!checkFileExtension(ext)) {
+        if (
+          !checkFileExtension(ext, opts && opts.include, opts && opts.exclude)
+        ) {
           throw new FileExtensionException({ msg: `不支持类型为${ext}的文件` });
         }
-        const { valid, conf } = checkSingleFileSize(part.readableLength);
+        const { valid, conf } = checkSingleFileSize(
+          part.readableLength,
+          opts && opts.singleLimit
+        );
         if (!valid) {
           throw new FileTooLargeException({
             msg: `文件单个大小不能超过${conf}b`
@@ -150,11 +157,14 @@ export const multipart = (app: Application) => {
         part.resume();
       }
     }
-    const { valid, conf } = checkFileNums(files.length);
+    const { valid, conf } = checkFileNums(files.length, opts && opts.fileNums);
     if (!valid) {
       throw new FileTooManyException({ msg: `上传文件数量不能超过${conf}` });
     }
-    const { valid: valid1, conf: conf1 } = checkTotalFileSize(totalSize);
+    const { valid: valid1, conf: conf1 } = checkTotalFileSize(
+      totalSize,
+      opts && opts.totalLimit
+    );
     if (!valid1) {
       throw new FileTooLargeException({ msg: `总文件体积不能超过${conf1}` });
     }
@@ -162,37 +172,45 @@ export const multipart = (app: Application) => {
   };
 };
 
-function checkSingleFileSize(size: number) {
+function checkSingleFileSize(size: number, singleLimit?: number) {
   // file_include,file_exclude,file_single_limit,file_total_limit,file_store_dir
   // 默认 2M
-  const confSize = config.getItem('file_single_limit', 1024 * 1024 * 2);
+  const confSize = singleLimit
+    ? singleLimit
+    : config.getItem('file.singleLimit', 1024 * 1024 * 2);
   return {
     valid: confSize > size,
     conf: confSize
   };
 }
 
-function checkTotalFileSize(size: number) {
+function checkTotalFileSize(size: number, totalLimit?: number) {
   // 默认 20M
-  const confSize = config.getItem('file_total_limit', 1024 * 1024 * 20);
+  const confSize = totalLimit
+    ? totalLimit
+    : config.getItem('file.totalLimit', 1024 * 1024 * 20);
   return {
     valid: confSize > size,
     conf: confSize
   };
 }
 
-function checkFileNums(nums: number) {
+function checkFileNums(nums: number, fileNums?: number) {
   // 默认 10
-  const confNums = config.getItem('file_nums', 10);
+  const confNums = fileNums ? fileNums : config.getItem('file.nums', 10);
   return {
     valid: confNums > nums,
     conf: confNums
   };
 }
 
-function checkFileExtension(ext: string) {
-  const fileInclude = config.getItem('file_include');
-  const fileExclude = config.getItem('file_exclude');
+function checkFileExtension(
+  ext: string,
+  include?: string[],
+  exclude?: string[]
+) {
+  const fileInclude = include ? include : config.getItem('file.include');
+  const fileExclude = exclude ? exclude : config.getItem('file.exclude');
   // 如果两者都有取fileInclude，有一者则用一者
   if (fileInclude && fileExclude) {
     if (!Array.isArray(fileInclude)) {
