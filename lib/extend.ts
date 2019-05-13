@@ -132,11 +132,15 @@ export const multipart = (app: Application) => {
         // part.readableLength 31492 检查单个文件的大小
         // 超过长度，报错
         // 检查extension，报错
-        if (!checkFileExtension(extname(part.filename))) {
-          throw new FileExtensionException();
+        const ext = extname(part.filename);
+        if (!checkFileExtension(ext)) {
+          throw new FileExtensionException({ msg: `不支持类型为${ext}的文件` });
         }
-        if (!checkSingleFileSize(part.readableLength)) {
-          throw new FileTooLargeException();
+        const { valid, conf } = checkSingleFileSize(part.readableLength);
+        if (!valid) {
+          throw new FileTooLargeException({
+            msg: `文件单个大小不能超过${conf}b`
+          });
         }
         // 计算总大小
         totalSize += part.readableLength;
@@ -146,11 +150,13 @@ export const multipart = (app: Application) => {
         part.resume();
       }
     }
-    if (!checkFileNums(files.length)) {
-      throw new FileTooManyException();
+    const { valid, conf } = checkFileNums(files.length);
+    if (!valid) {
+      throw new FileTooManyException({ msg: `上传文件数量不能超过${conf}` });
     }
-    if (!checkTotalFileSize(totalSize)) {
-      throw new FileTooLargeException();
+    const { valid: valid1, conf: conf1 } = checkTotalFileSize(totalSize);
+    if (!valid1) {
+      throw new FileTooLargeException({ msg: `总文件体积不能超过${conf1}` });
     }
     return files;
   };
@@ -160,19 +166,28 @@ function checkSingleFileSize(size: number) {
   // file_include,file_exclude,file_single_limit,file_total_limit,file_store_dir
   // 默认 2M
   const confSize = config.getItem('file_single_limit', 1024 * 1024 * 2);
-  return confSize > size;
+  return {
+    valid: confSize > size,
+    conf: confSize
+  };
 }
 
 function checkTotalFileSize(size: number) {
   // 默认 20M
   const confSize = config.getItem('file_total_limit', 1024 * 1024 * 20);
-  return confSize > size;
+  return {
+    valid: confSize > size,
+    conf: confSize
+  };
 }
 
 function checkFileNums(nums: number) {
   // 默认 10
   const confNums = config.getItem('file_nums', 10);
-  return confNums > nums;
+  return {
+    valid: confNums > nums,
+    conf: confNums
+  };
 }
 
 function checkFileExtension(ext: string) {

@@ -1,5 +1,6 @@
 import { IRouterContext } from 'koa-router';
 import fs from 'fs';
+import path from 'path';
 import { routeMetaInfo } from './core';
 import { get, unset } from 'lodash';
 import { config } from './config';
@@ -253,4 +254,19 @@ export function getFiles(dir: string) {
     }
   }
   return res;
+}
+
+/**
+ * 递归创建目录 同步方法
+ * @param dirname 目录
+ */
+export function mkdirsSync(dirname: string) {
+  if (fs.existsSync(dirname)) {
+    return true;
+  } else {
+    if (mkdirsSync(path.dirname(dirname))) {
+      fs.mkdirSync(dirname);
+      return true;
+    }
+  }
 }

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;factory&quot; | lin-mizar</title>
+	<title>&quot;limiter&quot; | lin-mizar</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,89 +56,186 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="_factory_.html">&quot;factory&quot;</a>
+					<a href="_limiter_.html">&quot;limiter&quot;</a>
 				</li>
 			</ul>
-			<h1>External module &quot;factory&quot;</h1>
+			<h1>External module &quot;limiter&quot;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>工厂方法</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_limiter_.ratelimitoptions.html" class="tsd-kind-icon">Ratelimit<wbr>Options</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_limiter_.html#ratelimitexpires" class="tsd-kind-icon">Ratelimit<wbr>Expires</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_factory_.html#modelextend" class="tsd-kind-icon">model<wbr>Extend</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_limiter_.html#find" class="tsd-kind-icon">find</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_limiter_.html#pttl" class="tsd-kind-icon">pttl</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_limiter_.html#ratelimit" class="tsd-kind-icon">ratelimit</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
+					<a name="ratelimitexpires" class="tsd-anchor"></a>
+					<h3>Ratelimit<wbr>Expires</h3>
+					<div class="tsd-signature tsd-kind-icon">Ratelimit<wbr>Expires<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in limiter.ts:44</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>returned body when error</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>expires<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>expires: <span class="tsd-signature-type">number</span></h5>
+											</li>
+											<li>
+												<h5>url: <span class="tsd-signature-type">string</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
-					<a name="modelextend" class="tsd-anchor"></a>
-					<h3>model<wbr>Extend</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
-						<li class="tsd-signature tsd-kind-icon">model<wbr>Extend<span class="tsd-signature-symbol">(</span>superModel<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, attributes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">model</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="find" class="tsd-anchor"></a>
+					<h3>find</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">find<span class="tsd-signature-symbol">(</span>db<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RedisClient</span>, p<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/12f5a9b/lib/factory.ts#L30">factory.ts:30</a></li>
+									<li>Defined in limiter.ts:14</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>扩展模型</p>
+									<p>find p in redis</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>superModel: <span class="tsd-signature-type">any</span></h5>
+									<h5>db: <span class="tsd-signature-type">RedisClient</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>基础模型</p>
+										<p>redis client</p>
 									</div>
 								</li>
 								<li>
-									<h5>attributes: <span class="tsd-signature-type">any</span></h5>
+									<h5>p: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>扩展的属性</p>
-										<pre><code class="language-js"><span class="hljs-keyword">const</span> { modelExtend } = <span class="hljs-built_in">require</span>(<span class="hljs-string">"lin-mizar/lin/factory"</span>);
-<span class="hljs-keyword">const</span> { User } = <span class="hljs-built_in">require</span>(<span class="hljs-string">"lin-mizar"</span>);
-<span class="hljs-keyword">const</span> Sequelize = <span class="hljs-built_in">require</span>(<span class="hljs-string">"sequelize"</span>);
-
-<span class="hljs-keyword">const</span> User2 = modelExtend(User, {
-<span class="hljs-attr">phone</span>: {
- <span class="hljs-attr">type</span>: Sequelize.STRING(<span class="hljs-number">30</span>),
- <span class="hljs-attr">unique</span>: <span class="hljs-literal">true</span>,
- <span class="hljs-attr">allowNull</span>: <span class="hljs-literal">true</span>
- }
-});
-
-User2.prototype.sayHello = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
- <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"hello world!"</span>);
-};
-
-<span class="hljs-built_in">module</span>.exports = { User2 };</code></pre>
+										<p>key</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">model</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="pttl" class="tsd-anchor"></a>
+					<h3>pttl</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">pttl<span class="tsd-signature-symbol">(</span>db<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RedisClient</span>, p<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in limiter.ts:30</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>get expire time in redis for p</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>db: <span class="tsd-signature-type">RedisClient</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>redis client</p>
+									</div>
+								</li>
+								<li>
+									<h5>p: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>key</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="ratelimit" class="tsd-anchor"></a>
+					<h3>ratelimit</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">ratelimit<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/_limiter_.ratelimitoptions.html" class="tsd-signature-type">RatelimitOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in limiter.ts:111</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Initialize ratelimit middleware with the given <code>opts</code></p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>options: <a href="../interfaces/_limiter_.ratelimitoptions.html" class="tsd-signature-type">RatelimitOptions</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -171,7 +268,7 @@ User2.prototype.sayHello = <span class="hljs-function"><span class="hljs-keyword
 					<li class=" tsd-kind-external-module">
 						<a href="_extended_validator_.html">"extended-<wbr>validator"</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="_factory_.html">"factory"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -186,7 +283,7 @@ User2.prototype.sayHello = <span class="hljs-function"><span class="hljs-keyword
 					<li class=" tsd-kind-external-module">
 						<a href="_jwt_.html">"jwt"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="_limiter_.html">"limiter"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -223,8 +320,20 @@ User2.prototype.sayHello = <span class="hljs-function"><span class="hljs-keyword
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="../interfaces/_limiter_.ratelimitoptions.html" class="tsd-kind-icon">Ratelimit<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="_limiter_.html#ratelimitexpires" class="tsd-kind-icon">Ratelimit<wbr>Expires</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_limiter_.html#find" class="tsd-kind-icon">find</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_limiter_.html#pttl" class="tsd-kind-icon">pttl</a>
+					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="_factory_.html#modelextend" class="tsd-kind-icon">model<wbr>Extend</a>
+						<a href="_limiter_.html#ratelimit" class="tsd-kind-icon">ratelimit</a>
 					</li>
 				</ul>
 			</nav>

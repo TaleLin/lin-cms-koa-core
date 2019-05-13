@@ -285,7 +285,7 @@ export class RepeatException extends HttpException {
  * 不可操作
  */
 export class Forbidden extends HttpException {
-  public code = 401;
+  public code = 403;
   public msg = '不可操作';
   public errorCode = 10070;
 
@@ -408,6 +408,30 @@ export class FileExtensionException extends HttpException {
   public code = 401;
   public msg = '文件扩展名不符合规范';
   public errorCode = 10130;
+
+  constructor(ex?: Exception) {
+    super();
+    if (ex && ex.code) {
+      assert(isInteger(ex.code));
+      this.code = ex.code;
+    }
+    if (ex && ex.msg) {
+      this.msg = ex.msg;
+    }
+    if (ex && ex.errorCode) {
+      assert(isInteger(ex.errorCode));
+      this.errorCode = ex.errorCode;
+    }
+  }
+}
+
+/**
+ * 请求过于频繁，请稍后重试
+ */
+export class LimitException extends HttpException {
+  public code = 401;
+  public msg = '请求过于频繁，请稍后重试';
+  public errorCode = 10140;
 
   constructor(ex?: Exception) {
     super();

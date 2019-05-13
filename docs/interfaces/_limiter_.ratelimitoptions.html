@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>LogArgs | lin-mizar</title>
+	<title>RatelimitOptions | lin-mizar</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_core_.html">&quot;core&quot;</a>
+					<a href="../modules/_limiter_.html">&quot;limiter&quot;</a>
 				</li>
 				<li>
-					<a href="_core_.logargs.html">LogArgs</a>
+					<a href="_limiter_.ratelimitoptions.html">RatelimitOptions</a>
 				</li>
 			</ul>
-			<h1>Interface LogArgs</h1>
+			<h1>Interface RatelimitOptions</h1>
 		</div>
 	</div>
 </header>
@@ -73,7 +73,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">LogArgs</span>
+						<span class="target">RatelimitOptions</span>
 					</li>
 				</ul>
 			</section>
@@ -84,13 +84,18 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_core_.logargs.html#authority" class="tsd-kind-icon">authority</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_core_.logargs.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_core_.logargs.html#method" class="tsd-kind-icon">method</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_core_.logargs.html#path" class="tsd-kind-icon">path</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_core_.logargs.html#status_code" class="tsd-kind-icon">status_<wbr>code</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_core_.logargs.html#user_id" class="tsd-kind-icon">user_<wbr>id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_core_.logargs.html#user_name" class="tsd-kind-icon">user_<wbr>name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_limiter_.ratelimitoptions.html#blacklist" class="tsd-kind-icon">blacklist</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_limiter_.ratelimitoptions.html#db" class="tsd-kind-icon">db</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_limiter_.ratelimitoptions.html#duration" class="tsd-kind-icon">duration</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_limiter_.ratelimitoptions.html#endpoint" class="tsd-kind-icon">endpoint</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_limiter_.ratelimitoptions.html#errormessage" class="tsd-kind-icon">error<wbr>Message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_limiter_.ratelimitoptions.html#headers" class="tsd-kind-icon">headers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_limiter_.ratelimitoptions.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_limiter_.ratelimitoptions.html#logging" class="tsd-kind-icon">logging</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_limiter_.ratelimitoptions.html#max" class="tsd-kind-icon">max</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_limiter_.ratelimitoptions.html#prefix" class="tsd-kind-icon">prefix</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_limiter_.ratelimitoptions.html#throw" class="tsd-kind-icon">throw</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_limiter_.ratelimitoptions.html#whitelist" class="tsd-kind-icon">whitelist</a></li>
 							</ul>
 						</section>
 					</div>
@@ -99,74 +104,179 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="authority" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> authority</h3>
-					<div class="tsd-signature tsd-kind-icon">authority<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<a name="blacklist" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> blacklist</h3>
+					<div class="tsd-signature tsd-kind-icon">blacklist<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/12f5a9b/lib/core.ts#L366">core.ts:366</a></li>
+							<li>Defined in limiter.ts:79</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>array of ids to blacklist</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="db" class="tsd-anchor"></a>
+					<h3>db</h3>
+					<div class="tsd-signature tsd-kind-icon">db<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in limiter.ts:50</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>database connection</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="duration" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> duration</h3>
+					<div class="tsd-signature tsd-kind-icon">duration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in limiter.ts:54</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>limit duration in milliseconds [1 hour]</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="endpoint" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> endpoint</h3>
+					<div class="tsd-signature tsd-kind-icon">endpoint<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in limiter.ts:71</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>special key for indentify</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="errormessage" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> error<wbr>Message</h3>
+					<div class="tsd-signature tsd-kind-icon">error<wbr>Message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="../modules/_limiter_.html#ratelimitexpires" class="tsd-signature-type">RatelimitExpires</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in limiter.ts:87</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>error returned as the body of the response</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="headers" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> headers</h3>
+					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in limiter.ts:91</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>custom header names</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="id" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> id</h3>
+					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in limiter.ts:62</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>id to compare requests default: ip</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="logging" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> logging</h3>
+					<div class="tsd-signature tsd-kind-icon">logging<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in limiter.ts:105</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="message" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> message</h3>
-					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<a name="max" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> max</h3>
+					<div class="tsd-signature tsd-kind-icon">max<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/12f5a9b/lib/core.ts#L360">core.ts:360</a></li>
+							<li>Defined in limiter.ts:58</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>max requests per &#39;id&#39; default: 2500</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="method" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> method</h3>
-					<div class="tsd-signature tsd-kind-icon">method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<a name="prefix" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> prefix</h3>
+					<div class="tsd-signature tsd-kind-icon">prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/12f5a9b/lib/core.ts#L364">core.ts:364</a></li>
+							<li>Defined in limiter.ts:66</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>redis key prefix default: &quot;limit&quot;</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="path" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> path</h3>
-					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<a name="throw" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> throw</h3>
+					<div class="tsd-signature tsd-kind-icon">throw<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/12f5a9b/lib/core.ts#L365">core.ts:365</a></li>
+							<li>Defined in limiter.ts:83</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>throw on rate limit exceeded default: false</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="status_code" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> status_<wbr>code</h3>
-					<div class="tsd-signature tsd-kind-icon">status_<wbr>code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<a name="whitelist" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> whitelist</h3>
+					<div class="tsd-signature tsd-kind-icon">whitelist<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/12f5a9b/lib/core.ts#L363">core.ts:363</a></li>
+							<li>Defined in limiter.ts:75</li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="user_id" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> user_<wbr>id</h3>
-					<div class="tsd-signature tsd-kind-icon">user_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/12f5a9b/lib/core.ts#L361">core.ts:361</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="user_name" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> user_<wbr>name</h3>
-					<div class="tsd-signature tsd-kind-icon">user_<wbr>name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/12f5a9b/lib/core.ts#L362">core.ts:362</a></li>
-						</ul>
-					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>array of ids to whitelist</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -179,7 +289,7 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_config_.html">"config"</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_core_.html">"core"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -212,7 +322,7 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_jwt_.html">"jwt"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="../modules/_limiter_.html">"limiter"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -249,68 +359,62 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../classes/_core_.auth.html" class="tsd-kind-icon">Auth</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../classes/_core_.file.html" class="tsd-kind-icon">File</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../classes/_core_.group.html" class="tsd-kind-icon">Group</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_core_.lin.html" class="tsd-kind-icon">Lin</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../classes/_core_.log.html" class="tsd-kind-icon">Log</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_core_.manager.html" class="tsd-kind-icon">Manager</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../classes/_core_.user.html" class="tsd-kind-icon">User</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_core_.fileargs.html" class="tsd-kind-icon">File<wbr>Args</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_core_.logargs.html" class="tsd-kind-icon">Log<wbr>Args</a>
+						<a href="_limiter_.ratelimitoptions.html" class="tsd-kind-icon">Ratelimit<wbr>Options</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_core_.logargs.html#authority" class="tsd-kind-icon">authority</a>
+								<a href="_limiter_.ratelimitoptions.html#blacklist" class="tsd-kind-icon">blacklist</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_core_.logargs.html#message" class="tsd-kind-icon">message</a>
+								<a href="_limiter_.ratelimitoptions.html#db" class="tsd-kind-icon">db</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_core_.logargs.html#method" class="tsd-kind-icon">method</a>
+								<a href="_limiter_.ratelimitoptions.html#duration" class="tsd-kind-icon">duration</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_core_.logargs.html#path" class="tsd-kind-icon">path</a>
+								<a href="_limiter_.ratelimitoptions.html#endpoint" class="tsd-kind-icon">endpoint</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_core_.logargs.html#status_code" class="tsd-kind-icon">status_<wbr>code</a>
+								<a href="_limiter_.ratelimitoptions.html#errormessage" class="tsd-kind-icon">error<wbr>Message</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_core_.logargs.html#user_id" class="tsd-kind-icon">user_<wbr>id</a>
+								<a href="_limiter_.ratelimitoptions.html#headers" class="tsd-kind-icon">headers</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_core_.logargs.html#user_name" class="tsd-kind-icon">user_<wbr>name</a>
+								<a href="_limiter_.ratelimitoptions.html#id" class="tsd-kind-icon">id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_limiter_.ratelimitoptions.html#logging" class="tsd-kind-icon">logging</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_limiter_.ratelimitoptions.html#max" class="tsd-kind-icon">max</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_limiter_.ratelimitoptions.html#prefix" class="tsd-kind-icon">prefix</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_limiter_.ratelimitoptions.html#throw" class="tsd-kind-icon">throw</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_limiter_.ratelimitoptions.html#whitelist" class="tsd-kind-icon">whitelist</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
-						<a href="../modules/_core_.html#__version__" class="tsd-kind-icon">__version__</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="../modules/_limiter_.html#ratelimitexpires" class="tsd-kind-icon">Ratelimit<wbr>Expires</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
-						<a href="../modules/_core_.html#disableloading" class="tsd-kind-icon">disable<wbr>Loading</a>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_limiter_.html#find" class="tsd-kind-icon">find</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
-						<a href="../modules/_core_.html#routemetainfo" class="tsd-kind-icon">route<wbr>Meta<wbr>Info</a>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_limiter_.html#pttl" class="tsd-kind-icon">pttl</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/_limiter_.html#ratelimit" class="tsd-kind-icon">ratelimit</a>
 					</li>
 				</ul>
 			</nav>

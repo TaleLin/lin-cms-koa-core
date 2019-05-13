@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import path from 'path';
 import fs from 'fs';
 import { config } from './config';
+import { mkdirsSync } from './util';
 
 /**
  * 上传文件类，所有文件上传的基类
@@ -20,7 +21,7 @@ export class Uploader {
   /**
    * 处理文件流Stream
    */
-  public upload(files: any[]) {
+  public async upload(files: any[]) {
     throw new Error('you must overload this method');
   }
 
@@ -33,7 +34,7 @@ export class Uploader {
     const dir = this.getExactStoreDir();
     const exists = fs.existsSync(dir);
     if (!exists) {
-      fs.mkdirSync(dir);
+      mkdirsSync(dir);
     }
     return path.join(dir, filename2);
   }
