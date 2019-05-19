@@ -425,6 +425,7 @@ export interface FileArgs {
   name?: string;
   extension?: string;
   size?: number;
+  md5?: string;
 }
 
 /**
@@ -438,10 +439,12 @@ export class File extends Model {
   public name!: string;
   public extension!: string;
   public size!: number;
+  public md5!: string;
 
-  static createRecord(args?: FileArgs, commit?: boolean) {
+  static async createRecord(args?: FileArgs, commit?: boolean) {
     const record = File.build(args as any);
-    commit && record.save();
+    // tslint:disable-next-line: await-promise
+    commit && (await record.save());
     return record;
   }
 
@@ -452,7 +455,8 @@ export class File extends Model {
       type: this.type,
       name: this.name,
       extension: this.extension,
-      size: this.size
+      size: this.size,
+      md5: this.md5
     };
     return origin;
   }

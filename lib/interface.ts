@@ -38,6 +38,11 @@ export const UserInterface = {
       allowNull: false,
       unique: true
     },
+    avatar: {
+      // 用户默认生成图像，为null
+      type: Sequelize.STRING({ length: 500 }),
+      comment: '头像url'
+    },
     admin: {
       type: Sequelize.TINYINT,
       allowNull: false,
@@ -206,14 +211,22 @@ export const FileInterface = {
     comment: '1 local，其他表示其他地方'
   },
   name: {
-    type: Sequelize.STRING(30),
+    type: Sequelize.STRING(100),
     allowNull: false
   },
   extension: {
-    type: Sequelize.STRING(20)
+    type: Sequelize.STRING(50)
   },
   size: {
     type: Sequelize.INTEGER,
     allowNull: true
+  },
+  // 建立索引，方便搜索
+  // 域名配置
+  md5: {
+    type: Sequelize.STRING(40),
+    allowNull: true,
+    unique: true,
+    comment: '图片md5值，防止上传重复图片'
   }
 };

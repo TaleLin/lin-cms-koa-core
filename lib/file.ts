@@ -1,11 +1,12 @@
 /**
  * 文件上传相关
- * file_include,file_exclude,file_single_limit,file_total_limit,file_store_dir
- * id,path,type,name,extension,size
+ * file_include,file_exclude,file_single_limit,file_total_limit,file_store_dir,siteDomain
+ * id,path,type,name,extension,size,md5
  */
 import uuid from 'uuid';
 import dayjs from 'dayjs';
 import path from 'path';
+import crypto from 'crypto';
 import fs from 'fs';
 import { config } from './config';
 import { mkdirsSync } from './util';
@@ -31,12 +32,17 @@ export class Uploader {
    */
   public getStorePath(filename: string) {
     const filename2 = this.generateName(filename);
-    const dir = this.getExactStoreDir();
+    const formatDay = this.getFormatDay();
+    const dir = this.getExactStoreDir(formatDay);
     const exists = fs.existsSync(dir);
     if (!exists) {
       mkdirsSync(dir);
     }
-    return path.join(dir, filename2);
+    return {
+      absolutePath: path.join(dir, filename2),
+      relativePath: `${formatDay}/${filename2}`,
+      realName: filename2
+    };
   }
 
   /**
@@ -51,12 +57,31 @@ export class Uploader {
   /**
    * 获得确切的保存路径
    */
-  public getExactStoreDir() {
-    let storeDir = config.getItem('file_store_dir', 'assets');
+  public getExactStoreDir(formatDay: string) {
+    let storeDir = config.getItem('file.storeDir');
+    if (!storeDir) {
+      throw new Error('storeDir must not be undefined');
+    }
     this.storeDir && (storeDir = this.storeDir);
     const extrat = path.isAbsolute(storeDir)
-      ? path.join(storeDir, dayjs().format('YYYY/MM/DD'))
-      : path.join(process.cwd(), storeDir, dayjs().format('YYYY/MM/DD'));
+      ? path.join(storeDir, formatDay)
+      : path.join(process.cwd(), storeDir, formatDay);
     return extrat;
+  }
+
+  /**
+   * getFormatDay
+   */
+  public getFormatDay() {
+    return dayjs().format('YYYY/MM/DD');
+  }
+
+  /**
+   * 生成图片的md5
+   */
+  public generateMd5(data: any) {
+    const buf = data.readableBuffer._getBuffer(data.readableLength);
+    const md5 = crypto.createHash('md5');
+    return md5.update(buf).digest('hex');
   }
 }
