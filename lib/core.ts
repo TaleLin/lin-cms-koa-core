@@ -211,6 +211,7 @@ export class User extends Model {
   public admin!: number;
   public active!: number;
   public email!: string;
+  public avatar!: string;
   // tslint:disable-next-line:variable-name
   public group_id!: number;
   public password!: string;
@@ -260,6 +261,7 @@ export class User extends Model {
       admin: this.admin,
       active: this.active,
       email: this.email,
+      avatar: this.avatar,
       group_id: this.group_id,
       // @ts-ignore
       create_time: this.createTime
