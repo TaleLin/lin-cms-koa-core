@@ -4,7 +4,7 @@
  */
 import ms from 'ms';
 import { RedisClient } from 'redis';
-import { Forbidden, LimitException } from './exception';
+import { Forbidden, LimitException } from '../exception';
 
 /**
  * find p in redis

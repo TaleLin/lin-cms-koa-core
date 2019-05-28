@@ -17,8 +17,10 @@
   "license": "MIT",
   "dependencies": {
     "class-validator": "^0.9.1",
+    "co-busboy": "^1.4.0",
     "consola": "^2.5.6",
     "dayjs": "^1.8.9",
+    "egg-logger": "^2.4.1",
     "is-async-function": "^1.2.3",
     "jsonwebtoken": "^8.5.0",
     "koa": "^2.7.0",
@@ -27,10 +29,9 @@
     "mysql2": "^1.6.5",
     "mz-modules": "^2.1.0",
     "sequelize": "^5.3.5",
+    "stream-wormhole": "^1.1.0",
     "tslib": "^1.9.3",
-    "uuid": "^3.3.2",
-    "co-busboy": "^1.4.0",
-    "stream-wormhole": "^1.1.0"
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@types/consola": "^1.0.0",
