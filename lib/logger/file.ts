@@ -8,14 +8,14 @@ import utility from 'utility';
 import dayjs from 'dayjs';
 
 const depd = require('depd')('egg-logger');
-const utils = require('egg-logger/lib/util');
+const utils = require('egg-logger/lib/utils');
 
 import { Transport } from 'egg-logger';
 
 /**
  * output log into file {@link Transport}。
  */
-class FileTransport extends Transport {
+export class FileTransport extends Transport {
   _stream: fs.WriteStream | null;
   options: any;
   logCount: number = 1;
@@ -28,6 +28,7 @@ class FileTransport extends Transport {
   constructor(options) {
     super(options);
     assert(this.options.dir, 'should pass options.dir');
+    assert(this.options.sizeLimit, 'should pass options.sizeLimit');
 
     this._stream = null;
     this.logCount = 1;
@@ -209,5 +210,3 @@ class FileTransport extends Transport {
     }
   }
 }
-
-module.exports = FileTransport;

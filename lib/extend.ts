@@ -96,20 +96,20 @@ export const success = (app: Application) => {
  * @param app app实例
  */
 export const logging = (app: Application) => {
-  const logger = new Logger();
-  logger.set(
-    'file',
-    new FileTransport({
-      file: '/path/to/file',
-      level: 'INFO'
-    })
-  );
-  logger.set(
-    'console',
-    new ConsoleTransport({
-      level: 'DEBUG'
-    })
-  );
+  // const logger = new Logger();
+  // logger.set(
+  //   'file',
+  //   new FileTransport({
+  //     file: '/path/to/file',
+  //     level: 'INFO'
+  //   })
+  // );
+  // logger.set(
+  //   'console',
+  //   new ConsoleTransport({
+  //     level: 'DEBUG'
+  //   })
+  // );
   app.context.logger = consola;
 };
 
