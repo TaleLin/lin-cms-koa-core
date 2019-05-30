@@ -80,7 +80,7 @@ export class Uploader {
    * 生成图片的md5
    */
   public generateMd5(data: any) {
-    const buf = data.readableBuffer._getBuffer(data.readableLength);
+    const buf = data._readableState.buffer.head.data;
     const md5 = crypto.createHash('md5');
     return md5.update(buf).digest('hex');
   }

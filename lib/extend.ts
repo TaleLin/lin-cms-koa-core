@@ -151,6 +151,7 @@ export const multipart = (app: Application) => {
         }
         // otherwise, it's a stream
         // part.fieldname, part.filename, part.encoding, part.mime
+        // _readableState.length
         // part.readableLength 31492 检查单个文件的大小
         // 超过长度，报错
         // 检查extension，报错
@@ -161,7 +162,7 @@ export const multipart = (app: Application) => {
           throw new FileExtensionException({ msg: `不支持类型为${ext}的文件` });
         }
         const { valid, conf } = checkSingleFileSize(
-          part.readableLength,
+          part._readableState.length,
           opts && opts.singleLimit
         );
         if (!valid) {
@@ -170,7 +171,7 @@ export const multipart = (app: Application) => {
           });
         }
         // 计算总大小
-        totalSize += part.readableLength;
+        totalSize += part._readableState.length;
         const tmp = cloneDeep(part);
         files.push(tmp);
         // 恢复再次接受data
