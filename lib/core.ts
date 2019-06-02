@@ -264,7 +264,9 @@ export class User extends Model {
       avatar: this.avatar,
       group_id: this.group_id,
       // @ts-ignore
-      create_time: this.createTime
+      create_time: this.createTime,
+      // @ts-ignore
+      update_time: this.updateTime
     };
     if (has(this, 'auths')) {
       return { ...origin, auths: get(this, 'auths', []) };

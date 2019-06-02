@@ -18,6 +18,10 @@ export const InfoCrudMixin = {
       createTime() {
         // @ts-ignore
         return dayjs(this.getDataValue('create_time')).unix() * 1000;
+      },
+      updateTime() {
+        // @ts-ignore
+        return dayjs(this.getDataValue('update_time')).unix() * 1000;
       }
     }
   }

@@ -103,8 +103,10 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_file_.uploader.html#generatemd5" class="tsd-kind-icon">generate<wbr>Md5</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_file_.uploader.html#generatename" class="tsd-kind-icon">generate<wbr>Name</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_file_.uploader.html#getexactstoredir" class="tsd-kind-icon">get<wbr>Exact<wbr>Store<wbr>Dir</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_file_.uploader.html#getformatday" class="tsd-kind-icon">get<wbr>Format<wbr>Day</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_file_.uploader.html#getstorepath" class="tsd-kind-icon">get<wbr>Store<wbr>Path</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_file_.uploader.html#upload" class="tsd-kind-icon">upload</a></li>
 							</ul>
@@ -124,7 +126,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/12f5a9b/lib/file.ts#L17">file.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/file.ts#L18">file.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -146,13 +148,41 @@
 					<div class="tsd-signature tsd-kind-icon">store<wbr>Dir<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/12f5a9b/lib/file.ts#L17">file.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/file.ts#L18">file.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="generatemd5" class="tsd-anchor"></a>
+					<h3>generate<wbr>Md5</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">generate<wbr>Md5<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/file.ts#L82">file.ts:82</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>生成图片的md5</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>data: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="generatename" class="tsd-anchor"></a>
 					<h3>generate<wbr>Name</h3>
@@ -163,7 +193,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/12f5a9b/lib/file.ts#L46">file.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/file.ts#L52">file.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -188,18 +218,46 @@
 					<a name="getexactstoredir" class="tsd-anchor"></a>
 					<h3>get<wbr>Exact<wbr>Store<wbr>Dir</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Exact<wbr>Store<wbr>Dir<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Exact<wbr>Store<wbr>Dir<span class="tsd-signature-symbol">(</span>formatDay<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/12f5a9b/lib/file.ts#L54">file.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/file.ts#L60">file.ts:60</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>获得确切的保存路径</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>formatDay: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getformatday" class="tsd-anchor"></a>
+					<h3>get<wbr>Format<wbr>Day</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Format<wbr>Day<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/file.ts#L75">file.ts:75</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>getFormatDay</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -210,13 +268,13 @@
 					<a name="getstorepath" class="tsd-anchor"></a>
 					<h3>get<wbr>Store<wbr>Path</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Store<wbr>Path<span class="tsd-signature-symbol">(</span>filename<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Store<wbr>Path<span class="tsd-signature-symbol">(</span>filename<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/12f5a9b/lib/file.ts#L32">file.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/file.ts#L33">file.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -233,7 +291,18 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">object</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>absolute<wbr>Path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>real<wbr>Name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>relative<wbr>Path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
 						</li>
 					</ul>
 				</section>
@@ -247,7 +316,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/12f5a9b/lib/file.ts#L24">file.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/file.ts#L25">file.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -310,7 +379,7 @@
 						<a href="../modules/_jwt_.html">"jwt"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_limiter_.html">"limiter"</a>
+						<a href="../modules/_limit_limiter_.html">"limit/limiter"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_lin_router_.html">"lin-<wbr>router"</a>
@@ -323,6 +392,9 @@
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_log_.html">"log"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_logger_file_.html">"logger/file"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_middleware_.html">"middleware"</a>
@@ -358,10 +430,16 @@
 								<a href="_file_.uploader.html#storedir" class="tsd-kind-icon">store<wbr>Dir</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_file_.uploader.html#generatemd5" class="tsd-kind-icon">generate<wbr>Md5</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_file_.uploader.html#generatename" class="tsd-kind-icon">generate<wbr>Name</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_file_.uploader.html#getexactstoredir" class="tsd-kind-icon">get<wbr>Exact<wbr>Store<wbr>Dir</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_file_.uploader.html#getformatday" class="tsd-kind-icon">get<wbr>Format<wbr>Day</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_file_.uploader.html#getstorepath" class="tsd-kind-icon">get<wbr>Store<wbr>Path</a>

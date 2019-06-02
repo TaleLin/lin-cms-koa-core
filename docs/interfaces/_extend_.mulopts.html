@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Exception | lin-mizar</title>
+	<title>MulOpts | lin-mizar</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,31 +56,24 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_exception_.html">&quot;exception&quot;</a>
+					<a href="../modules/_extend_.html">&quot;extend&quot;</a>
 				</li>
 				<li>
-					<a href="_exception_.exception.html">Exception</a>
+					<a href="_extend_.mulopts.html">MulOpts</a>
 				</li>
 			</ul>
-			<h1>Interface Exception</h1>
+			<h1>Interface MulOpts</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>HttpException 类构造函数的参数接口</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Exception</span>
+						<span class="target">MulOpts</span>
 					</li>
 				</ul>
 			</section>
@@ -91,9 +84,12 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_exception_.exception.html#code" class="tsd-kind-icon">code</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_exception_.exception.html#errorcode" class="tsd-kind-icon">error<wbr>Code</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_exception_.exception.html#msg" class="tsd-kind-icon">msg</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_extend_.mulopts.html#autofields" class="tsd-kind-icon">auto<wbr>Fields</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_extend_.mulopts.html#exclude" class="tsd-kind-icon">exclude</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_extend_.mulopts.html#filenums" class="tsd-kind-icon">file<wbr>Nums</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_extend_.mulopts.html#include" class="tsd-kind-icon">include</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_extend_.mulopts.html#singlelimit" class="tsd-kind-icon">single<wbr>Limit</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_extend_.mulopts.html#totallimit" class="tsd-kind-icon">total<wbr>Limit</a></li>
 							</ul>
 						</section>
 					</div>
@@ -102,32 +98,62 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="code" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> code</h3>
-					<div class="tsd-signature tsd-kind-icon">code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<a name="autofields" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> auto<wbr>Fields</h3>
+					<div class="tsd-signature tsd-kind-icon">auto<wbr>Fields<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/exception.ts#L8">exception.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/extend.ts#L117">extend.ts:117</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="errorcode" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> error<wbr>Code</h3>
-					<div class="tsd-signature tsd-kind-icon">error<wbr>Code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<a name="exclude" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> exclude</h3>
+					<div class="tsd-signature tsd-kind-icon">exclude<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/exception.ts#L10">exception.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/extend.ts#L122">extend.ts:122</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="msg" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> msg</h3>
-					<div class="tsd-signature tsd-kind-icon">msg<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="filenums" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> file<wbr>Nums</h3>
+					<div class="tsd-signature tsd-kind-icon">file<wbr>Nums<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/exception.ts#L9">exception.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/extend.ts#L120">extend.ts:120</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="include" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> include</h3>
+					<div class="tsd-signature tsd-kind-icon">include<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/extend.ts#L121">extend.ts:121</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="singlelimit" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> single<wbr>Limit</h3>
+					<div class="tsd-signature tsd-kind-icon">single<wbr>Limit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/extend.ts#L118">extend.ts:118</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="totallimit" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> total<wbr>Limit</h3>
+					<div class="tsd-signature tsd-kind-icon">total<wbr>Limit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/extend.ts#L119">extend.ts:119</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -151,10 +177,10 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_enums_.html">"enums"</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_exception_.html">"exception"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="../modules/_extend_.html">"extend"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -215,75 +241,60 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_exception_.authfailed.html" class="tsd-kind-icon">Auth<wbr>Failed</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_exception_.expiredtokenexception.html" class="tsd-kind-icon">Expired<wbr>Token<wbr>Exception</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_exception_.failed.html" class="tsd-kind-icon">Failed</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_exception_.fileextensionexception.html" class="tsd-kind-icon">File<wbr>Extension<wbr>Exception</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_exception_.filetoolargeexception.html" class="tsd-kind-icon">File<wbr>Too<wbr>Large<wbr>Exception</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_exception_.filetoomanyexception.html" class="tsd-kind-icon">File<wbr>Too<wbr>Many<wbr>Exception</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_exception_.forbidden.html" class="tsd-kind-icon">Forbidden</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_exception_.httpexception.html" class="tsd-kind-icon">Http<wbr>Exception</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_exception_.invalidtokenexception.html" class="tsd-kind-icon">Invalid<wbr>Token<wbr>Exception</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_exception_.limitexception.html" class="tsd-kind-icon">Limit<wbr>Exception</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_exception_.methodnotallowed.html" class="tsd-kind-icon">Method<wbr>Not<wbr>Allowed</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_exception_.notfound.html" class="tsd-kind-icon">Not<wbr>Found</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_exception_.parametersexception.html" class="tsd-kind-icon">Parameters<wbr>Exception</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_exception_.refreshexception.html" class="tsd-kind-icon">Refresh<wbr>Exception</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_exception_.repeatexception.html" class="tsd-kind-icon">Repeat<wbr>Exception</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_exception_.success.html" class="tsd-kind-icon">Success</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_exception_.unknownexception.html" class="tsd-kind-icon">Unknown<wbr>Exception</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_exception_.exception.html" class="tsd-kind-icon">Exception</a>
+						<a href="_extend_.mulopts.html" class="tsd-kind-icon">Mul<wbr>Opts</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_exception_.exception.html#code" class="tsd-kind-icon">code</a>
+								<a href="_extend_.mulopts.html#autofields" class="tsd-kind-icon">auto<wbr>Fields</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_exception_.exception.html#errorcode" class="tsd-kind-icon">error<wbr>Code</a>
+								<a href="_extend_.mulopts.html#exclude" class="tsd-kind-icon">exclude</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_exception_.exception.html#msg" class="tsd-kind-icon">msg</a>
+								<a href="_extend_.mulopts.html#filenums" class="tsd-kind-icon">file<wbr>Nums</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_extend_.mulopts.html#include" class="tsd-kind-icon">include</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_extend_.mulopts.html#singlelimit" class="tsd-kind-icon">single<wbr>Limit</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_extend_.mulopts.html#totallimit" class="tsd-kind-icon">total<wbr>Limit</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_extend_.html#checkfileextension" class="tsd-kind-icon">check<wbr>File<wbr>Extension</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_extend_.html#checkfilenums" class="tsd-kind-icon">check<wbr>File<wbr>Nums</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_extend_.html#checksinglefilesize" class="tsd-kind-icon">check<wbr>Single<wbr>File<wbr>Size</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_extend_.html#checktotalfilesize" class="tsd-kind-icon">check<wbr>Total<wbr>File<wbr>Size</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/_extend_.html#json" class="tsd-kind-icon">json</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/_extend_.html#logging" class="tsd-kind-icon">logging</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/_extend_.html#multipart" class="tsd-kind-icon">multipart</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/_extend_.html#success" class="tsd-kind-icon">success</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_extend_.html#transform" class="tsd-kind-icon">transform</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
