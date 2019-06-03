@@ -1,4 +1,4 @@
 exports.user = {
-  name: "pedro",
+  name: 'pedro',
   age: 23
-}
+};

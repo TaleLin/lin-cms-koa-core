@@ -1,6 +1,6 @@
-import { Validator as BaseValidator } from "class-validator";
-import { has, get } from "lodash";
-import validator1 from "validator";
+import { Validator as BaseValidator } from 'class-validator';
+import { has, get } from 'lodash';
+import validator1 from 'validator';
 
 /**
  * IsFloat的参数可选项
@@ -125,7 +125,7 @@ export class ExtendedValidator extends BaseValidator {
    * @param options 参数项
    */
   isFloat2(input: number, options?: IsFloatOptions) {
-    return validator1.isFloat(input + "", options);
+    return validator1.isFloat(input + '', options);
   }
 
   /**
@@ -143,7 +143,7 @@ export class ExtendedValidator extends BaseValidator {
    * @param options 参数项
    */
   isInt3(input: number, options?: IsIntOptions) {
-    return validator1.isInt(input + "", options);
+    return validator1.isInt(input + '', options);
   }
 }
 

@@ -28,6 +28,6 @@ export enum UserActive {
  * REFRESH 代表 refresh token
  */
 export enum TokenType {
-  ACCESS = "access",
-  REFRESH = "refresh"
+  ACCESS = 'access',
+  REFRESH = 'refresh'
 }

@@ -1,13 +1,13 @@
-import { assert, getFiles } from "./util";
-import { get, set } from "lodash";
-import Application from "koa";
-import Router from "koa-router";
-import consola from "consola";
-import path from "path";
-import { Model } from "sequelize";
-import { Plugin } from "./plugin";
-import { config } from "./config";
-import { disableLoading } from "./core";
+import { assert, getFiles } from './util';
+import { get, set } from 'lodash';
+import Application from 'koa';
+import Router from 'koa-router';
+import consola from 'consola';
+import path from 'path';
+import { Model } from 'sequelize';
+import { Plugin } from './plugin';
+import { config } from './config';
+import { disableLoading } from './core';
 
 /**
  * 加载器
@@ -19,7 +19,7 @@ export class Loader {
   private app: Application;
   public plugins = {};
   constructor(pluginPath: {}, app: Application) {
-    assert(!!pluginPath, "pluginPath must not be empty");
+    assert(!!pluginPath, 'pluginPath must not be empty');
     this.pluginPath = pluginPath;
     this.app = app;
     this.loadMainApi(app);
@@ -35,15 +35,15 @@ export class Loader {
       if (get(this.pluginPath, `${item}.enable`)) {
         const path1 = get(this.pluginPath, `${item}.path`);
         const baseDir = process.cwd();
-        let confPath = "";
-        const scriptType = config.getItem("scriptType", "js");
-        const prod = process.env.NODE_ENV === "production";
-        if (prod || scriptType !== "ts") {
-          confPath = path.resolve(baseDir, path1, "config.js");
+        let confPath = '';
+        const scriptType = config.getItem('scriptType', 'js');
+        const prod = process.env.NODE_ENV === 'production';
+        if (prod || scriptType !== 'ts') {
+          confPath = path.resolve(baseDir, path1, 'config.js');
         } else {
-          confPath = path.resolve(baseDir, path1, "config.ts");
+          confPath = path.resolve(baseDir, path1, 'config.ts');
         }
-        const appPath = path.resolve(baseDir, path1, "app");
+        const appPath = path.resolve(baseDir, path1, 'app');
         const incomingConf = get(this.pluginPath, item);
         this.loadConfig(item, confPath, incomingConf);
         this.loadPlugin(item, appPath);
@@ -87,35 +87,35 @@ export class Loader {
     const mainRouter = new Router();
     this.mainRouter = mainRouter;
     // 默认api的文件夹
-    let apiDir = config.getItem("apiDir", "app/api");
+    let apiDir = config.getItem('apiDir', 'app/api');
     apiDir = `${process.cwd()}/${apiDir}`;
     const files = getFiles(apiDir);
     for (const file of files) {
-      const extention = file.substring(file.lastIndexOf("."), file.length);
+      const extention = file.substring(file.lastIndexOf('.'), file.length);
       // 现在只考虑加载.js文件，后续考虑.ts文件
-      if (extention === ".js") {
+      if (extention === '.js') {
         const mod = require(file);
         // 如果mod 为 koa-router实例
         // const exports = get(mod, "default");
         // 如果disableLoading为true，则不加载这个文件路由
         // tslint:disable-next-line:no-empty
         if (mod instanceof Router) {
-          if (config.getItem("debug")) {
+          if (config.getItem('debug')) {
             consola.info(`loading a router instance from file: ${file}`);
-            get(mod, "stack", []).forEach(ly => {
-              consola.info(`loading a route: ${get(ly, "path")}`);
+            get(mod, 'stack', []).forEach(ly => {
+              consola.info(`loading a route: ${get(ly, 'path')}`);
             });
           }
           mainRouter.use(mod.routes()).use(mod.allowedMethods());
         } else if (!mod[disableLoading]) {
           Object.keys(mod).forEach(key => {
             if (mod[key] instanceof Router) {
-              if (config.getItem("debug")) {
+              if (config.getItem('debug')) {
                 consola.info(
                   `loading a router instance :${key} from file: ${file}`
                 );
-                get(mod[key], "stack", []).forEach(ly => {
-                  consola.info(`loading a route: ${get(ly, "path")}`);
+                get(mod[key], 'stack', []).forEach(ly => {
+                  consola.info(`loading a route: ${get(ly, 'path')}`);
                 });
               }
               mainRouter.use(mod[key].routes()).use(mod[key].allowedMethods());

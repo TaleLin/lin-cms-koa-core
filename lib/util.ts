@@ -1,26 +1,27 @@
-import { IRouterContext } from "koa-router";
-import fs from "fs";
-import { routeMetaInfo } from "./core";
-import { get, unset } from "lodash";
-import { config } from "./config";
-import { ParametersException } from "./exception";
-import { extendedValidator } from "./extended-validator";
-import { __decorate, __metadata } from "tslib";
+import { IRouterContext } from 'koa-router';
+import fs from 'fs';
+import path from 'path';
+import { routeMetaInfo } from './core';
+import { get, unset } from 'lodash';
+import { config } from './config';
+import { ParametersException } from './exception';
+import { extendedValidator } from './extended-validator';
+import { __decorate, __metadata } from 'tslib';
 
 export const isUndefined = (obj: any): obj is undefined =>
-  typeof obj === "undefined";
+  typeof obj === 'undefined';
 
-export const isFunction = (fn: any): boolean => typeof fn === "function";
+export const isFunction = (fn: any): boolean => typeof fn === 'function';
 
 export const isObject = (fn: any): fn is object =>
-  !isNil(fn) && typeof fn === "object";
+  !isNil(fn) && typeof fn === 'object';
 
-export const isString = (fn: any): fn is string => typeof fn === "string";
+export const isString = (fn: any): fn is string => typeof fn === 'string';
 
-export const isConstructor = (fn: string): boolean => fn === "constructor";
+export const isConstructor = (fn: string): boolean => fn === 'constructor';
 
 export const validatePath = (path?: string): string =>
-  path ? (path.charAt(0) !== "/" ? "/" + path : path) : "";
+  path ? (path.charAt(0) !== '/' ? '/' + path : path) : '';
 
 // tslint:disable-next-line: strict-type-predicates
 export const isNil = (obj: null): boolean => isUndefined(obj) || obj === null;
@@ -28,10 +29,10 @@ export const isNil = (obj: null): boolean => isUndefined(obj) || obj === null;
 export const isEmpty = (array: { length: number }): boolean =>
   !(array && array.length > 0);
 
-export const isSymbol = (fn: any): fn is symbol => typeof fn === "symbol";
+export const isSymbol = (fn: any): fn is symbol => typeof fn === 'symbol';
 
 export const strVal = (value: any) =>
-  typeof value === "string" ? value : String(value);
+  typeof value === 'string' ? value : String(value);
 
 export const isNotEmpty = extendedValidator.isNotEmpty;
 
@@ -44,7 +45,7 @@ export const isPositive = extendedValidator.isPositive;
  */
 export function assert(ok: boolean, ...args: string[]): void {
   if (!ok) {
-    throw new Error(args.join(" "));
+    throw new Error(args.join(' '));
   }
 }
 
@@ -57,7 +58,7 @@ export function toHump(name: string) {
 
 // 驼峰转换下划线
 export function toLine(name: string) {
-  return name.replace(/([A-Z])/g, "_$1").toLowerCase();
+  return name.replace(/([A-Z])/g, '_$1').toLowerCase();
 }
 
 /**
@@ -74,7 +75,7 @@ export function findMetaByAuth(auth: any) {
   const dests = Array.from(routeMetaInfo.values());
   for (let i = 0; i < dests.length; i++) {
     const el = dests[i];
-    if (el["auth"] === auth) {
+    if (el['auth'] === auth) {
       return el;
     }
   }
@@ -86,7 +87,7 @@ export function findMetaByAuth(auth: any) {
  * @param time input time
  */
 export function checkDateFormat(time: string) {
-  if (!time || time === "") {
+  if (!time || time === '') {
     return true;
   }
   const r = time.match(
@@ -113,13 +114,13 @@ export function checkDateFormat(time: string) {
 
 export function paginate(ctx: IRouterContext) {
   let count =
-    get(ctx.request.query, "count") || config.getItem("countDefault", 10);
+    get(ctx.request.query, 'count') || config.getItem('countDefault', 10);
   let start =
-    get(ctx.request.query, "page") || config.getItem("pageDefault", 0);
+    get(ctx.request.query, 'page') || config.getItem('pageDefault', 0);
   count = parseInt(count >= 15 ? 15 : count, 10);
   start = parseInt(start, 10) * count;
   if (start < 0 || count < 0) {
-    throw new ParametersException({ msg: "请输入正确的分页参数" });
+    throw new ParametersException({ msg: '请输入正确的分页参数' });
   }
   return { start, count };
 }
@@ -163,7 +164,7 @@ export function unsets(obj: any, props: Array<string>) {
  */
 export function decorateProp(decorators, type, target, key) {
   return __decorate(
-    [...decorators, __metadata("design:type", type)],
+    [...decorators, __metadata('design:type', type)],
     target,
     key
   );
@@ -244,7 +245,7 @@ export function getFiles(dir: string) {
   let res: string[] = [];
   const files = fs.readdirSync(dir);
   for (const file of files) {
-    const name = dir + "/" + file;
+    const name = dir + '/' + file;
     if (fs.statSync(name).isDirectory()) {
       const tmp = getFiles(name);
       res = res.concat(tmp);
@@ -253,4 +254,19 @@ export function getFiles(dir: string) {
     }
   }
   return res;
+}
+
+/**
+ * 递归创建目录 同步方法
+ * @param dirname 目录
+ */
+export function mkdirsSync(dirname: string) {
+  if (fs.existsSync(dirname)) {
+    return true;
+  } else {
+    if (mkdirsSync(path.dirname(dirname))) {
+      fs.mkdirSync(dirname);
+      return true;
+    }
+  }
 }

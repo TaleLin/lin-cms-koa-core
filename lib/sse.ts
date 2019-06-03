@@ -1,4 +1,4 @@
-import { Transform, Readable, TransformCallback } from "stream";
+import { Transform, Readable, TransformCallback } from 'stream';
 
 /**
  * SSE功能封装类
@@ -9,7 +9,7 @@ export class SSE extends Transform {
   }
 
   _transform(chunk: any, encoding: string, cb: TransformCallback) {
-    this.push(chunk.toString("utf8"));
+    this.push(chunk.toString('utf8'));
     cb();
   }
 }
@@ -99,7 +99,7 @@ export class MessageBroker {
    * 拼接buffer
    */
   joinBuffer() {
-    return this.buffer.join("");
+    return this.buffer.join('');
   }
 
   /**
@@ -121,7 +121,7 @@ export class MessageBroker {
     if (comment) {
       this.buffer.push(comment);
     } else {
-      this.buffer.push(": sse sever is still alive \n\n");
+      this.buffer.push(': sse sever is still alive \n\n');
       const tmp = this.joinBuffer();
       this.buffer.length = 0;
       return tmp;

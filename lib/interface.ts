@@ -1,8 +1,8 @@
-import Sequelize from "sequelize";
-import { merge } from "lodash";
-import { UserAdmin, UserActive } from "./enums";
-import dayjs from "dayjs";
-import { generate } from "./password-hash";
+import Sequelize from 'sequelize';
+import { merge } from 'lodash';
+import { UserAdmin, UserActive } from './enums';
+import dayjs from 'dayjs';
+import { generate } from './password-hash';
 
 /**
  * 记录信息的mixin
@@ -10,14 +10,18 @@ import { generate } from "./password-hash";
 export const InfoCrudMixin = {
   attributes: {},
   options: {
-    createdAt: "create_time",
-    updatedAt: "update_time",
-    deletedAt: "delete_time",
+    createdAt: 'create_time',
+    updatedAt: 'update_time',
+    deletedAt: 'delete_time',
     paranoid: true,
     getterMethods: {
       createTime() {
         // @ts-ignore
-        return dayjs(this.getDataValue("create_time")).unix() * 1000;
+        return dayjs(this.getDataValue('create_time')).unix() * 1000;
+      },
+      updateTime() {
+        // @ts-ignore
+        return dayjs(this.getDataValue('update_time')).unix() * 1000;
       }
     }
   }
@@ -37,6 +41,11 @@ export const UserInterface = {
       type: Sequelize.STRING({ length: 24 }),
       allowNull: false,
       unique: true
+    },
+    avatar: {
+      // 用户默认生成图像，为null
+      type: Sequelize.STRING({ length: 500 }),
+      comment: '头像url'
     },
     admin: {
       type: Sequelize.TINYINT,
@@ -61,25 +70,25 @@ export const UserInterface = {
       type: Sequelize.STRING({ length: 100 }),
       set(ps) {
         // @ts-ignore
-        this.setDataValue("password", generate(ps));
+        this.setDataValue('password', generate(ps));
       },
       get() {
         // @ts-ignore
-        return this.getDataValue("password");
+        return this.getDataValue('password');
       }
     }
   },
   options: merge(
     {
-      tableName: "lin_user",
+      tableName: 'lin_user',
       getterMethods: {
         isAdmin() {
           // @ts-ignore
-          return this.getDataValue("admin") === UserAdmin.ADMIN;
+          return this.getDataValue('admin') === UserAdmin.ADMIN;
         },
         isActive() {
           // @ts-ignore
-          return this.getDataValue("active") === UserActive.ACTIVE;
+          return this.getDataValue('active') === UserActive.ACTIVE;
         }
       }
     },
@@ -109,7 +118,7 @@ export const AuthInterface = {
     }
   },
   options: {
-    tableName: "lin_auth",
+    tableName: 'lin_auth',
     createdAt: false,
     updatedAt: false
   }
@@ -134,7 +143,7 @@ export const GroupInterface = {
     }
   },
   options: {
-    tableName: "lin_group",
+    tableName: 'lin_group',
     createdAt: false,
     updatedAt: false
   }
@@ -174,14 +183,54 @@ export const LogInterface = {
     }
   },
   options: {
-    tableName: "lin_log",
-    createdAt: "time",
+    tableName: 'lin_log',
+    createdAt: 'time',
     updatedAt: false,
     getterMethods: {
       time() {
         // @ts-ignore
-        return dayjs(this.getDataValue("time")).unix() * 1000;
+        return dayjs(this.getDataValue('time')).unix() * 1000;
       }
     }
+  }
+};
+
+/**
+ * 文件接口
+ */
+export const FileInterface = {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  path: {
+    type: Sequelize.STRING({ length: 500 }),
+    allowNull: false
+  },
+  type: {
+    type: Sequelize.TINYINT,
+    allowNull: false,
+    defaultValue: 1,
+    comment: '1 local，其他表示其他地方'
+  },
+  name: {
+    type: Sequelize.STRING(100),
+    allowNull: false
+  },
+  extension: {
+    type: Sequelize.STRING(50)
+  },
+  size: {
+    type: Sequelize.INTEGER,
+    allowNull: true
+  },
+  // 建立索引，方便搜索
+  // 域名配置
+  md5: {
+    type: Sequelize.STRING(40),
+    allowNull: true,
+    unique: true,
+    comment: '图片md5值，防止上传重复图片'
   }
 };
