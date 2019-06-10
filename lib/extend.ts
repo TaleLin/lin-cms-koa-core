@@ -7,7 +7,6 @@ import {
   FileExtensionException,
   FileTooManyException
 } from './exception';
-import consola from 'consola';
 import { toLine, unsets } from './util';
 import { config } from './config';
 import { get, set, cloneDeep } from 'lodash';
@@ -15,11 +14,9 @@ import parse from 'co-busboy';
 import sendToWormhole from 'stream-wormhole';
 import { extname } from 'path';
 
-import { Logger, FileTransport, ConsoleTransport } from 'egg-logger';
-
-// const Logger = require('egg-logger').Logger;
-// const FileTransport = require('egg-logger').FileTransport;
-// const ConsoleTransport = require('egg-logger').ConsoleTransport;
+import { Logger } from 'egg-logger';
+import { FileTransport } from './logger/file';
+import { ConsoleTransport } from './logger/console';
 
 /**
  * json序列化扩展
@@ -96,22 +93,32 @@ export const success = (app: Application) => {
  * @param app app实例
  */
 export const logging = (app: Application) => {
-  // TODO: 提供配置项
-  // const logger = new Logger();
-  // logger.set(
-  //   'file',
-  //   new FileTransport({
-  //     file: '/path/to/file',
-  //     level: 'INFO'
-  //   })
-  // );
-  // logger.set(
-  //   'console',
-  //   new ConsoleTransport({
-  //     level: 'DEBUG'
-  //   })
-  // );
-  app.context.logger = consola;
+  let options = {
+    level: 'INFO',
+    dir: 'logs',
+    sizeLimit: 1024 * 1024 * 5
+  };
+  const logConf = config.getItem('log');
+  options = { ...options, ...logConf };
+
+  const logger = new Logger({});
+
+  logger.set(
+    'file',
+    new FileTransport({
+      dir: options.dir,
+      sizeLimit: options.sizeLimit,
+      level: options.level
+    })
+  );
+  logger.set(
+    'console',
+    new ConsoleTransport({
+      level: options.level
+    })
+  );
+
+  app.context.logger = logger;
 };
 
 export interface MulOpts {
