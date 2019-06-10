@@ -96,6 +96,7 @@ export const success = (app: Application) => {
  * @param app app实例
  */
 export const logging = (app: Application) => {
+  // TODO: 提供配置项
   // const logger = new Logger();
   // logger.set(
   //   'file',
