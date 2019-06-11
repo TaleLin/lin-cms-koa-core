@@ -37,7 +37,7 @@ export const log = async (ctx: Context, next: () => Promise<any>) => {
     const requestLog: boolean = config.getItem('log.requestLog');
     const level: string = config.getItem('log.level');
     if (requestLog) {
-      if (levels[level] >= levels['DEBUG']) {
+      if (levels[level] <= levels['DEBUG']) {
         const data = {
           param: ctx.request.query,
           body: ctx.request.body
