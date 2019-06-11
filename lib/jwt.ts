@@ -374,7 +374,7 @@ async function groupRequired(ctx: RouterContext, next: () => Promise<any>) {
         const endpoint = `${ctx.method} ${routeName}`;
         const { auth, module } = routeMetaInfo.get(endpoint);
         const item = await ctx.manager.authModel.findOne({
-          where: { auth, module }
+          where: { auth, module, group_id: groupId }
         });
         // console.log(item);
         if (item) {
