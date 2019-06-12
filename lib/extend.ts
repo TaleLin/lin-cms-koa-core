@@ -96,21 +96,24 @@ export const logging = (app: Application) => {
   let options = {
     level: 'INFO',
     dir: 'logs',
-    sizeLimit: 1024 * 1024 * 5
+    sizeLimit: 1024 * 1024 * 5,
+    file: true
   };
   const logConf = config.getItem('log');
   options = { ...options, ...logConf };
 
   const logger = new Logger({});
-
-  logger.set(
-    'file',
-    new FileTransport({
-      dir: options.dir,
-      sizeLimit: options.sizeLimit,
-      level: options.level
-    })
-  );
+  // 如果file开启，则打开，否则关闭
+  if (options.file) {
+    logger.set(
+      'file',
+      new FileTransport({
+        dir: options.dir,
+        sizeLimit: options.sizeLimit,
+        level: options.level
+      })
+    );
+  }
   logger.set(
     'console',
     new ConsoleTransport({
