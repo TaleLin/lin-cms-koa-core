@@ -48,9 +48,9 @@ const logging = config.getItem('db.logging', true);
     }
  } 
  */
-const dialectOptions = config_1.config.getItem('db.ssl') ? {
+const dialectOptions = config.getItem('db.ssl') ? {
     ssl: {
-        cert: config_1.config.getItem('db.sslCert')
+        cert: config.getItem('db.sslCert')
     }
 } : {};
 
