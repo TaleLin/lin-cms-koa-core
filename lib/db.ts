@@ -41,12 +41,27 @@ const password = config.getItem('db.password', '123456');
 const logging = config.getItem('db.logging', true);
 
 /**
+ * ssl连接
+ dialectOptions: {
+    ssl: {
+      cert: cert
+    }
+ } 
+ */
+const dialectOptions = config_1.config.getItem('db.ssl') ? {
+    ssl: {
+        cert: config_1.config.getItem('db.sslCert')
+    }
+} : {};
+
+/**
  * 全局的 Sequelize 实例
  */
 export const db = new Sequelize(database, username, password, {
   host: host,
   port: port,
   dialect: type,
+  dialectOptions,
   logging: logging,
   timezone: '+08:00'
 });
