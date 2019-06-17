@@ -20,7 +20,8 @@ export class Uploader {
     this.storeDir = storeDir;
   }
   /**
-   * 处理文件流Stream
+   * 处理文件对象
+   * { size, encoding, fieldname, filename, mimeType, data }
    */
   public async upload(files: any[]) {
     throw new Error('you must overload this method');
@@ -79,8 +80,8 @@ export class Uploader {
   /**
    * 生成图片的md5
    */
-  public generateMd5(data: any) {
-    const buf = data._readableState.buffer.head.data;
+  public generateMd5(item: any) {
+    const buf = item.data;
     const md5 = crypto.createHash('md5');
     return md5.update(buf).digest('hex');
   }

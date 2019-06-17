@@ -75,11 +75,8 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_db_.html#database" class="tsd-kind-icon">database</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-external-module"><a href="_db_.html#db" class="tsd-kind-icon">db</a></li>
-								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_db_.html#host" class="tsd-kind-icon">host</a></li>
-								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_db_.html#logging" class="tsd-kind-icon">logging</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_db_.html#options" class="tsd-kind-icon">options</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_db_.html#password" class="tsd-kind-icon">password</a></li>
-								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_db_.html#port" class="tsd-kind-icon">port</a></li>
-								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_db_.html#type" class="tsd-kind-icon">type</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_db_.html#username" class="tsd-kind-icon">username</a></li>
 							</ul>
 						</section>
@@ -94,7 +91,7 @@
 					<div class="tsd-signature tsd-kind-icon">database<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;config.getItem(&#x27;db.database&#x27;, &#x27;lin-cms&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/db.ts#L11">db.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/1784b28/lib/db.ts#L11">db.ts:11</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -106,10 +103,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module">
 					<a name="db" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> db</h3>
-					<div class="tsd-signature tsd-kind-icon">db<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Sequelize</span><span class="tsd-signature-symbol"> =&nbsp;new Sequelize(database, username, password, {host: host,port: port,dialect: type,logging: logging,timezone: &#x27;+08:00&#x27;})</span></div>
+					<div class="tsd-signature tsd-kind-icon">db<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Sequelize</span><span class="tsd-signature-symbol"> =&nbsp;new Sequelize(database, username, password, {...options})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/db.ts#L46">db.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/1784b28/lib/db.ts#L31">db.ts:31</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -119,32 +116,17 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-					<a name="host" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> host</h3>
-					<div class="tsd-signature tsd-kind-icon">host<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;config.getItem(&#x27;db.host&#x27;, &#x27;localhost&#x27;)</span></div>
+					<a name="options" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> options</h3>
+					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;config.getItem(&#x27;db&#x27;, {})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/db.ts#L21">db.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/1784b28/lib/db.ts#L26">db.ts:26</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>数据库host，默认localhost</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-					<a name="logging" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> logging</h3>
-					<div class="tsd-signature tsd-kind-icon">logging<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;config.getItem(&#x27;db.logging&#x27;, true)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/db.ts#L41">db.ts:41</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>是否输出sequelize日志，默认 true</p>
+							<p>其它数据库配置项</p>
 						</div>
 					</div>
 				</section>
@@ -154,7 +136,7 @@
 					<div class="tsd-signature tsd-kind-icon">password<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;config.getItem(&#x27;db.password&#x27;, &#x27;123456&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/db.ts#L36">db.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/1784b28/lib/db.ts#L21">db.ts:21</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -164,42 +146,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-					<a name="port" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> port</h3>
-					<div class="tsd-signature tsd-kind-icon">port<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;config.getItem(&#x27;db.port&#x27;, 3306)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/db.ts#L26">db.ts:26</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>数据库端口，默认3306</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-					<a name="type" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;config.getItem(&#x27;db.type&#x27;, &#x27;mysql&#x27;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/db.ts#L16">db.ts:16</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>数据库类型，默认mysql</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 					<a name="username" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> username</h3>
 					<div class="tsd-signature tsd-kind-icon">username<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;config.getItem(&#x27;db.username&#x27;, &#x27;root&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/81b4993/lib/db.ts#L31">db.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/1784b28/lib/db.ts#L16">db.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -216,77 +168,8 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_config_.html">"config"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_core_.html">"core"</a>
-					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="_db_.html">"db"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_enums_.html">"enums"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_exception_.html">"exception"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_extend_.html">"extend"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_extended_validator_.html">"extended-<wbr>validator"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_factory_.html">"factory"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_file_.html">"file"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_index_.html">"index"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_interface_.html">"interface"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_jwt_.html">"jwt"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_limit_limiter_.html">"limit/limiter"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_lin_router_.html">"lin-<wbr>router"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_lin_validator_.html">"lin-<wbr>validator"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_loader_.html">"loader"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_log_.html">"log"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_logger_file_.html">"logger/file"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_middleware_.html">"middleware"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_mixin_.html">"mixin"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_password_hash_.html">"password-<wbr>hash"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_plugin_.html">"plugin"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_sse_.html">"sse"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_util_.html">"util"</a>
 					</li>
 				</ul>
 			</nav>
@@ -299,19 +182,10 @@
 						<a href="_db_.html#db" class="tsd-kind-icon">db</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="_db_.html#host" class="tsd-kind-icon">host</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="_db_.html#logging" class="tsd-kind-icon">logging</a>
+						<a href="_db_.html#options" class="tsd-kind-icon">options</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_db_.html#password" class="tsd-kind-icon">password</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="_db_.html#port" class="tsd-kind-icon">port</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="_db_.html#type" class="tsd-kind-icon">type</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_db_.html#username" class="tsd-kind-icon">username</a>

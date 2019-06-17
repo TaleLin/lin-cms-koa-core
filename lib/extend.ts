@@ -7,19 +7,15 @@ import {
   FileExtensionException,
   FileTooManyException
 } from './exception';
-import consola from 'consola';
 import { toLine, unsets } from './util';
 import { config } from './config';
-import { get, set, cloneDeep } from 'lodash';
-import parse from 'co-busboy';
-import sendToWormhole from 'stream-wormhole';
+import { get, set } from 'lodash';
+import asyncBusboy from 'async-busboy';
 import { extname } from 'path';
 
-import { Logger, FileTransport, ConsoleTransport } from 'egg-logger';
-
-// const Logger = require('egg-logger').Logger;
-// const FileTransport = require('egg-logger').FileTransport;
-// const ConsoleTransport = require('egg-logger').ConsoleTransport;
+import { Logger } from 'egg-logger';
+import { FileTransport } from './logger/file';
+import { ConsoleTransport } from './logger/console';
 
 /**
  * json序列化扩展
@@ -96,25 +92,38 @@ export const success = (app: Application) => {
  * @param app app实例
  */
 export const logging = (app: Application) => {
-  // const logger = new Logger();
-  // logger.set(
-  //   'file',
-  //   new FileTransport({
-  //     file: '/path/to/file',
-  //     level: 'INFO'
-  //   })
-  // );
-  // logger.set(
-  //   'console',
-  //   new ConsoleTransport({
-  //     level: 'DEBUG'
-  //   })
-  // );
-  app.context.logger = consola;
+  let options = {
+    level: 'INFO',
+    dir: 'logs',
+    sizeLimit: 1024 * 1024 * 5,
+    file: true
+  };
+  const logConf = config.getItem('log');
+  options = { ...options, ...logConf };
+
+  const logger = new Logger({});
+  // 如果file开启，则打开，否则关闭
+  if (options.file) {
+    logger.set(
+      'file',
+      new FileTransport({
+        dir: options.dir,
+        sizeLimit: options.sizeLimit,
+        level: options.level
+      })
+    );
+  }
+  logger.set(
+    'console',
+    new ConsoleTransport({
+      level: options.level
+    })
+  );
+
+  app.context.logger = logger;
 };
 
 export interface MulOpts {
-  autoFields?: boolean;
   singleLimit?: number;
   totalLimit?: number;
   fileNums?: number;
@@ -132,51 +141,62 @@ export const multipart = (app: Application) => {
     if (!this.is('multipart')) {
       throw new Error('Content-Type must be multipart/*');
     }
-    // field指表单中的非文件
-    const parts = parse(this, { autoFields: opts && opts.autoFields });
-    let part;
-    let totalSize = 0;
-    const files: any[] = [];
-    // tslint:disable-next-line:no-conditional-assignment
-    while ((part = await parts()) != null) {
-      if (part.length) {
-        // arrays are busboy fields
-      } else {
-        if (!part.filename) {
-          // user click `upload` before choose a file,
-          // `part` will be file stream, but `part.filename` is empty
-          // must handler this, such as log error.
-          await sendToWormhole(part);
-          continue;
-        }
-        // otherwise, it's a stream
-        // part.fieldname, part.filename, part.encoding, part.mime
-        // _readableState.length
-        // part.readableLength 31492 检查单个文件的大小
-        // 超过长度，报错
-        // 检查extension，报错
-        const ext = extname(part.filename);
-        if (
-          !checkFileExtension(ext, opts && opts.include, opts && opts.exclude)
-        ) {
-          throw new FileExtensionException({ msg: `不支持类型为${ext}的文件` });
-        }
-        const { valid, conf } = checkSingleFileSize(
-          part._readableState.length,
-          opts && opts.singleLimit
-        );
-        if (!valid) {
-          throw new FileTooLargeException({
-            msg: `文件单个大小不能超过${conf}b`
-          });
-        }
-        // 计算总大小
-        totalSize += part._readableState.length;
-        const tmp = cloneDeep(part);
-        files.push(tmp);
-        // 恢复再次接受data
-        part.resume();
+    let filePromises: Promise<any>[] = [];
+    const { fields } = await asyncBusboy(this.req, {
+      onFile: async function(fieldname, file, filename, encoding, mimetype) {
+        const filePromise = new Promise((resolve, reject) => {
+          let bufs = [];
+          file
+            .on('error', err => {
+              file.resume();
+              reject(err);
+            })
+            .on('data', (d: never) => {
+              bufs.push(d);
+            })
+            .on('end', () => {
+              const buf = Buffer.concat(bufs);
+              resolve({
+                size: buf.length,
+                encoding: encoding,
+                fieldname: fieldname,
+                filename: filename,
+                mimeType: mimetype,
+                data: buf
+              });
+            });
+        });
+        filePromises.push(filePromise);
       }
+    });
+    let files: any[] = [];
+    let totalSize = 0;
+
+    for (const filePromise of filePromises) {
+      let file;
+      try {
+        file = await filePromise;
+      } catch (error) {
+        throw new HttpException({ msg: '文件体损坏，无法读取' });
+      }
+      const ext = extname(file.filename);
+      if (
+        !checkFileExtension(ext, opts && opts.include, opts && opts.exclude)
+      ) {
+        throw new FileExtensionException({ msg: `不支持类型为${ext}的文件` });
+      }
+      const { valid, conf } = checkSingleFileSize(
+        file.size,
+        opts && opts.singleLimit
+      );
+      if (!valid) {
+        throw new FileTooLargeException({
+          msg: `${file.filename}大小不能超过${conf}字节`
+        });
+      }
+      // 计算总大小
+      totalSize += file.size;
+      files.push(file);
     }
     const { valid, conf } = checkFileNums(files.length, opts && opts.fileNums);
     if (!valid) {
@@ -189,6 +209,7 @@ export const multipart = (app: Application) => {
     if (!valid1) {
       throw new FileTooLargeException({ msg: `总文件体积不能超过${conf1}` });
     }
+    this.request.fields = fields;
     return files;
   };
 };

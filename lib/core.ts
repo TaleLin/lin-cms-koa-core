@@ -97,7 +97,7 @@ export class Lin {
     const pluginRp = new LinRouter({ prefix: '/plugin' });
     Object.values(this.manager!.plugins).forEach(plugin => {
       consola.info(`loading plugin: ${get(plugin, 'name')}`);
-      const controllers = Object.values(get(plugin, 'controllers'));
+      const controllers: any[] = Object.values(get(plugin, 'controllers'));
       if (controllers.length > 1) {
         controllers.forEach(cont => {
           set(
@@ -117,8 +117,8 @@ export class Lin {
             set(ly, 'path', `/${get(plugin, 'name')}${get(ly, 'path')}`);
           });
           pluginRp
-            .use((cont as any).routes() as IMiddleware)
-            .use((cont as any).allowedMethods() as IMiddleware);
+            .use(cont.routes() as IMiddleware)
+            .use(cont.allowedMethods() as IMiddleware);
         });
       } else {
         controllers.forEach(cont => {
@@ -128,8 +128,8 @@ export class Lin {
             });
           }
           pluginRp
-            .use((cont as any).routes() as IMiddleware)
-            .use((cont as any).allowedMethods() as IMiddleware);
+            .use(cont.routes() as IMiddleware)
+            .use(cont.allowedMethods() as IMiddleware);
         });
       }
     });
