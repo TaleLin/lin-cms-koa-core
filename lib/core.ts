@@ -62,6 +62,7 @@ export class Lin {
     userModel = userModel || User;
     groupModel = groupModel || Group;
     authModel = authModel || Auth;
+    this.initModels(userModel, groupModel, authModel);
     this.applyManager(userModel, groupModel, authModel);
     // 4. db 同步到数据库默认为false，每次同步会很慢 todo 抽离
     await this.applyDB(synchronize);
@@ -74,6 +75,50 @@ export class Lin {
   private applyJwt() {
     const secret = this.app!.context.config.getItem('secret');
     jwt.initApp(this.app!, secret);
+  }
+
+  private initModels(userModel: any, groupModel: any, authModel: any) {
+    userModel.init(
+      {
+        ...UserInterface.attributes
+      },
+      merge(
+        {
+          sequelize: db,
+          tableName: 'lin_user',
+          modelName: 'user'
+        },
+        UserInterface.options
+      )
+    );
+
+    groupModel.init(
+      {
+        ...GroupInterface.attributes
+      },
+      merge(
+        {
+          sequelize: db,
+          tableName: 'lin_group',
+          modelName: 'group'
+        },
+        GroupInterface.options
+      )
+    );
+
+    authModel.init(
+      {
+        ...AuthInterface.attributes
+      },
+      merge(
+        {
+          sequelize: db,
+          tableName: 'lin_auth',
+          modelName: 'auth'
+        },
+        AuthInterface.options
+      )
+    );
   }
 
   private async applyDB(synchronize?: boolean, force?: boolean) {
@@ -278,20 +323,6 @@ export class User extends Model {
   }
 }
 
-User.init(
-  {
-    ...UserInterface.attributes
-  },
-  merge(
-    {
-      sequelize: db,
-      tableName: 'lin_user',
-      modelName: 'user'
-    },
-    UserInterface.options
-  )
-);
-
 /**
  * 权限系统中的Group模型
  */
@@ -312,20 +343,6 @@ export class Group extends Model {
   }
 }
 
-Group.init(
-  {
-    ...GroupInterface.attributes
-  },
-  merge(
-    {
-      sequelize: db,
-      tableName: 'lin_group',
-      modelName: 'group'
-    },
-    GroupInterface.options
-  )
-);
-
 /**
  * 权限系统中的Auth模型
  */
@@ -345,20 +362,6 @@ export class Auth extends Model {
     };
   }
 }
-
-Auth.init(
-  {
-    ...AuthInterface.attributes
-  },
-  merge(
-    {
-      sequelize: db,
-      tableName: 'lin_auth',
-      modelName: 'auth'
-    },
-    AuthInterface.options
-  )
-);
 
 export interface LogArgs {
   message?: string;

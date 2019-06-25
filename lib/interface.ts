@@ -7,7 +7,7 @@ import { generate } from './password-hash';
 /**
  * 记录信息的mixin
  */
-export const InfoCrudMixin = {
+export let InfoCrudMixin = {
   attributes: {},
   options: {
     createdAt: 'create_time',
@@ -30,7 +30,7 @@ export const InfoCrudMixin = {
 /**
  * 用户接口
  */
-export const UserInterface = {
+export let UserInterface = {
   attributes: {
     id: {
       type: Sequelize.INTEGER,
@@ -78,28 +78,37 @@ export const UserInterface = {
       }
     }
   },
-  options: merge(
-    {
-      tableName: 'lin_user',
-      getterMethods: {
-        isAdmin() {
-          // @ts-ignore
-          return this.getDataValue('admin') === UserAdmin.ADMIN;
-        },
-        isActive() {
-          // @ts-ignore
-          return this.getDataValue('active') === UserActive.ACTIVE;
-        }
+  options: {
+    tableName: 'lin_user',
+    createdAt: 'create_time',
+    updatedAt: 'update_time',
+    deletedAt: 'delete_time',
+    paranoid: true,
+    getterMethods: {
+      isAdmin() {
+        // @ts-ignore
+        return this.getDataValue('admin') === UserAdmin.ADMIN;
+      },
+      isActive() {
+        // @ts-ignore
+        return this.getDataValue('active') === UserActive.ACTIVE;
+      },
+      createTime() {
+        // @ts-ignore
+        return dayjs(this.getDataValue('create_time')).unix() * 1000;
+      },
+      updateTime() {
+        // @ts-ignore
+        return dayjs(this.getDataValue('update_time')).unix() * 1000;
       }
-    },
-    InfoCrudMixin.options
-  )
+    }
+  }
 };
 
 /**
  * 权限接口
  */
-export const AuthInterface = {
+export let AuthInterface = {
   attributes: {
     id: {
       type: Sequelize.INTEGER,
@@ -127,7 +136,7 @@ export const AuthInterface = {
 /**
  * 分组接口
  */
-export const GroupInterface = {
+export let GroupInterface = {
   attributes: {
     id: {
       type: Sequelize.INTEGER,
@@ -152,7 +161,7 @@ export const GroupInterface = {
 /**
  * 日志接口
  */
-export const LogInterface = {
+export let LogInterface = {
   attributes: {
     id: {
       type: Sequelize.INTEGER,
@@ -198,7 +207,7 @@ export const LogInterface = {
 /**
  * 文件接口
  */
-export const FileInterface = {
+export let FileInterface = {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
