@@ -1,4 +1,3 @@
-import isAsyncFunction from 'is-async-function';
 import { get, isArray, unset, cloneDeep } from 'lodash';
 import { ParametersException, HttpException } from './exception';
 import { Context } from 'koa';
@@ -165,11 +164,7 @@ export class LinValidator {
             // 当rule的optional为false时，进行校验
             if (!stoppedFlag && !it.optional) {
               let valid: boolean;
-              if (isAsyncFunction(it.validate)) {
-                valid = await it.validate(this.data[dataKey][key]);
-              } else {
-                valid = it.validate(this.data[dataKey][key]);
-              }
+              valid = await it.validate(this.data[dataKey][key]);
               if (!valid) {
                 errs.push(it.message);
                 // 如果当前key已有错误，则置stoppedFlag为true，后续会直接跳过校验
@@ -187,11 +182,7 @@ export class LinValidator {
           const errs: String[] = [];
           if (!stoppedFlag && !value.optional) {
             let valid: boolean;
-            if (isAsyncFunction(value.validate)) {
-              valid = await value.validate(this.data[dataKey][key]);
-            } else {
-              valid = value.validate(this.data[dataKey][key]);
-            }
+            valid = await value.validate(this.data[dataKey][key]);
             if (!valid) {
               errs.push(value.message);
               // 如果当前key已有错误，则置stoppedFlag为true，后续会直接跳过校验
@@ -220,11 +211,7 @@ export class LinValidator {
       // 自定义校验函数，第一个参数是校验是否成功，第二个参数为错误信息
       let validRes: boolean;
       try {
-        if (isAsyncFunction(customerValidateFunc)) {
-          validRes = await customerValidateFunc.call(this, this.data);
-        } else {
-          validRes = customerValidateFunc.call(this, this.data);
-        }
+        validRes = await customerValidateFunc.call(this, this.data);
         if (isArray(validRes) && !validRes[0]) {
           let key;
           if (validRes[2]) {
