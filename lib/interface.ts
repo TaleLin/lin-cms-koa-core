@@ -3,6 +3,7 @@ import { merge } from 'lodash';
 import { UserAdmin, UserActive } from './enums';
 import dayjs from 'dayjs';
 import { generate } from './password-hash';
+import {config} from './config';
 
 /**
  * 记录信息的mixin
@@ -45,7 +46,12 @@ export let UserInterface = {
     avatar: {
       // 用户默认生成图像，为null
       type: Sequelize.STRING({ length: 500 }),
-      comment: '头像url'
+      comment: '头像url',
+      get() {
+        // @ts-ignore
+        return config.getItem('siteDomain') + 'assets/' + this.getDataValue('avatar');
+      }
+      
     },
     admin: {
       type: Sequelize.TINYINT,
