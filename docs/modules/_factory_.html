@@ -92,13 +92,13 @@
 					<a name="modelextend" class="tsd-anchor"></a>
 					<h3>model<wbr>Extend</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
-						<li class="tsd-signature tsd-kind-icon">model<wbr>Extend<span class="tsd-signature-symbol">(</span>superModel<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, attributes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">model</span></li>
+						<li class="tsd-signature tsd-kind-icon">model<wbr>Extend<span class="tsd-signature-symbol">(</span>superModel<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, attributes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/1784b28/lib/factory.ts#L30">factory.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/3e5bfce/lib/factory.ts#L41">factory.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -119,26 +119,21 @@
 									<div class="tsd-comment tsd-typography">
 										<p>扩展的属性</p>
 										<pre><code class="language-js"><span class="hljs-keyword">const</span> { modelExtend } = <span class="hljs-built_in">require</span>(<span class="hljs-string">"lin-mizar/lin/factory"</span>);
-<span class="hljs-keyword">const</span> { User } = <span class="hljs-built_in">require</span>(<span class="hljs-string">"lin-mizar"</span>);
+<span class="hljs-keyword">const</span> { UserInterface } = <span class="hljs-built_in">require</span>(<span class="hljs-string">"lin-mizar"</span>);
 <span class="hljs-keyword">const</span> Sequelize = <span class="hljs-built_in">require</span>(<span class="hljs-string">"sequelize"</span>);
 
-<span class="hljs-keyword">const</span> User2 = modelExtend(User, {
+modelExtend(UserInterface, {
 <span class="hljs-attr">phone</span>: {
  <span class="hljs-attr">type</span>: Sequelize.STRING(<span class="hljs-number">30</span>),
  <span class="hljs-attr">unique</span>: <span class="hljs-literal">true</span>,
  <span class="hljs-attr">allowNull</span>: <span class="hljs-literal">true</span>
  }
 });
-
-User2.prototype.sayHello = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
- <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"hello world!"</span>);
-};
-
-<span class="hljs-built_in">module</span>.exports = { User2 };</code></pre>
+</code></pre>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">model</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
