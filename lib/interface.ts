@@ -49,7 +49,7 @@ export let UserInterface = {
       comment: '头像url',
       get() {
         // @ts-ignore
-        return config.getItem('siteDomain') + 'assets/' + this.getDataValue('avatar');
+        return this.getDataValue('avatar') ? config.getItem('siteDomain') + 'assets/' + this.getDataValue('avatar') : null;
       }
       
     },
