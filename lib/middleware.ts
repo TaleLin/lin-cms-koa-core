@@ -1,5 +1,7 @@
 import { HttpException, NotFound, MethodNotAllowed } from './exception';
 import { Context } from 'koa';
+const levels = require('egg-logger/lib/level');
+import { config } from './config';
 
 /**
  * 全局异常处理中间件
@@ -32,10 +34,25 @@ export const log = async (ctx: Context, next: () => Promise<any>) => {
     await next();
     const ms = Date.now() - start;
     ctx.set('X-Response-Time', `${ms}ms`);
-    ctx.logger.info(
-      `[${ctx.method}] -> [${ctx.url}] from: ${ctx.ip} costs: ${ms}ms`
-    );
-
+    const requestLog: boolean = config.getItem('log.requestLog', true);
+    const level: string = config.getItem('log.level', 'INFO');
+    if (requestLog) {
+      if (levels[level] <= levels['DEBUG']) {
+        const data = {
+          param: ctx.request.query,
+          body: ctx.request.body
+        };
+        ctx.logger.debug(
+          `[${ctx.method}] -> [${ctx.url}] from: ${
+            ctx.ip
+          } costs: ${ms}ms data:${JSON.stringify(data, null, 4)}`
+        );
+      } else {
+        ctx.logger.info(
+          `[${ctx.method}] -> [${ctx.url}] from: ${ctx.ip} costs: ${ms}ms`
+        );
+      }
+    }
     if (ctx.status === 404) {
       ctx.app.emit('error', new NotFound(), ctx);
     } else if (ctx.status === 405) {
@@ -44,6 +61,26 @@ export const log = async (ctx: Context, next: () => Promise<any>) => {
       ctx.app.emit('error', new HttpException({ msg: ctx.message }), ctx);
     }
   } catch (err) {
+    const ms = Date.now() - start;
+    const requestLog: boolean = config.getItem('log.requestLog', true);
+    const level: string = config.getItem('log.level', 'INFO');
+    if (requestLog) {
+      if (levels[level] <= levels['DEBUG']) {
+        const data = {
+          param: ctx.request.query,
+          body: ctx.request.body
+        };
+        ctx.logger.debug(
+          `[${ctx.method}] -> [${ctx.url}] from: ${
+            ctx.ip
+          } costs: ${ms}ms data:${JSON.stringify(data, null, 4)}`
+        );
+      } else {
+        ctx.logger.info(
+          `[${ctx.method}] -> [${ctx.url}] from: ${ctx.ip} costs: ${ms}ms`
+        );
+      }
+    }
     ctx.status = ctx.status || 500;
     ctx.app.emit('error', err, ctx);
   }

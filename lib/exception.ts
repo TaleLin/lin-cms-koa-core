@@ -405,7 +405,7 @@ export class FileTooManyException extends HttpException {
  * 文件扩展名不符合规范
  */
 export class FileExtensionException extends HttpException {
-  public code = 401;
+  public code = 406;
   public msg = '文件扩展名不符合规范';
   public errorCode = 10130;
 

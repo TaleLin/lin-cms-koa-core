@@ -11,6 +11,7 @@ const depd = require('depd')('egg-logger');
 const utils = require('egg-logger/lib/utils');
 
 import { Transport } from 'egg-logger';
+import { consoleFormatter } from './format';
 
 /**
  * output log into file {@link Transport}。
@@ -18,7 +19,7 @@ import { Transport } from 'egg-logger';
 export class FileTransport extends Transport {
   _stream: fs.WriteStream | null;
   options: any;
-  logCount: number = 1;
+
   /**
    * @constructor
    * @param {Object} options
@@ -31,7 +32,6 @@ export class FileTransport extends Transport {
     assert(this.options.sizeLimit, 'should pass options.sizeLimit');
 
     this._stream = null;
-    this.logCount = 1;
     this.reload();
   }
 
@@ -65,13 +65,13 @@ export class FileTransport extends Transport {
     // 存在，则判断是否溢出
     if (filename) {
       const overflow = this.checkSizeOverflow(filename);
-      // 如果溢出，logCount ++ , reload
+      // 如果溢出，reload
       if (overflow) {
-        this.logCount += 1;
+        // filename重命名
+        this.renameLogFile(filename);
         this.reload();
       }
     } else {
-      this.logCount = 1;
       this.reload();
     }
 
@@ -80,6 +80,8 @@ export class FileTransport extends Transport {
       console.error(err.stack);
       return;
     }
+    meta = meta || {};
+    meta.formatter = consoleFormatter;
     const buf = super.log(level, args, meta);
     // @ts-ignore
     if (buf.length) {
@@ -87,12 +89,24 @@ export class FileTransport extends Transport {
     }
   }
 
+  renameLogFile(filename: string) {
+    const today = dayjs();
+    const dir = path.dirname(filename);
+    const mill = today.format('HH:mm:ss');
+    const refilename = path.join(
+      dir,
+      `${today.format('YYYY-MM-DD')}-${mill}.log`
+    );
+    fs.renameSync(filename, refilename);
+  }
+
   /**
    * 检查当前的日志文件是否为当天
    */
   checkIsPresent() {
     // 检查前面的日志
-    // 2019-05-29.1.log
+    // 2019-06-01-21:29:01.log
+    // 而且检查当前文件夹
     const filename = this.getPresentFilename();
     const exist = fs.existsSync(filename);
     if (exist) {
@@ -106,8 +120,10 @@ export class FileTransport extends Transport {
     const dir: string = path.isAbsolute(this.options.dir)
       ? this.options.dir
       : path.join(process.cwd(), this.options.dir);
-    const today = dayjs().format('YYYY-MM-DD');
-    const filename = path.join(dir, `${today}.${this.logCount}.log`);
+    const today = dayjs();
+    const ddir = path.join(dir, today.format('YYYY-MM'));
+    const dfilename = today.format('YYYY-MM-DD');
+    const filename = path.join(ddir, `${dfilename}.log`);
     return filename;
   }
 

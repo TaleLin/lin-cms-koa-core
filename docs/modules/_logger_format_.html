@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>FileArgs | lin-mizar</title>
+	<title>&quot;logger/format&quot; | lin-mizar</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,106 +56,127 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_core_.html">&quot;core&quot;</a>
-				</li>
-				<li>
-					<a href="_core_.fileargs.html">FileArgs</a>
+					<a href="_logger_format_.html">&quot;logger/format&quot;</a>
 				</li>
 			</ul>
-			<h1>Interface FileArgs</h1>
+			<h1>External module &quot;logger/format&quot;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<span class="target">FileArgs</span>
-					</li>
-				</ul>
-			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Variables</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_core_.fileargs.html#extension" class="tsd-kind-icon">extension</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_core_.fileargs.html#md5" class="tsd-kind-icon">md5</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_core_.fileargs.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_core_.fileargs.html#path" class="tsd-kind-icon">path</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_core_.fileargs.html#size" class="tsd-kind-icon">size</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_core_.fileargs.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_logger_format_.html#categoryregexp" class="tsd-kind-icon">category<wbr>Regexp</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_logger_format_.html#chalk" class="tsd-kind-icon">chalk</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_logger_format_.html#duartionregexp" class="tsd-kind-icon">duartion<wbr>Regexp</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_logger_format_.html#hostname" class="tsd-kind-icon">hostname</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_logger_format_.html#httpmethodregexp" class="tsd-kind-icon">http<wbr>Method<wbr>Regexp</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_logger_format_.html#os" class="tsd-kind-icon">os</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_logger_format_.html#consoleformatter" class="tsd-kind-icon">console<wbr>Formatter</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="categoryregexp" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> category<wbr>Regexp</h3>
+					<div class="tsd-signature tsd-kind-icon">category<wbr>Regexp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> =&nbsp;/(\[[\w\-_.:]+\])/g</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/3e5bfce/lib/logger/format.ts#L7">logger/format.ts:7</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="chalk" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> chalk</h3>
+					<div class="tsd-signature tsd-kind-icon">chalk<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;chalk&#x27;)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/3e5bfce/lib/logger/format.ts#L1">logger/format.ts:1</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="duartionregexp" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> duartion<wbr>Regexp</h3>
+					<div class="tsd-signature tsd-kind-icon">duartion<wbr>Regexp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> =&nbsp;/([0-9]+ms)/g</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/3e5bfce/lib/logger/format.ts#L5">logger/format.ts:5</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="hostname" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> hostname</h3>
+					<div class="tsd-signature tsd-kind-icon">hostname<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;os.hostname()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/3e5bfce/lib/logger/format.ts#L4">logger/format.ts:4</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="httpmethodregexp" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> http<wbr>Method<wbr>Regexp</h3>
+					<div class="tsd-signature tsd-kind-icon">http<wbr>Method<wbr>Regexp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> =&nbsp;/(GET|POST|PUT|PATH|HEAD|DELETE) /g</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/3e5bfce/lib/logger/format.ts#L8">logger/format.ts:8</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="os" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> os</h3>
+					<div class="tsd-signature tsd-kind-icon">os<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;os&#x27;)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/3e5bfce/lib/logger/format.ts#L2">logger/format.ts:2</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="extension" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> extension</h3>
-					<div class="tsd-signature tsd-kind-icon">extension<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/3e5bfce/lib/core.ts#L433">core.ts:433</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="md5" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> md5</h3>
-					<div class="tsd-signature tsd-kind-icon">md5<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/3e5bfce/lib/core.ts#L435">core.ts:435</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="name" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/3e5bfce/lib/core.ts#L432">core.ts:432</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="path" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> path</h3>
-					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/3e5bfce/lib/core.ts#L430">core.ts:430</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="size" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> size</h3>
-					<div class="tsd-signature tsd-kind-icon">size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/3e5bfce/lib/core.ts#L434">core.ts:434</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="type" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/3e5bfce/lib/core.ts#L431">core.ts:431</a></li>
-						</ul>
-					</aside>
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="consoleformatter" class="tsd-anchor"></a>
+					<h3>console<wbr>Formatter</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">console<wbr>Formatter<span class="tsd-signature-symbol">(</span>meta<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/3e5bfce/lib/logger/format.ts#L11">logger/format.ts:11</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>meta: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -166,71 +187,32 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_core_.html">"core"</a>
+						<a href="_logger_format_.html">"logger/format"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../classes/_core_.auth.html" class="tsd-kind-icon">Auth</a>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_logger_format_.html#categoryregexp" class="tsd-kind-icon">category<wbr>Regexp</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../classes/_core_.file.html" class="tsd-kind-icon">File</a>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_logger_format_.html#chalk" class="tsd-kind-icon">chalk</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../classes/_core_.group.html" class="tsd-kind-icon">Group</a>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_logger_format_.html#duartionregexp" class="tsd-kind-icon">duartion<wbr>Regexp</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_core_.lin.html" class="tsd-kind-icon">Lin</a>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_logger_format_.html#hostname" class="tsd-kind-icon">hostname</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../classes/_core_.log.html" class="tsd-kind-icon">Log</a>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_logger_format_.html#httpmethodregexp" class="tsd-kind-icon">http<wbr>Method<wbr>Regexp</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_core_.manager.html" class="tsd-kind-icon">Manager</a>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_logger_format_.html#os" class="tsd-kind-icon">os</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../classes/_core_.user.html" class="tsd-kind-icon">User</a>
-					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_core_.fileargs.html" class="tsd-kind-icon">File<wbr>Args</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_core_.fileargs.html#extension" class="tsd-kind-icon">extension</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_core_.fileargs.html#md5" class="tsd-kind-icon">md5</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_core_.fileargs.html#name" class="tsd-kind-icon">name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_core_.fileargs.html#path" class="tsd-kind-icon">path</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_core_.fileargs.html#size" class="tsd-kind-icon">size</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_core_.fileargs.html#type" class="tsd-kind-icon">type</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_core_.logargs.html" class="tsd-kind-icon">Log<wbr>Args</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
-						<a href="../modules/_core_.html#__version__" class="tsd-kind-icon">__version__</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
-						<a href="../modules/_core_.html#disableloading" class="tsd-kind-icon">disable<wbr>Loading</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
-						<a href="../modules/_core_.html#routemetainfo" class="tsd-kind-icon">route<wbr>Meta<wbr>Info</a>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="_logger_format_.html#consoleformatter" class="tsd-kind-icon">console<wbr>Formatter</a>
 					</li>
 				</ul>
 			</nav>

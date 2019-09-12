@@ -9,10 +9,10 @@
  *
  * ```js
  * const { modelExtend } = require("lin-mizar/lin/factory");
- * const { User } = require("lin-mizar");
+ * const { UserInterface } = require("lin-mizar");
  * const Sequelize = require("sequelize");
  *
- * const User2 = modelExtend(User, {
+ * modelExtend(UserInterface, {
  * phone: {
  *  type: Sequelize.STRING(30),
  *  unique: true,
@@ -20,25 +20,25 @@
  *  }
  * });
  *
- * User2.prototype.sayHello = function () {
- *  console.log("hello world!");
- * };
- *
- * module.exports = { User2 };
  * ```
  */
+// export function modelExtend(superModel: any, attributes) {
+//   superModel.tableAttributes = {
+//     ...superModel.tableAttributes,
+//     ...attributes
+//   };
+//   const model = class extends superModel {};
+//   Object.keys(attributes).forEach(key => {
+//     Object.defineProperty(model.prototype, key, {
+//       get() {
+//         return this.dataValues && this.dataValues[key];
+//       }
+//     });
+//   });
+//   return model;
+// }
+
 export function modelExtend(superModel: any, attributes) {
-  superModel.tableAttributes = {
-    ...superModel.tableAttributes,
-    ...attributes
-  };
-  const model = class extends superModel {};
-  Object.keys(attributes).forEach(key => {
-    Object.defineProperty(model.prototype, key, {
-      get() {
-        return this.dataValues && this.dataValues[key];
-      }
-    });
-  });
-  return model;
+  // UserInterface.attributes
+  superModel.attributes = { ...superModel.attributes, ...attributes };
 }
