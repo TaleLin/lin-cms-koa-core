@@ -3,7 +3,7 @@ import { merge } from 'lodash';
 import { UserAdmin, UserActive } from './enums';
 import dayjs from 'dayjs';
 import { generate } from './password-hash';
-import {config} from './config';
+import { config } from './config';
 
 /**
  * 记录信息的mixin
@@ -38,10 +38,15 @@ export let UserInterface = {
       primaryKey: true,
       autoIncrement: true
     },
-    nickname: {
+    username: {
       type: Sequelize.STRING({ length: 24 }),
       allowNull: false,
       unique: true
+    },
+    nickname: {
+      type: Sequelize.STRING({ length: 24 }),
+      comment: '昵称',
+      allowNull: true
     },
     avatar: {
       // 用户默认生成图像，为null
@@ -51,7 +56,7 @@ export let UserInterface = {
         // @ts-ignore
         return this.getDataValue('avatar') ? config.getItem('siteDomain') + 'assets/' + this.getDataValue('avatar') : null;
       }
-      
+
     },
     admin: {
       type: Sequelize.TINYINT,
