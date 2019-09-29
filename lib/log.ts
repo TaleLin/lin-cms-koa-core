@@ -20,7 +20,7 @@ const REG_XP = /(?<=\{)[^}]*(?=\})/g;
  *   mount: true
  * },
  * loginRequired,
- * logger("{user.nickname}就是皮了一波"),
+ * logger("{user.username}就是皮了一波"),
  * async ctx => {
  *   ctx.json({
  *     msg: "物质决定意识，经济基础决定上层建筑"
@@ -56,7 +56,7 @@ function writeLog(template: string, ctx: IRouterContext) {
       {
         message: message,
         user_id: ctx.currentUser.id,
-        user_name: ctx.currentUser.nickname,
+        user_name: ctx.currentUser.username,
         status_code: statusCode,
         method: ctx.request.method,
         path: ctx.request.path,

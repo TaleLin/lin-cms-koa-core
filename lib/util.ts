@@ -147,7 +147,7 @@ export function unsets(obj: any, props: Array<string>) {
  *  message: "昵称不可为空"
  * }),
  * tslib.__metadata("design:type", String)
- * ] , RegisterForm.prototype, "nickname", void 0);
+ * ] , RegisterForm.prototype, "username", void 0);
  * // 可被转化为
  * decorate(
  * [Length(2, 20, {
@@ -158,7 +158,7 @@ export function unsets(obj: any, props: Array<string>) {
  * })],
  * String,
  * RegisterForm.prototype,
- * "nickname"
+ * "username"
  * )
  * ```
  */
