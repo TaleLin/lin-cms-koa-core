@@ -223,11 +223,11 @@ export class Manager {
 
   /**
    * 校验密码是否正确
-   * @param nickname 昵称
+   * @param username 昵称
    * @param password 密码
    */
-  public verify(nickname: string, password: string) {
-    return this.userModel.verify(nickname, password);
+  public verify(username: string, password: string) {
+    return this.userModel.verify(username, password);
   }
 
   /**
@@ -252,7 +252,7 @@ export class Manager {
  */
 export class User extends Model {
   public id!: number;
-  public nickname!: string;
+  public username!: string;
   public admin!: number;
   public active!: number;
   public email!: string;
@@ -268,9 +268,9 @@ export class User extends Model {
   // tslint:disable-next-line:variable-name
   public delete_time!: Date;
 
-  static async verify(nickname: string, password: string): Promise<User> {
+  static async verify(username: string, password: string): Promise<User> {
     // tslint:disable-next-line: await-promise
-    const user = await this.findOne({ where: { nickname, delete_time: null } });
+    const user = await this.findOne({ where: { username, delete_time: null } });
     if (!user) {
       throw new NotFound({ msg: '用户不存在' });
     }
@@ -302,7 +302,7 @@ export class User extends Model {
   toJSON() {
     const origin = {
       id: this.id,
-      nickname: this.nickname,
+      username: this.username,
       admin: this.admin,
       active: this.active,
       email: this.email,
