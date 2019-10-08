@@ -253,6 +253,7 @@ export class Manager {
 export class User extends Model {
   public id!: number;
   public username!: string;
+  public nickname!: string;
   public admin!: number;
   public active!: number;
   public email!: string;
@@ -303,6 +304,7 @@ export class User extends Model {
     const origin = {
       id: this.id,
       username: this.username,
+      nickname: this.nickname,
       admin: this.admin,
       active: this.active,
       email: this.email,

@@ -54,7 +54,7 @@ export let UserInterface = {
       comment: '头像url',
       get() {
         // @ts-ignore
-        return this.getDataValue('avatar') ? config.getItem('siteDomain') + 'assets/' + this.getDataValue('avatar') : null;
+        return this.getDataValue('avatar') ? config.getItem('siteDomain').replace(/\/+$/, '') + '/assets/' + this.getDataValue('avatar') : null;
       }
 
     },
