@@ -315,10 +315,8 @@ export class User extends Model {
       // @ts-ignore
       update_time: this.updateTime
     };
-    if (has(this, 'auths')) {
-      return { ...origin, auths: get(this, 'auths', []) };
-    } else if (has(this, 'groupName')) {
-      return { ...origin, group_name: get(this, 'groupName', '') };
+    if (has(this, 'auths') || has(this, 'groupName')) {
+      return { ...origin, auths: get(this, 'auths', []), group_name: get(this, 'groupName', '') };
     } else {
       return origin;
     }
