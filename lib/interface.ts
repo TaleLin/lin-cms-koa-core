@@ -1,7 +1,5 @@
 import Sequelize from 'sequelize';
-import { merge } from 'lodash';
 import { UserAdmin, UserActive } from './enums';
-import dayjs from 'dayjs';
 import { generate } from './password-hash';
 import { config } from './config';
 
@@ -17,12 +15,10 @@ export let InfoCrudMixin = {
     paranoid: true,
     getterMethods: {
       createTime() {
-        // @ts-ignore
-        return dayjs(this.getDataValue('create_time')).unix() * 1000;
+        return new Date().getTime();
       },
       updateTime() {
-        // @ts-ignore
-        return dayjs(this.getDataValue('update_time')).unix() * 1000;
+        return new Date().getTime();
       }
     }
   }
@@ -54,7 +50,7 @@ export let UserInterface = {
       comment: '头像url',
       get() {
         // @ts-ignore
-        return this.getDataValue('avatar') ? config.getItem('siteDomain') + 'assets/' + this.getDataValue('avatar') : null;
+        return this.getDataValue('avatar') ? config.getItem('siteDomain').replace(/\/+$/, '') + '/assets/' + this.getDataValue('avatar') : null;
       }
 
     },
@@ -105,12 +101,10 @@ export let UserInterface = {
         return this.getDataValue('active') === UserActive.ACTIVE;
       },
       createTime() {
-        // @ts-ignore
-        return dayjs(this.getDataValue('create_time')).unix() * 1000;
+        return new Date().getTime();
       },
       updateTime() {
-        // @ts-ignore
-        return dayjs(this.getDataValue('update_time')).unix() * 1000;
+        return new Date().getTime();
       }
     }
   }
@@ -208,8 +202,7 @@ export let LogInterface = {
     updatedAt: false,
     getterMethods: {
       time() {
-        // @ts-ignore
-        return dayjs(this.getDataValue('time')).unix() * 1000;
+        return new Date().getTime();
       }
     }
   }

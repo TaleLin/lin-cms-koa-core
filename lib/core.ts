@@ -253,6 +253,7 @@ export class Manager {
 export class User extends Model {
   public id!: number;
   public username!: string;
+  public nickname!: string;
   public admin!: number;
   public active!: number;
   public email!: string;
@@ -303,6 +304,7 @@ export class User extends Model {
     const origin = {
       id: this.id,
       username: this.username,
+      nickname: this.nickname,
       admin: this.admin,
       active: this.active,
       email: this.email,
@@ -313,10 +315,8 @@ export class User extends Model {
       // @ts-ignore
       update_time: this.updateTime
     };
-    if (has(this, 'auths')) {
-      return { ...origin, auths: get(this, 'auths', []) };
-    } else if (has(this, 'groupName')) {
-      return { ...origin, group_name: get(this, 'groupName', '') };
+    if (has(this, 'auths') || has(this, 'groupName')) {
+      return { ...origin, auths: get(this, 'auths', []), group_name: get(this, 'groupName', '') };
     } else {
       return origin;
     }
