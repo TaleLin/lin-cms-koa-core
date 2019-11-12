@@ -15,10 +15,12 @@ export let InfoCrudMixin = {
     paranoid: true,
     getterMethods: {
       createTime() {
-        return new Date().getTime();
+        // @ts-ignore
+        return new Date(this.getDataValue('create_time')).getTime();
       },
       updateTime() {
-        return new Date().getTime();
+        // @ts-ignore
+        return new Date(this.getDataValue('update_time')).getTime();
       }
     }
   }
@@ -101,10 +103,12 @@ export let UserInterface = {
         return this.getDataValue('active') === UserActive.ACTIVE;
       },
       createTime() {
-        return new Date().getTime();
+        // @ts-ignore
+        return new Date(this.getDataValue('create_time')).getTime();
       },
       updateTime() {
-        return new Date().getTime();
+        // @ts-ignore
+        return new Date(this.getDataValue('update_time')).getTime();
       }
     }
   }
@@ -202,7 +206,8 @@ export let LogInterface = {
     updatedAt: false,
     getterMethods: {
       time() {
-        return new Date().getTime();
+        // @ts-ignore
+        return new Date(this.getDataValue('time')).getTime();
       }
     }
   }
