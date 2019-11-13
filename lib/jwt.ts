@@ -273,6 +273,7 @@ async function parseHeader(ctx: RouterContext, type = TokenType.ACCESS) {
     const token = parts[1];
 
     if (/^Bearer$/i.test(scheme)) {
+      // @ts-ignore
       const obj = ctx.jwt.verifyToken(token);
       if (!get(obj, 'type') || get(obj, 'type') !== type) {
         ctx.throw(new AuthFailed({ msg: '请使用正确类型的令牌' }));
@@ -280,11 +281,13 @@ async function parseHeader(ctx: RouterContext, type = TokenType.ACCESS) {
       if (!get(obj, 'scope') || get(obj, 'scope') !== 'lin') {
         ctx.throw(new AuthFailed({ msg: '请使用正确作用域的令牌' }));
       }
+      // @ts-ignore
       const user = await ctx.manager.userModel.findByPk(get(obj, 'identity'));
       if (!user) {
         ctx.throw(new NotFound({ msg: '用户不存在' }));
       }
       // 将user挂在ctx上
+      // @ts-ignore
       ctx.currentUser = user;
     }
   } else {
@@ -306,6 +309,7 @@ async function loginRequired(ctx: RouterContext, next: () => Promise<any>) {
     await parseHeader(ctx);
     // 一定要await，否则这个守卫函数没有作用
     // 用户处于未激活状态
+    // @ts-ignore
     const currentUser = ctx.currentUser;
     checkUserIsActive(currentUser);
     await next();
@@ -356,6 +360,7 @@ async function refreshTokenRequiredWithUnifyException(
 async function groupRequired(ctx: RouterContext, next: () => Promise<any>) {
   if (ctx.request.method !== 'OPTIONS') {
     await parseHeader(ctx);
+    // @ts-ignore
     const currentUser = ctx.currentUser;
     // 用户处于未激活状态
     checkUserIsActive(currentUser);
@@ -369,10 +374,13 @@ async function groupRequired(ctx: RouterContext, next: () => Promise<any>) {
           msg: '您还不属于任何权限组，请联系超级管理员获得权限'
         });
       }
+      // @ts-ignore
       if (ctx.matched) {
+        // @ts-ignore
         const routeName = ctx._matchedRouteName || ctx.routerName;
         const endpoint = `${ctx.method} ${routeName}`;
         const { auth, module } = routeMetaInfo.get(endpoint);
+        // @ts-ignore
         const item = await ctx.manager.authModel.findOne({
           where: { auth, module, group_id: groupId }
         });
@@ -397,6 +405,7 @@ async function groupRequired(ctx: RouterContext, next: () => Promise<any>) {
 async function adminRequired(ctx: RouterContext, next: () => Promise<any>) {
   if (ctx.request.method !== 'OPTIONS') {
     await parseHeader(ctx);
+    // @ts-ignore
     const currentUser = ctx.currentUser;
     if (currentUser && currentUser.isAdmin) {
       await next();
