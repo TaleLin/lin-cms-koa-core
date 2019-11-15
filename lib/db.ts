@@ -43,6 +43,32 @@ export const db = new Sequelize(database, username, password, {
 // const host = config.getItem('db.host', 'localhost');
 
 /**
+ * ssl连接
+ dialectOptions: {
+    ssl: {
+      cert: cert
+    }
+ } 
+ */
+const dialectOptions = config.getItem('db.ssl') ? {
+    ssl: {
+        cert: config.getItem('db.sslCert')
+    }
+} : {};
+
+/**
+ * 全局的 Sequelize 实例
+ */
+export const db = new Sequelize(database, username, password, {
+  host: host,
+  port: port,
+  dialect: type,
+  dialectOptions,
+  logging: logging,
+  timezone: '+08:00'
+});
+
+/**
  * 数据库端口，默认3306
  */
 // const port = config.getItem('db.port', 3306);
