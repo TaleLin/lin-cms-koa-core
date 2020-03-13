@@ -1,7 +1,6 @@
-import { Config } from '../lib/config';
+import { config as conf } from '../lib/config/index';
 
 test('测试Config', () => {
-  const conf = new Config();
   conf.getConfigFromFile('tests/setting.js');
   expect(conf.getItem('hello', null)).toBe(null);
   expect(conf.hasItem('hello')).toBe(false);

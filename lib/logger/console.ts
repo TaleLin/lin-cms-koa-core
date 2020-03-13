@@ -21,10 +21,6 @@ export class ConsoleTransport extends Transport {
   constructor(options) {
     super(options);
     this.options.stderrLevel = utils.normalizeLevel(this.options.stderrLevel);
-    // EGG_LOG has the highest priority
-    if (process.env.EGG_LOG) {
-      this.options.level = utils.normalizeLevel(process.env.EGG_LOG);
-    }
   }
 
   get defaults() {

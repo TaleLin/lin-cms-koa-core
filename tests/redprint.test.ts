@@ -1,5 +1,5 @@
-import { LinRouter } from '../lib/lin-router';
-import { routeMetaInfo } from '../lib/core';
+import { LinRouter } from '../lib/router';
+import { routeMetaInfo } from '../lib/core.';
 import { groupRequired } from '../lib/jwt';
 
 // ts的装饰器只能对类和类方法使用，不能对函数直接使用

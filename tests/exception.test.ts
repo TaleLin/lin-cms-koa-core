@@ -3,7 +3,7 @@ import { HttpException, ParametersException, Success } from '../lib/exception';
 test('测试HttpException基类', () => {
   const ex = new HttpException();
   expect(ex.code).toBe(500);
-  expect(ex.errorCode).toBe(999);
+  expect(ex.errorCode).toBe(9999);
 });
 
 test('测试ParametersException', () => {
