@@ -1,12 +1,13 @@
 {
   "name": "lin-mizar",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "The core library of Lin CMS",
   "main": "lin/index.js",
   "scripts": {
     "tsc": " rm -rf lin/ && tsc",
     "test": "jest tests",
-    "doc": "typedoc --out docs --mode modules ./lib"
+    "doc": "typedoc --out docs --mode modules ./lib",
+    "debugger": "node --inspect-brk ./node_modules/jest/bin/jest --runInBand --no-cache --no-watchman"
   },
   "keywords": [
     "lin",
@@ -44,12 +45,13 @@
     "@types/sequelize": "^4.27.39",
     "@types/uuid": "^3.4.4",
     "jest": "^24.3.1",
+    "supertest": "^4.0.2",
     "redis": "^2.8.0",
     "ts-jest": "^24.0.0",
     "ts-node": "^8.0.3",
     "tslint": "^5.13.1",
     "tslint-config-standard": "^8.0.1",
-    "typedoc": "^0.14.2",
-    "typescript": "^3.3.3333"
+    "typedoc": "^0.16.11",
+    "typescript": "^3.8.3"
   }
 }

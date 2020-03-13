@@ -1,4 +1,4 @@
-import { generate, verify } from '../lib/password-hash';
+import { generate, verify } from '../lib/encrypt';
 
 test('测试加密解密1', () => {
   const hash = generate('123456gpd');

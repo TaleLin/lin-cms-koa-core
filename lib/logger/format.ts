@@ -1,6 +1,9 @@
+'use strict';
+
 const chalk = require('chalk');
 const os = require('os');
 
+// other varibles
 const hostname = os.hostname();
 const duartionRegexp = /([0-9]+ms)/g;
 // eslint-disable-next-line no-useless-escape
