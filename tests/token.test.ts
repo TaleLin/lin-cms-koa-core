@@ -1,4 +1,3 @@
-const { createAccessToken, verifyAccessToken } = require('../lib/jwt');
 const { config } = require('../lib/config');
 
 beforeAll(() => {
@@ -7,6 +6,7 @@ beforeAll(() => {
 });
 
 test('测试token生成，验证', () => {
+  const { createAccessToken, verifyAccessToken } = require('../lib/jwt');
 
   const access = createAccessToken({
     name: 'Evan',
