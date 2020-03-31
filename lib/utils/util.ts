@@ -1,9 +1,7 @@
-import { IRouterContext } from 'koa-router';
 import fs from 'fs';
 import path from 'path';
 // import { routeMetaInfo } from './core';
-import { get, unset } from 'lodash';
-import { config } from '../config';
+import { unset } from 'lodash';
 // import { ParametersException } from './exception';
 // import { extendedValidator } from './extended-validator';
 import { __decorate, __metadata } from 'tslib';
@@ -64,27 +62,6 @@ export function toLine(name: string) {
 }
 
 /**
- * 通过当前的路由名找到对应的权限录入信息
- * @param ctx koa 的 context
- */
-// export function findAuthAndModule(ctx: IRouterContext) {
-//   const routeName = ctx._matchedRouteName || ctx.routerName;
-//   const endpoint = `${ctx.method} ${routeName}`;
-//   return routeMetaInfo.get(endpoint);
-// }
-
-// export function findMetaByAuth(auth: any) {
-//   const dests = Array.from(routeMetaInfo.values());
-//   for (let i = 0; i < dests.length; i++) {
-//     const el = dests[i];
-//     if (el['auth'] === auth) {
-//       return el;
-//     }
-//   }
-//   return null;
-// }
-
-/**
  * 检查日期的格式为 "YYYY-MM-DD HH:mm:ss"
  * @param time input time
  */
@@ -113,19 +90,6 @@ export function checkDateFormat(time: string) {
     d.getSeconds() === parseInt(r[7], 10)
   );
 }
-
-// export function paginate(ctx: IRouterContext) {
-//   let count =
-//     get(ctx.request.query, 'count') || config.getItem('countDefault', 10);
-//   let start =
-//     get(ctx.request.query, 'page') || config.getItem('pageDefault', 0);
-//   count = parseInt(count >= 15 ? 15 : count, 10);
-//   start = parseInt(start, 10) * count;
-//   if (start < 0 || count < 0) {
-//     throw new ParametersException({ msg: '请输入正确的分页参数' });
-//   }
-//   return { start, count };
-// }
 
 export function unsets(obj: any, props: Array<string>) {
   props.forEach(prop => {

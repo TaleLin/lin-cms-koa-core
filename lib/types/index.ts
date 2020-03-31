@@ -1,5 +1,3 @@
-import { Request } from 'koa'
-
 /**
  * HttpException 类构造函数的参数接口
  */
@@ -30,7 +28,7 @@ export interface MulOpts {
 }
 // lin-router 路由元信息
 export interface Meta {
-  auth?: string;
+  permission?: string;
   module?: string;
   mount?: boolean;
 }

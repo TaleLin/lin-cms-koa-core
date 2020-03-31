@@ -7,13 +7,10 @@ import jwtGenerator, {
 import {
   ExpiredTokenException,
   InvalidTokenException,
-  AuthFailed,
-  NotFound,
-  RefreshException
+  AuthFailed
 } from '../exception';
 import { RouterContext } from 'koa-router';
 import { get } from 'lodash';
-import { routeMetaInfo } from '../core.';
 import { TokenType } from '../utils';
 import { config } from '../config';
 
@@ -296,78 +293,8 @@ function parseHeader(ctx: RouterContext, type = TokenType.ACCESS) {
   }
 }
 
-function checkUserIsActive(user) {
-  if (!user || !user.isActive) {
-    throw new AuthFailed({ msg: '您目前处于未激活状态，请联系超级管理员' });
-  }
-}
-
-/**
- * 守卫函数，用户刷新令牌
- */
-async function refreshTokenRequired(
-  ctx: RouterContext,
-  next: () => Promise<any>
-) {
-  // 添加access 和 refresh 的标识位
-  if (ctx.request.method !== 'OPTIONS') {
-    await parseHeader(ctx, TokenType.REFRESH);
-    await next();
-  } else {
-    await next();
-  }
-}
-
-/**
- * 守卫函数，用于权限组鉴权
- */
-async function groupRequired(ctx: RouterContext, next: () => Promise<any>) {
-  if (ctx.request.method !== 'OPTIONS') {
-    await parseHeader(ctx);
-    // @ts-ignore
-    const currentUser = ctx.currentUser;
-    // 用户处于未激活状态
-    checkUserIsActive(currentUser);
-    // 超级管理员
-    if (currentUser && currentUser.isAdmin) {
-      await next();
-    } else {
-      const groupId = currentUser.group_id;
-      if (!groupId) {
-        throw new AuthFailed({
-          msg: '您还不属于任何权限组，请联系超级管理员获得权限'
-        });
-      }
-      // @ts-ignore
-      if (ctx.matched) {
-        // @ts-ignore
-        const routeName = ctx._matchedRouteName || ctx.routerName;
-        const endpoint = `${ctx.method} ${routeName}`;
-        const { auth, module } = routeMetaInfo.get(endpoint);
-        // @ts-ignore
-        const item = await ctx.manager.authModel.findOne({
-          where: { auth, module, group_id: groupId }
-        });
-        // console.log(item);
-        if (item) {
-          await next();
-        } else {
-          throw new AuthFailed({ msg: '权限不够，请联系超级管理员获得权限' });
-        }
-      } else {
-        throw new AuthFailed({ msg: '权限不够，请联系超级管理员获得权限' });
-      }
-    }
-  } else {
-    await next();
-  }
-}
-
 export {
   jwt,
   getTokens,
-  groupRequired,
-  parseHeader,
-  refreshTokenRequired,
-  checkUserIsActive
+  parseHeader
 };
