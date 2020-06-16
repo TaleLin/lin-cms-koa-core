@@ -1,9 +1,12 @@
 import Application from 'koa'
-import { MulOpts } from '../types'
+import { MulOpts, CodeMessage } from '../types'
 import asyncBusboy from 'async-busboy';
 import { HttpException,FileExtensionException, FileTooLargeException,FileTooManyException } from '../exception/'
 import { extname } from 'path';
 import { config } from '../config';
+
+const CodeMessage = config.getItem('codeMessage', {}) as CodeMessage
+
 /**
  * 解析上传文件
  * @param app app实例
@@ -16,25 +19,25 @@ export const multipart = (app: Application) => {
     }
     let filePromises: Promise<any>[] = [];
     const { fields } = await asyncBusboy(this.req, {
-      onFile: async function(fieldname, file, filename, encoding, mimetype) {
+      onFile: async function(fieldName, file, filename, encoding, mimeType) {
         const filePromise = new Promise((resolve, reject) => {
-          let bufs = [];
+          let buffers = [];
           file
             .on('error', err => {
               file.resume();
               reject(err);
             })
             .on('data', (d: never) => {
-              bufs.push(d);
+              buffers.push(d);
             })
             .on('end', () => {
-              const buf = Buffer.concat(bufs);
+              const buf = Buffer.concat(buffers);
               resolve({
                 size: buf.length,
                 encoding: encoding,
-                fieldname: fieldname,
+                fieldName: fieldName,
                 filename: filename,
-                mimeType: mimetype,
+                mimeType: mimeType,
                 data: buf
               });
             });
@@ -50,13 +53,16 @@ export const multipart = (app: Application) => {
       try {
         file = await filePromise;
       } catch (error) {
-        throw new HttpException({ msg: '文件体损坏，无法读取' });
+        throw new HttpException({ code: 10210 });
       }
       const ext = extname(file.filename);
       if (
         !checkFileExtension(ext, opts && opts.include, opts && opts.exclude)
       ) {
-        throw new FileExtensionException({ msg: `不支持类型为${ext}的文件` });
+        throw new FileExtensionException({
+          code: 10130,
+          message: CodeMessage.getMessage(10130).replace('{ext}', ext)
+        });
       }
       const { valid, conf } = checkSingleFileSize(
         file.size,
@@ -64,7 +70,10 @@ export const multipart = (app: Application) => {
       );
       if (!valid) {
         throw new FileTooLargeException({
-          msg: `${file.filename}大小不能超过${conf}字节`
+          code: 10110,
+          message: CodeMessage.getMessage(10110)
+            .replace('{name}', file.filename)
+            .replace('{size}', conf)
         });
       }
       // 计算总大小
@@ -73,14 +82,20 @@ export const multipart = (app: Application) => {
     }
     const { valid, conf } = checkFileNums(files.length, opts && opts.fileNums);
     if (!valid) {
-      throw new FileTooManyException({ msg: `上传文件数量不能超过${conf}` });
+      throw new FileTooManyException({
+        code: 10121,
+        message: CodeMessage.getMessage(10121).replace('{num}', conf)
+      });
     }
-    const { valid: valid1, conf: conf1 } = checkTotalFileSize(
+    const { valid: totalValid, conf: totalConf } = checkTotalFileSize(
       totalSize,
       opts && opts.totalLimit
     );
-    if (!valid1) {
-      throw new FileTooLargeException({ msg: `总文件体积不能超过${conf1}` });
+    if (!totalValid) {
+      throw new FileTooLargeException({
+        code: 10111,
+        message: CodeMessage.getMessage(10111).replace('{size}', totalConf)
+      });
     }
     this.request.fields = fields;
     return files;

@@ -1,23 +1,23 @@
-// import { request, context, response } from '../../utils';
 import Koa from 'koa';
-import { error } from '../error';
 import request from 'supertest';
+import { config } from '../../config'
+import path from 'path'
 
-test('测试error中间件', async () => {
+config.init(path.resolve(__dirname, '../../../'))
+config.getConfigFromFile('test/config.js');
+
+describe('测试中间件', () => {
+  const { error } = require('../error');
   const app = new Koa();
-  app.on('error', error);
 
-  app.use(async ctx => {
-    throw new Error('gg');
-    ctx.body = 'hello lin';
+  it('测试error中间件', async () => {
+    app.on('error', error);
+  
+    app.use(async ctx => {
+      throw new Error('gg');
+    });
+  
+    const response = await request(app.callback()).get('/');
+    expect(response.status).toBe(500);
   });
-
-  const response = await request(app.callback()).get('/');
-  // .send({
-  //   nickname: 'pedro',
-  //   group_id: 1,
-  //   password: '123456',
-  //   confirm_password: '123455'
-  // });
-  expect(response.status).toBe(500);
-});
+})

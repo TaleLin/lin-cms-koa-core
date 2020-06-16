@@ -25,7 +25,7 @@ import { config } from '../config';
  * );
  * ```
  */
-export class Token {
+class Token {
   /**
    * 令牌的secret值，用于令牌的加密
    */
@@ -62,7 +62,7 @@ export class Token {
     accessExp?: number,
     refreshExp?: number
   ) {
-    // 将jwt实例挂到app的context上
+    // 将 jwt 实例挂到 app 的 context 上
     app.context.jwt = this;
     secret && (this.secret = secret);
     refreshExp && (this.refreshExp = refreshExp);
@@ -75,13 +75,13 @@ export class Token {
    */
   public createAccessToken(identity: string | number) {
     if (!this.secret) {
-      throw new Error('密匙不可为空');
+      throw new Error('secret can not be empty');
     }
     let exp: number = Math.floor(Date.now() / 1000) + this.accessExp;
     return jwtGenerator.sign(
       {
-        exp: exp,
-        identity: identity,
+        exp,
+        identity,
         scope: 'lin',
         type: TokenType.ACCESS
       },
@@ -95,13 +95,13 @@ export class Token {
    */
   public createRefreshToken(identity: string | number) {
     if (!this.secret) {
-      throw new Error('密匙不可为空');
+      throw new Error('secret can not be empty');
     }
     let exp: number = Math.floor(Date.now() / 1000) + this.refreshExp;
     return jwtGenerator.sign(
       {
-        exp: exp,
-        identity: identity,
+        exp,
+        identity,
         scope: 'lin',
         type: TokenType.REFRESH
       },
@@ -118,7 +118,7 @@ export class Token {
    */
   public verifyToken(token: string) {
     if (!this.secret) {
-      throw new Error('密匙不可为空');
+      throw new Error('secret can not be empty');
     }
     // NotBeforeError
     // TokenExpiredError
@@ -150,7 +150,7 @@ const jwt = new Token(
  * @param payload 负载，支持 string 和 object
  * @param options 参数
  */
-export function createAccessToken(
+function createAccessToken(
   payload: string | object,
   options?: SignOptions
 ) {
@@ -176,7 +176,7 @@ export function createAccessToken(
  * @param payload 负载，支持 string 和 object
  * @param options 参数
  */
-export function createRefreshToken(
+function createRefreshToken(
   payload: string | object,
   options?: SignOptions
 ) {
@@ -202,19 +202,23 @@ export function createRefreshToken(
  * @param token 令牌
  * @param options 选项
  */
-export function verifyAccessToken(token: string, options?: VerifyOptions) {
+function verifyAccessToken(token: string, options?: VerifyOptions) {
   let decode;
   try {
     decode = jwtGenerator.verify(token, jwt.secret!, options);
   } catch (error) {
     if (error instanceof TokenExpiredError) {
-      throw new ExpiredTokenException();
+      throw new ExpiredTokenException({
+        code: 10051
+      });
     } else {
-      throw new InvalidTokenException();
+      throw new InvalidTokenException({
+        code: 10041
+      });
     }
   }
   if (!decode['type'] || decode['type'] !== TokenType.ACCESS) {
-    throw new InvalidTokenException({ msg: '令牌类型错误' });
+    throw new InvalidTokenException();
   }
   return decode;
 }
@@ -224,19 +228,23 @@ export function verifyAccessToken(token: string, options?: VerifyOptions) {
  * @param token 令牌
  * @param options 选项
  */
-export function verifyRefreshToken(token: string, options?: VerifyOptions) {
+function verifyRefreshToken(token: string, options?: VerifyOptions) {
   let decode;
   try {
     decode = jwtGenerator.verify(token, jwt.secret!, options);
   } catch (error) {
     if (error instanceof TokenExpiredError) {
-      throw new ExpiredTokenException();
+      throw new ExpiredTokenException({
+        code: 10052
+      });
     } else {
-      throw new InvalidTokenException();
+      throw new InvalidTokenException({
+        code: 10042
+      });
     }
   }
   if (!decode['type'] || decode['type'] !== TokenType.REFRESH) {
-    throw new InvalidTokenException({ msg: '令牌类型错误' });
+    throw new InvalidTokenException();
   }
   return decode;
 }
@@ -259,7 +267,7 @@ function getTokens(user) {
 function parseHeader(ctx: RouterContext, type = TokenType.ACCESS) {
   // 此处借鉴了koa-jwt
   if (!ctx.header || !ctx.header.authorization) {
-    ctx.throw(new AuthFailed({ msg: '认证失败，请检查请求令牌是否正确' }));
+    ctx.throw(new AuthFailed({ code: 10013 }));
   }
   const parts = ctx.header.authorization.split(' ');
 
@@ -273,20 +281,12 @@ function parseHeader(ctx: RouterContext, type = TokenType.ACCESS) {
       // @ts-ignore
       const obj = ctx.jwt.verifyToken(token);
       if (!get(obj, 'type') || get(obj, 'type') !== type) {
-        ctx.throw(new AuthFailed({ msg: '请使用正确类型的令牌' }));
+        ctx.throw(new AuthFailed({ code: 10250 }));
       }
       if (!get(obj, 'scope') || get(obj, 'scope') !== 'lin') {
-        ctx.throw(new AuthFailed({ msg: '请使用正确作用域的令牌' }));
+        ctx.throw(new AuthFailed({ code: 10251 }));
       }
       return obj
-      // // @ts-ignore
-      // const user = await ctx.manager.userModel.findByPk(get(obj, 'identity'));
-      // if (!user) {
-      //   ctx.throw(new NotFound({ msg: '用户不存在' }));
-      // }
-      // // 将user挂在ctx上
-      // // @ts-ignore
-      // ctx.currentUser = user;
     }
   } else {
     ctx.throw(new AuthFailed());
@@ -294,7 +294,12 @@ function parseHeader(ctx: RouterContext, type = TokenType.ACCESS) {
 }
 
 export {
+  Token,
   jwt,
   getTokens,
-  parseHeader
+  parseHeader,
+  createAccessToken,
+  createRefreshToken,
+  verifyAccessToken,
+  verifyRefreshToken
 };

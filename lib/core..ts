@@ -30,7 +30,7 @@ export class Lin {
    */
   public async initApp(
     app: Application,
-    mount?: boolean, // 是否挂载插件路由，默认为true
+    mount?: boolean, // 是否挂载插件路由，默认为 true
   ) {
     this.app = app;
     this.app!.context.config = config;

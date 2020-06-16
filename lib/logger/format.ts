@@ -3,16 +3,16 @@
 const chalk = require('chalk');
 const os = require('os');
 
-// other varibles
+// other variables
 const hostname = os.hostname();
-const duartionRegexp = /([0-9]+ms)/g;
+const durationRegexp = /([0-9]+ms)/g;
 // eslint-disable-next-line no-useless-escape
 const categoryRegexp = /(\[[\w\-_.:]+\])/g;
 const httpMethodRegexp = /(GET|POST|PUT|PATH|HEAD|DELETE) /g;
 
 // output to Terminal format
 export function consoleFormatter(meta) {
-  let msg =
+  let message =
     meta.date +
     ' ' +
     meta.level +
@@ -24,17 +24,17 @@ export function consoleFormatter(meta) {
     ' - ' +
     meta.message;
   if (!chalk.supportsColor) {
-    return msg;
+    return message;
   }
 
   if (meta.level === 'ERROR') {
-    return chalk.red(msg);
+    return chalk.red(message);
   } else if (meta.level === 'WARN') {
-    return chalk.yellow(msg);
+    return chalk.yellow(message);
   }
 
-  // msg = msg.replace(duartionRegexp, chalk.green('$1'));
-  // msg = msg.replace(categoryRegexp, chalk.blue('$1'));
-  // msg = msg.replace(httpMethodRegexp, chalk.cyan('$1 '));
-  return msg;
+  // message = message.replace(durationRegexp, chalk.green('$1'));
+  // message = message.replace(categoryRegexp, chalk.blue('$1'));
+  // message = message.replace(httpMethodRegexp, chalk.cyan('$1 '));
+  return message;
 }

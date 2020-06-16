@@ -4,7 +4,7 @@
   "description": "The core library of Lin CMS",
   "main": "lin/index.js",
   "scripts": {
-    "tsc": " rm -rf lin/ && tsc",
+    "tsc": "rimraf lin/ && tsc",
     "test": "jest tests",
     "doc": "typedoc --out docs --mode modules ./lib",
     "debugger": "node --inspect-brk ./node_modules/jest/bin/jest --runInBand --no-cache --no-watchman"
@@ -14,7 +14,7 @@
     "cms",
     "koa"
   ],
-  "author": "pedrogao",
+  "author": "Pedro/Shirmy/Evan",
   "license": "MIT",
   "dependencies": {
     "async-busboy": "^0.7.0",

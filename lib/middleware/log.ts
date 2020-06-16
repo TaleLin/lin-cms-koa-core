@@ -39,7 +39,7 @@ export const log = async (ctx: Context, next: () => Promise<any>) => {
     } else if (ctx.status === 405) {
       ctx.app.emit('error', new MethodNotAllowed(), ctx);
     } else if (!ctx.body) {
-      ctx.app.emit('error', new HttpException({ msg: ctx.message }), ctx);
+      ctx.app.emit('error', new HttpException({ message: ctx.message }), ctx);
     }
   } catch (err) {
     const ms = Date.now() - start;
