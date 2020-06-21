@@ -1,16 +1,19 @@
 import Application from 'koa';
 import { Success } from "../exception";
-import { Exception } from "../types";
+import { Exception, CodeMessage } from "../types";
+import { config } from '../config'
+
+const CodeMessage = config.getItem('codeMessage', {}) as CodeMessage
 
 /**
- * 处理success
+ * 处理 success
  *
  * ```js
- * ctx.success({ msg:"hello from lin!" })
+ * ctx.success({ message: "hello from lin!" })
  * ```
  *
  * ```js
- * ctx.success({ code: 200, msg: "hello from lin!", errorCode: 10000 })
+ * ctx.success({ message: "hello from lin!", code: 0 })
  * ```
  *
  * @param app app实例
@@ -18,13 +21,13 @@ import { Exception } from "../types";
 export const success = (app: Application) => {
   app.context.success = function(ex?: Exception) {
     this.type = 'application/json';
-    const suc = new Success(ex);
+    const success = new Success(ex);
     let data = {
-      code: suc.errorCode,
-      message: suc.msg,
+      code: success.code,
+      message: success.message,
       request: `${this.method} ${this.req.url}`
     };
-    this.status = suc.code;
+    this.status = success.status;
     this.body = JSON.stringify(data);
   };
 };

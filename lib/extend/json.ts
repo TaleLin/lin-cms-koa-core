@@ -6,7 +6,7 @@ import { get, set } from 'lodash';
  * json序列化扩展
  *
  * ```js
- * ctx.json({ msg:"hello from lin!" })
+ * ctx.json({ message: "hello from lin!" })
  * ```
  *
  * @param app app实例
@@ -21,8 +21,8 @@ export const json = (app: Application) => {
     let data = Object.create(null);
     if (obj instanceof HttpException) {
       transform(obj, data);
-      set(data, 'url', this.request.url);
-      this.status = obj.code;
+      set(data, 'request', `${this.method} ${this.req.url}`);
+      this.status = obj.status;
     } else {
       data = obj;
     }
@@ -30,6 +30,7 @@ export const json = (app: Application) => {
   };
 };
 
+// 驼峰转换下划线
 function transform(obj: any, data: any) {
   const fields: string[] = get(obj, 'fields', []);
   fields.forEach(field => {

@@ -1,10 +1,10 @@
 {
   "name": "lin-mizar",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "The core library of Lin CMS",
   "main": "lin/index.js",
   "scripts": {
-    "tsc": " rm -rf lin/ && tsc",
+    "tsc": "rimraf lin/ && tsc",
     "test": "jest tests",
     "doc": "typedoc --out docs --mode modules ./lib",
     "debugger": "node --inspect-brk ./node_modules/jest/bin/jest --runInBand --no-cache --no-watchman"
@@ -14,7 +14,7 @@
     "cms",
     "koa"
   ],
-  "author": "pedrogao",
+  "author": "Pedro/Shirmy/Evan",
   "license": "MIT",
   "dependencies": {
     "async-busboy": "^0.7.0",
@@ -45,8 +45,9 @@
     "@types/sequelize": "^4.27.39",
     "@types/uuid": "^3.4.4",
     "jest": "^24.3.1",
-    "supertest": "^4.0.2",
     "redis": "^2.8.0",
+    "rimraf": "^3.0.2",
+    "supertest": "^4.0.2",
     "ts-jest": "^24.0.0",
     "ts-node": "^8.0.3",
     "tslint": "^5.13.1",

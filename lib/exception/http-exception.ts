@@ -1,6 +1,14 @@
 import assert from 'assert';
-import { isInteger } from 'lodash';
-import { Exception } from '../types'
+import { isInteger, isFunction } from 'lodash';
+import { Exception, CodeMessage } from '../types'
+import { config } from '../config'
+
+const CodeMessage = config.getItem('codeMessage', {}) as CodeMessage
+
+if (CodeMessage && !isFunction(CodeMessage.getMessage)) {
+  throw new Error('CodeMessage.getMessage() must be implemented')
+}
+
 /**
  * HttpException 是lin中所有其他异常的基类
  *
@@ -9,49 +17,63 @@ import { Exception } from '../types'
  * const ex = new HttpException();
  *
  * // 实例化一个带参的HttpException
- * const ex = new HttpException({ msg: "想给你一个信息呢！" });
+ * // 如果只传 code 会通过 CodeMessage.getMessage(code) 方法获取 message
+ * const ex = new HttpException({ code: 10010 });
  *
  * // 也可以是其他参数
- * const ex = new HttpException({ errorCode: 10010 });
+ * const ex = new HttpException({ message: CodeMessage.getMessage(10010) });
  *
  * // 也可以指定所有参数
- * const ex = new HttpException({ errorCode: 10010, msg: "想给你一个信息呢！", code: 200 });
+ * const ex = new HttpException({ code: 10010, message: CodeMessage.getMessage(10010) });
+ * 
+ * // 也可以只穿一个 code 作为参数
+ * // 如果只传 code 会通过 CodeMessage.getMessage(code) 方法获取 message
+ * const ex = new HttpException(10010)
  * ```
  */
 export class HttpException extends Error {
   /**
    * http 状态码
    */
-  public code: number = 500;
+  public status: number = 500;
 
   /**
    * 返回的信息内容
    */
-  public msg: any = '服务器未知错误';
+  public message = CodeMessage.getMessage(9999);
 
   /**
    * 特定的错误码
    */
-  public errorCode: number = 9999;
+  public code: number = 9999;
 
-  public fields: string[] = ['msg', 'errorCode'];
+  public fields: string[] = ['message', 'code'];
 
   /**
    * 构造函数
-   * @param ex 可选参数，通过{}的形式传入
+   * @param ex 可选参数，通过{}的形式传入 / 也可以直接传 code
    */
-  constructor(ex?: Exception) {
+  constructor(ex?: Exception | number) {
     super();
-    if (ex && ex.code) {
-      assert(isInteger(ex.code));
-      this.code = ex.code;
+    this.exceptionHandler(ex);
+  }
+
+  protected exceptionHandler(ex?: Exception | number) {
+    // 可以直接传一个 code
+    if (isInteger(ex)) {
+      this.code = ex as number
+      this.message = CodeMessage.getMessage(ex as number)
+      return
     }
-    if (ex && ex.msg) {
-      this.msg = ex.msg;
+    
+    if (ex && (ex as Exception).code) {
+      assert(isInteger((ex as Exception).code));
+      const code = (ex as Exception).code as number 
+      this.code = code;
+      this.message = CodeMessage.getMessage(code)
     }
-    if (ex && ex.errorCode) {
-      assert(isInteger(ex.errorCode));
-      this.errorCode = ex.errorCode;
+    if (ex && (ex as Exception).message) {
+      this.message = (ex as Exception).message as string;
     }
   }
 }
@@ -59,46 +81,26 @@ export class HttpException extends Error {
  * 成功
  */
 export class Success extends HttpException {
-  public code = 201;
-  public msg = '成功';
-  public errorCode = 0;
+  public status = 201;
+  public message = CodeMessage.getMessage(0);
+  public code = 0;
 
-  constructor(ex ? : Exception) {
+  constructor(ex?: number | Exception) {
     super();
-    if (ex && ex.code) {
-      assert(isInteger(ex.code));
-      this.code = ex.code;
-    }
-    if (ex && ex.msg) {
-      this.msg = ex.msg;
-    }
-    if (ex && ex.errorCode) {
-      assert(isInteger(ex.errorCode));
-      this.errorCode = ex.errorCode;
-    }
+    this.exceptionHandler(ex);
   }
 }
 /**
  * 失败
  */
 export class Failed extends HttpException {
-  public code = 400;
-  public msg = '失败';
-  public errorCode = 9999;
+  public status = 400;
+  public message = CodeMessage.getMessage(9999);
+  public code = 9999;
 
-  constructor(ex ? : Exception) {
+  constructor(ex?: Exception | number) {
     super();
-    if (ex && ex.code) {
-      assert(isInteger(ex.code));
-      this.code = ex.code;
-    }
-    if (ex && ex.msg) {
-      this.msg = ex.msg;
-    }
-    if (ex && ex.errorCode) {
-      assert(isInteger(ex.errorCode));
-      this.errorCode = ex.errorCode;
-    }
+    this.exceptionHandler(ex);
   }
 }
 
@@ -106,23 +108,13 @@ export class Failed extends HttpException {
  * 认证失败
  */
 export class AuthFailed extends HttpException {
-  public code = 401;
-  public msg = '认证失败';
-  public errorCode = 10000;
+  public status = 401;
+  public message = CodeMessage.getMessage(10000);
+  public code = 10000;
 
   constructor(ex ? : Exception) {
     super();
-    if (ex && ex.code) {
-      assert(isInteger(ex.code));
-      this.code = ex.code;
-    }
-    if (ex && ex.msg) {
-      this.msg = ex.msg;
-    }
-    if (ex && ex.errorCode) {
-      assert(isInteger(ex.errorCode));
-      this.errorCode = ex.errorCode;
-    }
+    this.exceptionHandler(ex);
   }
 }
 
@@ -130,23 +122,13 @@ export class AuthFailed extends HttpException {
  * 资源不存在
  */
 export class NotFound extends HttpException {
-  public code = 404;
-  public msg = '资源不存在';
-  public errorCode = 10020;
+  public status = 404;
+  public message = CodeMessage.getMessage(10020);
+  public code = 10020;
 
   constructor(ex ? : Exception) {
     super();
-    if (ex && ex.code) {
-      assert(isInteger(ex.code));
-      this.code = ex.code;
-    }
-    if (ex && ex.msg) {
-      this.msg = ex.msg;
-    }
-    if (ex && ex.errorCode) {
-      assert(isInteger(ex.errorCode));
-      this.errorCode = ex.errorCode;
-    }
+    this.exceptionHandler(ex);
   }
 }
 
@@ -154,23 +136,13 @@ export class NotFound extends HttpException {
  * 参数错误
  */
 export class ParametersException extends HttpException {
-  public code = 400;
-  public msg = '参数错误';
-  public errorCode = 10030;
+  public status = 400;
+  public message = CodeMessage.getMessage(10030);
+  public code = 10030;
 
   constructor(ex ? : Exception) {
     super();
-    if (ex && ex.code) {
-      assert(isInteger(ex.code));
-      this.code = ex.code;
-    }
-    if (ex && ex.msg) {
-      this.msg = ex.msg;
-    }
-    if (ex && ex.errorCode) {
-      assert(isInteger(ex.errorCode));
-      this.errorCode = ex.errorCode;
-    }
+    this.exceptionHandler(ex);
   }
 }
 
@@ -178,23 +150,13 @@ export class ParametersException extends HttpException {
  * 令牌失效或损坏
  */
 export class InvalidTokenException extends HttpException {
-  public code = 401;
-  public msg = '令牌失效';
-  public errorCode = 10040;
+  public status = 401;
+  public message = CodeMessage.getMessage(10040);
+  public code = 10040;
 
   constructor(ex ? : Exception) {
     super();
-    if (ex && ex.code) {
-      assert(isInteger(ex.code));
-      this.code = ex.code;
-    }
-    if (ex && ex.msg) {
-      this.msg = ex.msg;
-    }
-    if (ex && ex.errorCode) {
-      assert(isInteger(ex.errorCode));
-      this.errorCode = ex.errorCode;
-    }
+    this.exceptionHandler(ex);
   }
 }
 
@@ -202,23 +164,13 @@ export class InvalidTokenException extends HttpException {
  * 令牌过期
  */
 export class ExpiredTokenException extends HttpException {
-  public code = 422;
-  public msg = '令牌过期';
-  public errorCode = 10050;
+  public status = 422;
+  public message = CodeMessage.getMessage(10050);
+  public code = 10050;
 
   constructor(ex ? : Exception) {
     super();
-    if (ex && ex.code) {
-      assert(isInteger(ex.code));
-      this.code = ex.code;
-    }
-    if (ex && ex.msg) {
-      this.msg = ex.msg;
-    }
-    if (ex && ex.errorCode) {
-      assert(isInteger(ex.errorCode));
-      this.errorCode = ex.errorCode;
-    }
+    this.exceptionHandler(ex);
   }
 }
 
@@ -226,23 +178,13 @@ export class ExpiredTokenException extends HttpException {
  * 服务器未知错误
  */
 export class UnknownException extends HttpException {
-  public code = 400;
-  public msg = '服务器未知错误';
-  public errorCode = 999;
+  public status = 400;
+  public message = CodeMessage.getMessage(9999);
+  public code = 9999;
 
   constructor(ex ? : Exception) {
     super();
-    if (ex && ex.code) {
-      assert(isInteger(ex.code));
-      this.code = ex.code;
-    }
-    if (ex && ex.msg) {
-      this.msg = ex.msg;
-    }
-    if (ex && ex.errorCode) {
-      assert(isInteger(ex.errorCode));
-      this.errorCode = ex.errorCode;
-    }
+    this.exceptionHandler(ex);
   }
 }
 
@@ -250,47 +192,27 @@ export class UnknownException extends HttpException {
  * 字段重复
  */
 export class RepeatException extends HttpException {
-  public code = 400;
-  public msg = '字段重复';
-  public errorCode = 10060;
+  public status = 400;
+  public message = CodeMessage.getMessage(10060);
+  public code = 10060;
 
   constructor(ex ? : Exception) {
     super();
-    if (ex && ex.code) {
-      assert(isInteger(ex.code));
-      this.code = ex.code;
-    }
-    if (ex && ex.msg) {
-      this.msg = ex.msg;
-    }
-    if (ex && ex.errorCode) {
-      assert(isInteger(ex.errorCode));
-      this.errorCode = ex.errorCode;
-    }
+    this.exceptionHandler(ex);
   }
 }
 
 /**
- * 不可操作
+ * 禁止操作
  */
 export class Forbidden extends HttpException {
-  public code = 403;
-  public msg = '不可操作';
-  public errorCode = 10070;
+  public status = 403;
+  public message = CodeMessage.getMessage(10070);
+  public code = 10070;
 
   constructor(ex ? : Exception) {
     super();
-    if (ex && ex.code) {
-      assert(isInteger(ex.code));
-      this.code = ex.code;
-    }
-    if (ex && ex.msg) {
-      this.msg = ex.msg;
-    }
-    if (ex && ex.errorCode) {
-      assert(isInteger(ex.errorCode));
-      this.errorCode = ex.errorCode;
-    }
+    this.exceptionHandler(ex);
   }
 }
 
@@ -298,23 +220,13 @@ export class Forbidden extends HttpException {
  * 请求方法不允许
  */
 export class MethodNotAllowed extends HttpException {
-  public code = 405;
-  public msg = '请求方法不允许';
-  public errorCode = 10080;
+  public status = 405;
+  public message = CodeMessage.getMessage(10080);
+  public code = 10080;
 
   constructor(ex ? : Exception) {
     super();
-    if (ex && ex.code) {
-      assert(isInteger(ex.code));
-      this.code = ex.code;
-    }
-    if (ex && ex.msg) {
-      this.msg = ex.msg;
-    }
-    if (ex && ex.errorCode) {
-      assert(isInteger(ex.errorCode));
-      this.errorCode = ex.errorCode;
-    }
+    this.exceptionHandler(ex);
   }
 }
 
@@ -322,23 +234,13 @@ export class MethodNotAllowed extends HttpException {
  * refresh token 获取失败
  */
 export class RefreshException extends HttpException {
-  public code = 401;
-  public msg = 'refresh token 获取失败';
-  public errorCode = 10100;
+  public status = 401;
+  public message = CodeMessage.getMessage(10100);
+  public code = 10100;
 
   constructor(ex ? : Exception) {
     super();
-    if (ex && ex.code) {
-      assert(isInteger(ex.code));
-      this.code = ex.code;
-    }
-    if (ex && ex.msg) {
-      this.msg = ex.msg;
-    }
-    if (ex && ex.errorCode) {
-      assert(isInteger(ex.errorCode));
-      this.errorCode = ex.errorCode;
-    }
+    this.exceptionHandler(ex);
   }
 }
 
@@ -346,23 +248,13 @@ export class RefreshException extends HttpException {
  * 文件体积过大
  */
 export class FileTooLargeException extends HttpException {
-  public code = 413;
-  public msg = '文件体积过大';
-  public errorCode = 10110;
+  public status = 413;
+  public message = CodeMessage.getMessage(10110);
+  public code = 10110;
 
   constructor(ex ? : Exception) {
     super();
-    if (ex && ex.code) {
-      assert(isInteger(ex.code));
-      this.code = ex.code;
-    }
-    if (ex && ex.msg) {
-      this.msg = ex.msg;
-    }
-    if (ex && ex.errorCode) {
-      assert(isInteger(ex.errorCode));
-      this.errorCode = ex.errorCode;
-    }
+    this.exceptionHandler(ex);
   }
 }
 
@@ -370,23 +262,13 @@ export class FileTooLargeException extends HttpException {
  * 文件数量过多
  */
 export class FileTooManyException extends HttpException {
-  public code = 413;
-  public msg = '文件数量过多';
-  public errorCode = 10120;
+  public status = 413;
+  public message = CodeMessage.getMessage(10120);
+  public code = 10120;
 
   constructor(ex ? : Exception) {
     super();
-    if (ex && ex.code) {
-      assert(isInteger(ex.code));
-      this.code = ex.code;
-    }
-    if (ex && ex.msg) {
-      this.msg = ex.msg;
-    }
-    if (ex && ex.errorCode) {
-      assert(isInteger(ex.errorCode));
-      this.errorCode = ex.errorCode;
-    }
+    this.exceptionHandler(ex);
   }
 }
 
@@ -394,23 +276,13 @@ export class FileTooManyException extends HttpException {
  * 文件扩展名不符合规范
  */
 export class FileExtensionException extends HttpException {
-  public code = 406;
-  public msg = '文件扩展名不符合规范';
-  public errorCode = 10130;
+  public status = 406;
+  public message = CodeMessage.getMessage(10130);
+  public code = 10130;
 
   constructor(ex ? : Exception) {
     super();
-    if (ex && ex.code) {
-      assert(isInteger(ex.code));
-      this.code = ex.code;
-    }
-    if (ex && ex.msg) {
-      this.msg = ex.msg;
-    }
-    if (ex && ex.errorCode) {
-      assert(isInteger(ex.errorCode));
-      this.errorCode = ex.errorCode;
-    }
+    this.exceptionHandler(ex);
   }
 }
 
@@ -418,22 +290,12 @@ export class FileExtensionException extends HttpException {
  * 请求过于频繁，请稍后重试
  */
 export class LimitException extends HttpException {
-  public code = 401;
-  public msg = '请求过于频繁，请稍后重试';
-  public errorCode = 10140;
+  public status = 401;
+  public message = CodeMessage.getMessage(10140);
+  public code = 10140;
 
   constructor(ex ? : Exception) {
     super();
-    if (ex && ex.code) {
-      assert(isInteger(ex.code));
-      this.code = ex.code;
-    }
-    if (ex && ex.msg) {
-      this.msg = ex.msg;
-    }
-    if (ex && ex.errorCode) {
-      assert(isInteger(ex.errorCode));
-      this.errorCode = ex.errorCode;
-    }
+    this.exceptionHandler(ex);
   }
 }

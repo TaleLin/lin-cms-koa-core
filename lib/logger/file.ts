@@ -12,6 +12,9 @@ const utils = require('egg-logger/lib/utils');
 
 import { Transport } from 'egg-logger';
 import { consoleFormatter } from './format';
+import { config } from '../config'
+
+const baseDir = config.getItem('baseDir', process.cwd())
 
 /**
  * output log into file {@link Transport}。
@@ -119,7 +122,7 @@ export class FileTransport extends Transport {
   getPresentFilename() {
     const dir: string = path.isAbsolute(this.options.dir)
       ? this.options.dir
-      : path.join(process.cwd(), this.options.dir);
+      : path.join(baseDir, this.options.dir);
     const today = dayjs();
     const ddir = path.join(dir, today.format('YYYY-MM'));
     const dfilename = today.format('YYYY-MM-DD');
