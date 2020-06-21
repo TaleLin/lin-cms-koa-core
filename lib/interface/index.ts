@@ -1,7 +1,7 @@
 /**
  * 记录信息的mixin
  */
-export let InfoCrudMixin = {
+export const InfoCrudMixin = {
   attributes: {},
   options: {
     createdAt: 'create_time',

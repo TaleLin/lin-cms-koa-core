@@ -78,13 +78,18 @@
 <span class="hljs-keyword">const</span> ex = <span class="hljs-keyword">new</span> HttpException();
 
 <span class="hljs-comment">// 实例化一个带参的HttpException</span>
-<span class="hljs-keyword">const</span> ex = <span class="hljs-keyword">new</span> HttpException({ <span class="hljs-attr">msg</span>: <span class="hljs-string">"想给你一个信息呢！"</span> });
+<span class="hljs-comment">// 如果只传 code 会通过 CodeMessage.getMessage(code) 方法获取 message</span>
+<span class="hljs-keyword">const</span> ex = <span class="hljs-keyword">new</span> HttpException({ <span class="hljs-attr">code</span>: <span class="hljs-number">10010</span> });
 
 <span class="hljs-comment">// 也可以是其他参数</span>
-<span class="hljs-keyword">const</span> ex = <span class="hljs-keyword">new</span> HttpException({ <span class="hljs-attr">errorCode</span>: <span class="hljs-number">10010</span> });
+<span class="hljs-keyword">const</span> ex = <span class="hljs-keyword">new</span> HttpException({ <span class="hljs-attr">message</span>: CodeMessage.getMessage(<span class="hljs-number">10010</span>) });
 
 <span class="hljs-comment">// 也可以指定所有参数</span>
-<span class="hljs-keyword">const</span> ex = <span class="hljs-keyword">new</span> HttpException({ <span class="hljs-attr">errorCode</span>: <span class="hljs-number">10010</span>, <span class="hljs-attr">msg</span>: <span class="hljs-string">"想给你一个信息呢！"</span>, <span class="hljs-attr">code</span>: <span class="hljs-number">200</span> });</code></pre>
+<span class="hljs-keyword">const</span> ex = <span class="hljs-keyword">new</span> HttpException({ <span class="hljs-attr">code</span>: <span class="hljs-number">10010</span>, <span class="hljs-attr">message</span>: CodeMessage.getMessage(<span class="hljs-number">10010</span>) });
+
+<span class="hljs-comment">// 也可以只穿一个 code 作为参数</span>
+<span class="hljs-comment">// 如果只传 code 会通过 CodeMessage.getMessage(code) 方法获取 message</span>
+<span class="hljs-keyword">const</span> ex = <span class="hljs-keyword">new</span> HttpException(<span class="hljs-number">10010</span>)</code></pre>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -164,13 +169,18 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_exception_http_exception_.httpexception.html#code" class="tsd-kind-icon">code</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_exception_http_exception_.httpexception.html#errorcode" class="tsd-kind-icon">error<wbr>Code</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_exception_http_exception_.httpexception.html#fields" class="tsd-kind-icon">fields</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_exception_http_exception_.httpexception.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_exception_http_exception_.httpexception.html#msg" class="tsd-kind-icon">msg</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite"><a href="_exception_http_exception_.httpexception.html#message" class="tsd-kind-icon">message</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_exception_http_exception_.httpexception.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="_exception_http_exception_.httpexception.html#stack" class="tsd-kind-icon">stack</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_exception_http_exception_.httpexception.html#stack" class="tsd-kind-icon">stack</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_exception_http_exception_.httpexception.html#status" class="tsd-kind-icon">status</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_exception_http_exception_.httpexception.html#error" class="tsd-kind-icon">Error</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-private-protected">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="_exception_http_exception_.httpexception.html#exceptionhandler" class="tsd-kind-icon">exception<wbr>Handler</a></li>
 							</ul>
 						</section>
 					</div>
@@ -182,13 +192,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Http<wbr>Exception<span class="tsd-signature-symbol">(</span>ex<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_types_index_.exception.html" class="tsd-signature-type">Exception</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_exception_http_exception_.httpexception.html" class="tsd-signature-type">HttpException</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Http<wbr>Exception<span class="tsd-signature-symbol">(</span>ex<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_types_index_.exception.html" class="tsd-signature-type">Exception</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_exception_http_exception_.httpexception.html" class="tsd-signature-type">HttpException</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in lib/exception/http-exception.ts:37</li>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ca2d467/lib/exception/http-exception.ts#L50">lib/exception/http-exception.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -199,10 +209,10 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> ex: <a href="../interfaces/_types_index_.exception.html" class="tsd-signature-type">Exception</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> ex: <a href="../interfaces/_types_index_.exception.html" class="tsd-signature-type">Exception</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>可选参数，通过{}的形式传入</p>
+											<p>可选参数，通过{}的形式传入 / 也可以直接传 code</p>
 										</div>
 									</div>
 								</li>
@@ -217,25 +227,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="code" class="tsd-anchor"></a>
 					<h3>code</h3>
-					<div class="tsd-signature tsd-kind-icon">code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 500</span></div>
+					<div class="tsd-signature tsd-kind-icon">code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 9999</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in lib/exception/http-exception.ts:25</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>http 状态码</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="errorcode" class="tsd-anchor"></a>
-					<h3>error<wbr>Code</h3>
-					<div class="tsd-signature tsd-kind-icon">error<wbr>Code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 9999</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in lib/exception/http-exception.ts:35</li>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ca2d467/lib/exception/http-exception.ts#L48">lib/exception/http-exception.ts:48</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -247,31 +242,21 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="fields" class="tsd-anchor"></a>
 					<h3>fields</h3>
-					<div class="tsd-signature tsd-kind-icon">fields<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [&#x27;msg&#x27;, &#x27;errorCode&#x27;]</span></div>
+					<div class="tsd-signature tsd-kind-icon">fields<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [&#x27;message&#x27;, &#x27;code&#x27;]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in lib/exception/http-exception.ts:37</li>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ca2d467/lib/exception/http-exception.ts#L50">lib/exception/http-exception.ts:50</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite">
 					<a name="message" class="tsd-anchor"></a>
 					<h3>message</h3>
-					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = CodeMessage.getMessage(9999)</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="_exception_http_exception_.httpexception.html">HttpException</a>.<a href="_exception_http_exception_.httpexception.html#message">message</a></p>
+						<p>Overrides Error.message</p>
 						<ul>
-							<li>Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:974</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="msg" class="tsd-anchor"></a>
-					<h3>msg</h3>
-					<div class="tsd-signature tsd-kind-icon">msg<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> = &quot;服务器未知错误&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in lib/exception/http-exception.ts:30</li>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ca2d467/lib/exception/http-exception.ts#L43">lib/exception/http-exception.ts:43</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -291,17 +276,31 @@
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="stack" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> stack</h3>
 					<div class="tsd-signature tsd-kind-icon">stack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_exception_http_exception_.httpexception.html">HttpException</a>.<a href="_exception_http_exception_.httpexception.html#stack">stack</a></p>
-						<p>Overrides <a href="_exception_http_exception_.httpexception.html">HttpException</a>.<a href="_exception_http_exception_.httpexception.html#stack">stack</a></p>
 						<ul>
 							<li>Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975</li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="status" class="tsd-anchor"></a>
+					<h3>status</h3>
+					<div class="tsd-signature tsd-kind-icon">status<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 500</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ca2d467/lib/exception/http-exception.ts#L38">lib/exception/http-exception.ts:38</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>http 状态码</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
 					<a name="error" class="tsd-anchor"></a>
@@ -312,6 +311,32 @@
 							<li>Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:984</li>
 						</ul>
 					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private-protected">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+					<a name="exceptionhandler" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> exception<wbr>Handler</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">exception<wbr>Handler<span class="tsd-signature-symbol">(</span>ex<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_types_index_.exception.html" class="tsd-signature-type">Exception</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/TaleLin/lin-cms-koa-core/blob/ca2d467/lib/exception/http-exception.ts#L61">lib/exception/http-exception.ts:61</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> ex: <a href="../interfaces/_types_index_.exception.html" class="tsd-signature-type">Exception</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -361,25 +386,25 @@
 								<a href="_exception_http_exception_.httpexception.html#code" class="tsd-kind-icon">code</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_exception_http_exception_.httpexception.html#errorcode" class="tsd-kind-icon">error<wbr>Code</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_exception_http_exception_.httpexception.html#fields" class="tsd-kind-icon">fields</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite">
 								<a href="_exception_http_exception_.httpexception.html#message" class="tsd-kind-icon">message</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_exception_http_exception_.httpexception.html#msg" class="tsd-kind-icon">msg</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="_exception_http_exception_.httpexception.html#name" class="tsd-kind-icon">name</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="_exception_http_exception_.httpexception.html#stack" class="tsd-kind-icon">stack</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_exception_http_exception_.httpexception.html#status" class="tsd-kind-icon">status</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
 								<a href="_exception_http_exception_.httpexception.html#error" class="tsd-kind-icon">Error</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+								<a href="_exception_http_exception_.httpexception.html#exceptionhandler" class="tsd-kind-icon">exception<wbr>Handler</a>
 							</li>
 						</ul>
 					</li>
@@ -411,6 +436,9 @@
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="_exception_http_exception_.unknownexception.html" class="tsd-kind-icon">Unknown<wbr>Exception</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_exception_http_exception_.html#codemessage" class="tsd-kind-icon">Code<wbr>Message</a>
 					</li>
 				</ul>
 			</nav>

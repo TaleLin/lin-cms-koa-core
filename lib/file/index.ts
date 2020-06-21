@@ -11,6 +11,8 @@ import fs from 'fs';
 import { config } from '../config';
 import { mkdirsSync } from '../utils';
 
+const baseDir = config.getItem('baseDir', process.cwd())
+
 /**
  * 上传文件类，所有文件上传的基类
  */
@@ -52,7 +54,7 @@ export class Uploader {
    */
   public generateName(filename: string) {
     const ext = path.extname(filename);
-    return `${uuid.v4()}${ext}`;
+    return `${uuid.v4()}{ext}`;
   }
 
   /**
@@ -66,7 +68,7 @@ export class Uploader {
     this.storeDir && (storeDir = this.storeDir);
     const extract = path.isAbsolute(storeDir)
       ? path.join(storeDir, formatDay)
-      : path.join(process.cwd(), storeDir, formatDay);
+      : path.join(baseDir, storeDir, formatDay);
     return extract;
   }
 

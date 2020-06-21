@@ -9,15 +9,21 @@ import { Plugin } from '../plugin';
 import { config } from '../config';
 import { disableLoading } from '../core.';
 
+const baseDir = config.getItem('baseDir', process.cwd())
+
 /**
  * 加载器
  * 用于加载插件和路由文件
  */
 export class Loader {
   public mainRouter: Router | undefined;
+
   public pluginPath: {};
+
   private app: Application;
+
   public plugins = {};
+  
   constructor(pluginPath: {}, app: Application) {
     assert(!!pluginPath, 'pluginPath must not be empty');
     this.pluginPath = pluginPath;
@@ -43,7 +49,6 @@ export class Loader {
       // item is name of plugin
       if (get(this.pluginPath, `${item}.enable`)) {
         const path1 = get(this.pluginPath, `${item}.path`);
-        const baseDir = process.cwd();
         let confPath = '';
         const scriptType = config.getItem('scriptType', 'js');
         const prod = process.env.NODE_ENV === 'production';
@@ -97,7 +102,7 @@ export class Loader {
     this.mainRouter = mainRouter;
     // 默认api的文件夹
     let apiDir = config.getItem('apiDir', 'app/api');
-    apiDir = `${process.cwd()}/${apiDir}`;
+    apiDir = `${baseDir}/${apiDir}`;
     const files = getFiles(apiDir);
     for (const file of files) {
       const extension = file.substring(file.lastIndexOf('.'), file.length);

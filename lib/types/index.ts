@@ -1,12 +1,12 @@
-import { Request } from 'koa'
+import {IRouterOptions } from 'koa-router'
+import { ABSTRACT } from 'sequelize/types'
 
 /**
  * HttpException 类构造函数的参数接口
  */
 export interface Exception {
   code?: number;
-  msg?: any;
-  errorCode?: number;
+  message?: any;
 }
 
 export interface Option {
@@ -30,7 +30,18 @@ export interface MulOpts {
 }
 // lin-router 路由元信息
 export interface Meta {
-  auth?: string;
+  permission?: string;
   module?: string;
   mount?: boolean;
+}
+
+// LinRouter 选项
+export interface LinRouterOptions extends IRouterOptions {
+  module?: string;
+  mountPermission?: boolean;
+}
+
+export interface CodeMessage {
+  getMessage: (code: number) => string;
+  [propName: number]: string;
 }

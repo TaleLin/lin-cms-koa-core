@@ -40,14 +40,14 @@ export class ConsoleTransport extends Transport {
   log(level, args, meta) {
     meta = meta || {};
     meta.formatter = consoleFormatter;
-    const msg: any = super.log(level, args, meta);
+    const message: any = super.log(level, args, meta);
     if (
       levels[level] >= this.options.stderrLevel &&
       levels[level] < levels['NONE']
     ) {
-      process.stderr.write(msg);
+      process.stderr.write(message);
     } else {
-      process.stdout.write(msg);
+      process.stdout.write(message);
     }
   }
 }

@@ -34,6 +34,19 @@ export class Config {
   private envSuffix: string = '_ENV';
 
   /**
+   * 当前工作目录
+   */
+  private baseDir: string = process.cwd()
+
+  /**
+   * 初始化工作目录
+   * @param baseDir 工作目录
+   */
+  public init(baseDir: string = process.cwd()) {
+    this.baseDir = baseDir
+  }
+
+  /**
    * 获取单个的配置项
    * ```js
    * const val = config.getItem("key");
@@ -92,8 +105,7 @@ export class Config {
    * @param filepath js文件的路径，相对当前工作目录的路径
    */
   public getConfigFromFile(filepath: string) {
-    const baseDir = process.cwd();
-    const mod = require(path.resolve(baseDir, filepath));
+    const mod = require(path.resolve(this.baseDir, filepath));
     this.store = merge(this.store, mod);
   }
 

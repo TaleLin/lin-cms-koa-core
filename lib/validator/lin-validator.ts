@@ -1,6 +1,5 @@
 import { get, isArray, unset, cloneDeep } from 'lodash';
 import { ParametersException, HttpException } from '../exception';
-import { Context } from 'koa';
 import validator1 from 'validator';
 import { extendedValidator } from './extended-validator';
 import { getAllMethodNames, getAllFieldNames } from '../utils';
@@ -57,7 +56,7 @@ export class LinValidator {
           obj[err.key] = err.message;
         }
       }
-      throw new ParametersException({ msg: obj });
+      throw new ParametersException({ message: obj });
     } else {
       ctx.v = this;
       return this;
@@ -130,15 +129,15 @@ export class LinValidator {
       // 去data下找key，二级目录查找 dataKey 为一级目录的路径
       const [dataKey, dataVal] = this.findInData(key);
       if (this.isOptional(dataVal)) {
-        let msg: string | undefined;
+        let message: string | undefined;
         if (isArray(value)) {
           for (const it of value) {
             if (it.optional) {
               defaultVal = it.defaultValue && it.defaultValue;
               optional = true;
             } else {
-              if (!msg) {
-                msg = it.message;
+              if (!message) {
+                message = it.message;
               }
             }
           }
@@ -147,13 +146,13 @@ export class LinValidator {
             defaultVal = value.defaultValue && value.defaultValue;
             optional = true;
           } else {
-            msg = value.message;
+            message = value.message;
           }
         }
         // 没有 isOptional 抛异常
         // 有 isOptional 取它的默认值
         if (!optional) {
-          this.errors.push({ key, message: msg || `${key}不可为空` });
+          this.errors.push({ key, message: message || `${key}不可为空` });
         } else {
           this.parsed['default'][key] = defaultVal;
         }
@@ -228,7 +227,7 @@ export class LinValidator {
       } catch (error) {
         const key = this.getValidateFuncKey(validateFuncKey);
         if (error instanceof HttpException) {
-          this.errors.push({ key, message: error.msg });
+          this.errors.push({ key, message: error.message });
         } else {
           this.errors.push({ key, message: error.message });
         }

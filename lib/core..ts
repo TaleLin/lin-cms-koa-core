@@ -7,7 +7,7 @@ import { set, get } from 'lodash';
 import { config } from './config';
 
 // tslint:disable-next-line:variable-name
-export const __version__ = '0.2.3';
+export const __version__ = '0.3.2';
 
 // 存放meta路由信息
 export const routeMetaInfo = new Map();
@@ -30,7 +30,7 @@ export class Lin {
    */
   public async initApp(
     app: Application,
-    mount?: boolean, // 是否挂载插件路由，默认为true
+    mount?: boolean, // 是否挂载插件路由，默认为 true
   ) {
     this.app = app;
     this.app!.context.config = config;
