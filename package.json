@@ -6,7 +6,6 @@
   "scripts": {
     "tsc": "rimraf lin/ && tsc",
     "test": "jest tests",
-    "doc": "typedoc --out docs --mode modules ./lib",
     "debugger": "node --inspect-brk ./node_modules/jest/bin/jest --runInBand --no-cache --no-watchman"
   },
   "keywords": [
