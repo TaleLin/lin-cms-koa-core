@@ -1,6 +1,6 @@
 {
   "name": "lin-mizar",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "The core library of Lin CMS",
   "main": "lin/index.js",
   "scripts": {
