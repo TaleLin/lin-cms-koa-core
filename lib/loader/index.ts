@@ -7,9 +7,11 @@ import Router from 'koa-router';
 import path from 'path';
 import { Plugin } from '../plugin';
 import { config } from '../config';
-import { disableLoading } from '../core.';
 
 const baseDir = config.getItem('baseDir', process.cwd())
+
+// 当前文件路由是否挂载
+export const disableLoading = Symbol('disableLoading');
 
 /**
  * 加载器

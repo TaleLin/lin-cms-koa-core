@@ -13,4 +13,4 @@ export * from './jwt'
 export * from './loader'
 export * from './interface'
 
-export { Lin } from './core.'
+export { Lin, __version__ } from './core.'

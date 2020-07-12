@@ -13,6 +13,10 @@
     "cms",
     "koa"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TaleLin/lin-cms-koa-core.git"
+  },
   "author": "Pedro/Shirmy/Evan",
   "license": "MIT",
   "dependencies": {

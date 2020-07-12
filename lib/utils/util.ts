@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-// import { routeMetaInfo } from './core';
 import { unset } from 'lodash';
 // import { ParametersException } from './exception';
 // import { extendedValidator } from './extended-validator';
