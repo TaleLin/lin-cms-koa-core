@@ -7,13 +7,7 @@ import { set, get } from 'lodash';
 import { config } from './config';
 
 // tslint:disable-next-line:variable-name
-export const __version__ = '0.3.2';
-
-// 存放meta路由信息
-export const routeMetaInfo = new Map();
-
-// 当前文件路由是否挂载
-export const disableLoading = Symbol('disableLoading');
+export const __version__ = '0.3.5';
 
 /**
  * Lin核心类
