@@ -54,7 +54,7 @@ export class Uploader {
    */
   public generateName(filename: string) {
     const ext = path.extname(filename);
-    return `${uuid.v4()}{ext}`;
+    return `${uuid.v4()}${ext}`;
   }
 
   /**
