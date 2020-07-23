@@ -1,11 +1,11 @@
 <h1 align="center">
-  <a href="http://doc.cms.7yue.pro/">
-  <img src="http://doc.cms.7yue.pro/left-logo.png" width="250"/></a>
+  <a href="http://doc.cms.talelin.com/">
+  <img src="http://doc.cms.talelin.com/left-logo.png" width="250"/></a>
   <br>
   Lin-CMS-Koa-Core
 </h1>
 
-<h4 align="center">一个简单易用的CMS后端项目 | <a href="http://doc.cms.7yue.pro/" target="_blank">Lin-CMS-Koa的核心库</a></h4>
+<h4 align="center">一个简单易用的CMS后端项目 | <a href="http://doc.cms.talelin.com/" target="_blank">Lin-CMS-Koa的核心库</a></h4>
 
 <p align="center">
   <a href="http://flask.pocoo.org/docs/1.0/" rel="nofollow">
@@ -35,17 +35,19 @@ Lin-CMS 是林间有风团队经过大量项目实践所提炼出的一套**内�
 
 ### 文档地址
 
-[http://doc.cms.7yue.pro/](http://doc.cms.7yue.pro/)
+[http://doc.cms.talelin.com/](http://doc.cms.talelin.com/)
 
 ### 线上 demo
 
 [http://face.cms.7yue.pro/](http://face.cms.7yue.pro/)
 
+### 免费入门视频教程 
+
+[https://www.imooc.com/learn/1247](https://www.imooc.com/learn/1247)
+
 ### QQ 交流群
 
-QQ 群号：643205479
-
-<img class="QR-img" width="258" height="300" src="https://camo.githubusercontent.com/facc358629410637480581abcdf8ec1ceb8c7161/687474703a2f2f696d676c66332e6e6f73646e302e3132362e6e65742f696d672f516b354c576b4a56576b46334e6d6479633278476355745363454a4c4f565631636c45725931644a613046735133453161445a51576c5a485a3264436253743457584131563364525054302e6a70673f696d61676556696577267468756d626e61696c3d313638307830267175616c6974793d39362673747269706d6574613d3026747970653d6a7067">
+QQ 群号：643205479 / 814597236
 
 ### 微信公众号
 
@@ -55,7 +57,11 @@ QQ 群号：643205479
 
 ## 版本日志
 
-最新版本：`0.3.6`
+最新版本：`0.3.7`
+
+### 0.3.7
+
+1. `U` 优化发布脚本
 
 ### 0.3.6
 
