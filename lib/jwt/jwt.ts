@@ -116,7 +116,7 @@ class Token {
    *
    * @param token 令牌
    */
-  public verifyToken(token: string) {
+  public verifyToken(token: string, type = TokenType.ACCESS) {
     if (!this.secret) {
       throw new Error('secret can not be empty');
     }
@@ -127,9 +127,29 @@ class Token {
       decode = jwtGenerator.verify(token, this.secret);
     } catch (error) {
       if (error instanceof TokenExpiredError) {
-        throw new ExpiredTokenException();
+        if (type === TokenType.ACCESS) {
+          throw new ExpiredTokenException({
+            code: 10051
+          });
+        } else if (type === TokenType.REFRESH) {
+          throw new ExpiredTokenException({
+            code: 10052
+          });
+        } else {
+          throw new ExpiredTokenException();
+        }
       } else {
-        throw new InvalidTokenException();
+        if (type === TokenType.ACCESS) {
+          throw new InvalidTokenException({
+            code: 10041
+          });
+        } else if (type === TokenType.REFRESH) {
+          throw new InvalidTokenException({
+            code: 10042
+          });
+        } else {
+          throw new InvalidTokenException();
+        }
       }
     }
     return decode;
@@ -150,10 +170,7 @@ const jwt = new Token(
  * @param payload 负载，支持 string 和 object
  * @param options 参数
  */
-function createAccessToken(
-  payload: string | object,
-  options?: SignOptions
-) {
+function createAccessToken(payload: string | object, options?: SignOptions) {
   // type: TokenType.REFRESH
   let exp: number = Math.floor(Date.now() / 1000) + jwt.accessExp;
   if (typeof payload === 'string') {
@@ -176,10 +193,7 @@ function createAccessToken(
  * @param payload 负载，支持 string 和 object
  * @param options 参数
  */
-function createRefreshToken(
-  payload: string | object,
-  options?: SignOptions
-) {
+function createRefreshToken(payload: string | object, options?: SignOptions) {
   let exp: number = Math.floor(Date.now() / 1000) + jwt.refreshExp;
   // type: TokenType.REFRESH
   if (typeof payload === 'string') {
@@ -279,14 +293,14 @@ function parseHeader(ctx: RouterContext, type = TokenType.ACCESS) {
 
     if (/^Bearer$/i.test(scheme)) {
       // @ts-ignore
-      const obj = ctx.jwt.verifyToken(token);
+      const obj = ctx.jwt.verifyToken(token, type);
       if (!get(obj, 'type') || get(obj, 'type') !== type) {
         ctx.throw(new AuthFailed({ code: 10250 }));
       }
       if (!get(obj, 'scope') || get(obj, 'scope') !== 'lin') {
         ctx.throw(new AuthFailed({ code: 10251 }));
       }
-      return obj
+      return obj;
     }
   } else {
     ctx.throw(new AuthFailed());
