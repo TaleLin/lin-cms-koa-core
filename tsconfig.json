@@ -4,6 +4,7 @@
     "module": "commonjs",
     "noImplicitAny": false,
     "declaration": true,
+    "allowJs": true,
     "outDir": "./lin",
     "rootDir": "./lib",
     "importHelpers": true,

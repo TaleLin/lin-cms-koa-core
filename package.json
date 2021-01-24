@@ -1,6 +1,6 @@
 {
   "name": "lin-mizar",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "The core library of Lin CMS",
   "main": "lin/index.js",
   "scripts": {
@@ -20,7 +20,7 @@
   "author": "Pedro/Shirmy/Evan",
   "license": "MIT",
   "dependencies": {
-    "async-busboy": "^0.7.0",
+    "busboy": "^0.3.1",
     "class-validator": "^0.9.1",
     "consola": "^2.5.6",
     "dayjs": "^1.8.9",
